@@ -1,3 +1,0 @@
-Database connection string
-
-mongodb+srv://groupprojectAdmin:groupAdmin123@healthandphysicalfitnes.icyjlid.mongodb.net/test

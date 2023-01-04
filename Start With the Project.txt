@@ -1,0 +1,20 @@
+--------------------------------------------- Start With the Developments ------------------------------------------
+
+1. Clone the Whole Project into your local repo (Health And Physical Fitness Platform)
+
+2. Inside folder frontend do,
+              i. Open the terminal, and execute >> npm install
+              ii. To run the frontend, execute >> npm start
+
+3. Inside folder backend do,
+              i. Open the terminal, and execute >> npm install
+              ii. To run the backend, execute >> nodemon server
+
+4. Connecting with the database,
+              i. Install mongoDBCompass
+              ii. use the below Database Connection String to connnect to the database
+
+Database connection string
+mongodb+srv://groupprojectAdmin:groupAdmin123@healthandphysicalfitnes.icyjlid.mongodb.net/test
+
+
