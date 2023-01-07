@@ -1,3 +1,5 @@
+///////////////////////////////// Created By Mudith Perera //////////////////////////////
+
 import styled from "styled-components";
 
 export const FooterContainer = styled.div`
@@ -91,7 +93,7 @@ export const Text = styled.div`
   font-weight: 300;
 `;
 export const Image = styled.img`
-    width: 10rem;
+    width: 9rem;
     height: 9rem;
 `;
 export const H1 = styled.h1`

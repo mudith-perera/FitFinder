@@ -22,6 +22,7 @@ export const ImageContainer = styled.div`
 `
 
 export const Img = styled.img`
+    height: 300px;
 
 `
 export const UC_TextContainer = styled.div`

@@ -1,8 +1,11 @@
+///////////////////////////////// Created By Mudith Perera //////////////////////////////
+
 import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "../index.css";
+import "./StyleElements/LoginButton.css";
 import { Link } from "react-router-dom";
 
 import { Link1, Span } from "./StyleElements/NavBarElements.js";
@@ -25,7 +28,7 @@ function NavBar() {
                 Home<Span className="Ho me-5"></Span>
               </Link1>
             </Nav.Link>
-            <Nav.Link style={{ color: "white" }} href="fnq">
+            <Nav.Link style={{ color: "white" }} href="/uc">
               <Link1>
                 fnq<Span className="Ho"></Span>
               </Link1>
@@ -37,12 +40,12 @@ function NavBar() {
             </Nav.Link>
           </Nav>
           <Navbar.Brand>
-              <Link to={"sign-up"} className="btn btn-outline-warning mr-2 ">
+              <Link to={"sign-up"} className="button-6 ">
                 SignUp
               </Link>
             </Navbar.Brand>
             <Navbar.Brand>
-              <Link to={"login"} className="btn btn-outline-warning mr-2 ">
+              <Link to={"/login"} className="button-6 ">
                 Login
               </Link>
             </Navbar.Brand>

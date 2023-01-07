@@ -1,3 +1,5 @@
+///////////////////////////////// Created By Mudith Perera //////////////////////////////
+
 import React from 'react';
 import {Link} from 'react-router-dom';
 import img from '../Images/logo.png'
@@ -43,7 +45,7 @@ export default function App() {
                 </Link>
               </Link1>
               <Link1 className="FooterLink">
-                <Link to = "/fnq" style={{color:"inherit", textDecoration: 'none'}}>
+                <Link to = "/uc" style={{color:"inherit", textDecoration: 'none'}}>
                   FnQ
                 <Span className="Ho"></Span>
                 </Link>
