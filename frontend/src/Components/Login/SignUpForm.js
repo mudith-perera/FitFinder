@@ -12,7 +12,7 @@ import "aos/dist/aos.css";
 
 const SignUpForm = () => {
   useEffect(() => {
-    Aos.init({ duration: 1000});
+    Aos.init({ duration: 500});
   });
   return (
     <section data-aos="zoom-in">
@@ -21,11 +21,11 @@ const SignUpForm = () => {
           <div className="col-12">
             <div
               className="card card-registration card-registration-2"
-              style={{ borderRadius: "15px" }}
+              style={{ borderRadius: "15px",backgroundColor: "transparent" }}
             >
               <div className="card-body p-0">
-                <div className="row g-0">
-                  <div className="col-lg-6">
+                <div className="row g-0 ">
+                  <div className="col-lg-6 bg-partone">
                     <div className="p-5">
                       <h3
                         className="fw-normal mb-5"
@@ -44,6 +44,7 @@ const SignUpForm = () => {
                               type="text"
                               className="form-control form-control-lg"
                               label="First name"
+                              
                             />
                           </div>
                         </div>
@@ -147,7 +148,9 @@ const SignUpForm = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-6 bg-indigo text-white">
+
+
+                  <div className="col-lg-6 bg-parttwo text-white">
                     <div className="p-5">
                       <h3 className="fw-normal mb-5">For Gym Use&emsp;&emsp;
                         <img className="img1" src={img2} alt="General Info"/></h3>
