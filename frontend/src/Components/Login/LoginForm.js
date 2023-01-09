@@ -1,18 +1,17 @@
 ///////////////////////////////// Created By Mudith Perera //////////////////////////////
 
-import React,{useEffect} from "react";
-import "./LoginFormTextBox.css";
+import React, { useEffect } from "react";
+import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
 
 const LoginForm = () => {
   useEffect(() => {
-    Aos.init({ duration: 1000});
+    Aos.init({ duration: 1000 });
   });
   return (
-
-    <section  data-aos="zoom-in-up" className="vh-100 gradient-custom">
+    <section data-aos="zoom-in-up" className="vh-800 gradient-custom">
       <div className="container py-5 h-80">
         <div className="row d-flex justify-content-center align-items-center h-800">
           <div className="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -27,18 +26,22 @@ const LoginForm = () => {
                     Please enter your login and password!
                   </p>
 
-                  <div className="group form-control form-control-sm">
-                    <input className="inputLogin" type="email" required />
-                    <span className="highlight"></span>
-                    <span className="bar"></span>
-                    <label className="labelLogin" >Email</label>
+                  <div className="form-outline form-white">
+                    <MDBInput
+                      type="email"
+                      className="form-control form-control-lg"
+                      label="Email"
+                      style={{ backgroundColor: "transparent" }}
+                    />
                   </div>
-
-                  <div className="group form-control form-control-sm">
-                    <input className="inputLogin" type="password" required />
-                    <span className="highlight"></span>
-                    <span className="bar"></span>
-                    <label className="labelLogin" >Password</label>
+                  <br />
+                  <div className="form-outline form-white">
+                    <MDBInput
+                      type="password"
+                      className="form-control form-control-lg"
+                      label="Password"
+                      style={{ backgroundColor: "transparent" }}
+                    />
                   </div>
 
                   <p className="small mb-2 pb-lg-2">
@@ -47,12 +50,9 @@ const LoginForm = () => {
                     </a>
                   </p>
 
-                  <button
-                    className="btn btn-outline-light btn-lg px-5"
-                    type="submit"
-                  >
+                  <MDBBtn type="submit">
                     Login
-                  </button>
+                  </MDBBtn>
                 </div>
 
                 <div>

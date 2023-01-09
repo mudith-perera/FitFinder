@@ -19,9 +19,9 @@ function NavBar() {
         </Navbar.Brand>
 
         <Navbar.Toggle
-          aria-controls="navbarScroll"
+          aria-controls="basic-navbar-nav"
         />
-        <Navbar.Collapse id="navbarScroll">
+        <Navbar.Collapse id="navbarScroll" >
           <Nav className="me-auto my-4 my-lg-2" style={{ maxHeight: "250px" }}>
             <Nav.Link href="/" style={{ color: "white" }}>
               <Link1>

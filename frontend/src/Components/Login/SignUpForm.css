@@ -27,6 +27,14 @@
   border-bottom-left-radius:15px;
 }
 
+.bg-partthree{
+  background-color: #ffffff;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius:15px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius:15px;
+}
+
 .img1{
   height: 50px;
 }

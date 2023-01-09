@@ -16,3 +16,6 @@ code {
   background-color: #202020;
 }
 
+.navbar-toggler-icon{
+  background-image:url('./Images/navbarIco.png') !important;
+}
