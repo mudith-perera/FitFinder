@@ -30,7 +30,7 @@ export default function App() {
           <Image src={img}/>
         </Logo>
         <Name>
-          <H1> Something</H1>
+          <H1> FitFinder</H1>
         </Name>
       </FooterSection>
       <SubSection>

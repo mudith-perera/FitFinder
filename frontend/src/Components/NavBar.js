@@ -15,7 +15,7 @@ function NavBar() {
     <Navbar bg="myNavColor" variant="dark" expand="lg">
       <Container>
         <Navbar.Brand style={{ color: "white" }} href="/">
-          Something
+          FitFinder
         </Navbar.Brand>
 
         <Navbar.Toggle
