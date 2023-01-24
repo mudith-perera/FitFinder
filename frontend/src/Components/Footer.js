@@ -68,7 +68,7 @@ export default function App() {
             <HR/>
             <Text>
             <h4>Our Mission</h4>
-            blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla
+            Welcome to FitFinder the Health and Physical Fitness Platform. We will help you to find the best matching gym and manage your weekly gym schedule in one place.
             </Text>
           </FooterRightColumn>
         </FooterSection>
