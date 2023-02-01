@@ -1,11 +1,8 @@
 ///////////////////////////////// Created By Mudith Perera //////////////////////////////
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./SignUpForm.css";
-import { MDBInput, MDBTextArea, MDBBtn, MDBCheckbox } from "mdb-react-ui-kit";
-
-import img1 from "../../Images/SignupInfo.png";
-import img2 from "../../Images/SignUpGymInfo.png";
+import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -14,205 +11,109 @@ const SignUpForm = () => {
   useEffect(() => {
     Aos.init({ duration: 500 });
   });
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPwd, setConfirmPwd] = useState("");
+
+  const signUpMember = async (e) => {
+    e.preventDefault();
+    const formData = { email, password, confirmPwd };
+    console.log(formData)
+
+    // try {
+    //   const res = await axios.post('http://127.0.0.1:8000/api/add-users',formData);
+
+    //   if (res.data.status === 200)
+    //     {
+    //       console.log(res.data.message);
+    //       notifSuccess();//Load toastify Alert
+
+    //       setTimeout(() => {
+    //         navigate("/login");
+    //       }, 3000);
+
+    //     }
+    // } catch (err) {
+    //     notifError();
+    // }
+  };
+
   return (
-    <section data-aos="zoom-in">
-      <div className="container py-5 h-100">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col-12">
+    <section data-aos="flip-left" className="vh-800 gradient-custom">
+      <div className="container py-5 h-80">
+        <div className="row d-flex justify-content-center align-items-center h-800">
+          <div className="col-12 col-md-8 col-lg-6 col-xl-5">
             <div
-              className="card card-registration card-registration-2"
-              style={{ borderRadius: "15px", backgroundColor: "transparent" }}
+              className="card bg-dark text-white"
+              style={{ borderRadius: "1rem" }}
             >
-              <div className="card-body p-0">
-                <div className="row g-0 ">
-                  <div className="col-lg-6 bg-partone">
-                    <div className="p-5">
-                      <h3 className="fw-normal mb-5">
-                        General Infomation &emsp;
-                        <img className="img1" src={img1} alt="General Info" />
-                      </h3>
-
-                      <div className="row">
-                        <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="First name"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="Last name"
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="row">
-                        <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="Email"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="NIC"
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="row">
-                        <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="number"
-                              className="form-control form-control-lg"
-                              label="Age"
-                              min="12"
-                              max="100"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="Contact No"
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="row">
-                        <div className="col-md-6 mb-4 pb-2">
-                          <label className="form-label">Gender</label>
-                          <select
-                            className="form-control"
-                            required
-                            name="userType"
-                          >
-                            <option value="student">Male</option>
-                            <option value="teacher">Female</option>
-                            <option value="regular">Rather not say</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="row">
-                        <div className="col-md-12 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="Address"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="Town"
-                            />
-                          </div>
-                        </div>
-                      </div>
+              <div className="card-body p-3 text-center">
+                <form onSubmit={signUpMember}>
+                  <div className="mb-md-5 mt-md-4 pb-3">
+                    <h2 className="fw-bold mb-2 text-uppercase">Sign Up</h2>
+                    <p className="text-white-50 mb-5">
+                      Please Enter Below Information
+                    </p>
+                    <div className="form-outline form-white">
+                      <MDBInput
+                        name="email"
+                        type="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="form-control form-control-lg"
+                        label="Email"
+                        style={{ backgroundColor: "transparent" }}
+                      />
                     </div>
-                  </div>
-
-                  <div className="col-lg-6 bg-parttwo text-white">
-                    <div className="p-5">
-                      <h3 className="fw-normal mb-5">
-                        For Gym Use&emsp;&emsp;
-                        <img className="img1" src={img2} alt="General Info" />
-                      </h3>
-                      <div className="row">
-                        <div className="col-md-5 mb-4 pb-2">
-                          <div className="form-outline form-white">
-                            <MDBInput
-                              type="number"
-                              
-                              className="form-control form-control-lg"
-                              label="weight (kg)"
-                              min="20"
-                              style={{ backgroundColor: "transparent" }}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-5 mb-4 pb-2">
-                          <div className="form-outline form-white">
-                            <MDBInput
-                              type="number"
-                              className="form-control form-control-lg"
-                              label="Height (cm)"
-                              style={{ backgroundColor: "transparent" }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="row">
-                        <div className="col-md-5 mb-4 pb-2">
-                          <div className="form-outline form-white">
-                            <MDBInput
-                              type="number"
-                              
-                              className="form-control form-control-lg"
-                              label="Fat (%)"
-                              min="1"
-                              max="100"
-                              style={{ backgroundColor: "transparent" }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="col-md-5 mb-4 pb-2"></div>
-                      <div className="form-outline form-white">
-                        <MDBTextArea
-                          type="text"
-                          className="form-control form-control-lg"
-                          label="Medical Conditions (Seperated by ',' )"
-                          style={{ backgroundColor: "transparent" }}
-                        />
-                      </div>
-                      <br />
-                      <div className="form-check d-flex justify-content-start mb-4 pb-3">
-                        <MDBCheckbox />
-                        <label
-                          className="form-check-label text-white"
-                          
-                        >
-                          I do accept the{" "}
-                          <a href="#!" className="text-white">
-                            <u>Terms and Conditions</u>
-                          </a>{" "}
-                          of your site.
-                        </label>
-                      </div>
-
-                      <MDBBtn type="submit" outline color="light">
-                        Register
-                      </MDBBtn>
+                    <br />
+                    <div className="form-outline form-white">
+                      <MDBInput
+                        name="password"
+                        type="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="form-control form-control-lg"
+                        label="Password"
+                        style={{ backgroundColor: "transparent" }}
+                      />
                     </div>
+                    <br />
+                    <div className="form-outline form-white">
+                      <MDBInput
+                        name="confirmPwd"
+                        type="password"
+                        onChange={(e) => setConfirmPwd(e.target.value)}
+                        className="form-control form-control-lg"
+                        label="Confirm Password"
+                        style={{ backgroundColor: "transparent" }}
+                      />
+                    </div>
+                    <br />
+                    <div className="form-outline form-white">
+                      <input type="checkbox" required />
+                      <label className="form-check-label text-white">
+                        I do accept the{" "}
+                        <a href="#!" className="text-white">
+                          <u>Terms and Conditions</u>
+                        </a>{" "}
+                        of your site.
+                      </label>
+                    </div>
+                    <br />
+                    {/* <p className="small mb-2 pb-lg-2">
+                    <a className="text-white-50" href="#!">
+                      Forgot password?
+                    </a>
+                  </p> */}
+                    <MDBBtn type="submit">Sign Up</MDBBtn>
                   </div>
+                </form>
+                <div>
+                  <p className="mb-0">
+                    Already have an account?{" "}
+                    <a href="/login" className="text-white-50 fw-bold">
+                      Login
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
