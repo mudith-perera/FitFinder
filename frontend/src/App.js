@@ -11,8 +11,12 @@ import SignUp from "./Views/SignUp.js";
 import Home from "./Views/Home.js";
 
 import AdminHome from "./Views/Admin/AdminHome.js";
+
 import CoachHome from "./Views/Coach/CoachHome.js";
+
 import GymHome from "./Views/Gym/GymHome.js";
+import GymSignUpForm from "./Components/Gym/GymSignUpForm.js";
+
 import MemberHome from "./Views/Member/MemberHome.js";
 import MemberViewUpdate from "./Components/Member/MemberViewAndUpdateForm.js";
 
@@ -33,6 +37,8 @@ function App() {
           <Route exact path="/uc" element={<UC />} />
           <Route exact path="/sign-up" element={<SignUp />} />
           <Route exact path="/login" element={<Login />} />
+
+          <Route exact path="/gym-sign-up" element={<GymSignUpForm />} />
         </Route>
       </Routes>
       <Footer />

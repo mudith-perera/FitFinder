@@ -1,8 +1,16 @@
 ///////////////////////////////// Created By Mudith Perera //////////////////////////////
 
 import React, { useEffect, useState } from "react";
+
+import { Link } from "react-router-dom";
+
 import "./SignUpForm.css";
-import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
+import { MDBInput } from "mdb-react-ui-kit";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Button from "@mui/material/Button";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -15,12 +23,30 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
+  const [pwsdMatch, setpwsdMatch] = useState("");
+
+  const notifError = () => {
+    toast.error("Passwords do not match 😥", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
 
   const signUpMember = async (e) => {
     e.preventDefault();
     const formData = { email, password, confirmPwd };
-    console.log(formData)
+    console.log(formData);
 
+    if (password === confirmPwd) {
+      console.log("matched");
+      setpwsdMatch(true);
+    } else {
+      console.log("not matched");
+      setpwsdMatch(false);
+      notifError();
+    }
+
+    console.log(pwsdMatch);
     // try {
     //   const res = await axios.post('http://127.0.0.1:8000/api/add-users',formData);
 
@@ -41,6 +67,7 @@ const SignUpForm = () => {
 
   return (
     <section data-aos="flip-left" className="vh-800 gradient-custom">
+      <ToastContainer />
       <div className="container py-5 h-80">
         <div className="row d-flex justify-content-center align-items-center h-800">
           <div className="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -63,6 +90,7 @@ const SignUpForm = () => {
                         className="form-control form-control-lg"
                         label="Email"
                         style={{ backgroundColor: "transparent" }}
+                        required
                       />
                     </div>
                     <br />
@@ -74,6 +102,7 @@ const SignUpForm = () => {
                         className="form-control form-control-lg"
                         label="Password"
                         style={{ backgroundColor: "transparent" }}
+                        required
                       />
                     </div>
                     <br />
@@ -85,6 +114,7 @@ const SignUpForm = () => {
                         className="form-control form-control-lg"
                         label="Confirm Password"
                         style={{ backgroundColor: "transparent" }}
+                        required
                       />
                     </div>
                     <br />
@@ -104,7 +134,17 @@ const SignUpForm = () => {
                       Forgot password?
                     </a>
                   </p> */}
-                    <MDBBtn type="submit">Sign Up</MDBBtn>
+                    <Button variant="contained" type="submit">
+                      Sign Up
+                    </Button>
+                    <br />
+                    <br />
+                    <ButtonGroup>
+                      <Link to={"/gym-sign-up"}>
+                        <Button>Are you a Gym Owner ?</Button>
+                      </Link>
+                      <Button>Are you a Coach ?</Button>
+                    </ButtonGroup>
                   </div>
                 </form>
                 <div>

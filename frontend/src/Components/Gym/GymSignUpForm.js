@@ -1,19 +1,35 @@
 ///////////////////////////////// Created By Mudith Perera //////////////////////////////
 
-import React, { useEffect } from "react";
-import "./MemberViewAndUpdateForm.css";
-import { MDBInput, MDBTextArea, MDBBtn } from "mdb-react-ui-kit";
+import React, { useEffect, useState } from "react";
+import "./GymSignUpForm.css";
+import { MDBInput, MDBTextArea } from "mdb-react-ui-kit";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import SendIcon from "@mui/icons-material/Send";
+import Stack from "@mui/material/Stack";
+import Button from '@mui/material/Button';
 
 import img1 from "../../Images/SignupInfo.png";
-import img2 from "../../Images/SignUpGymInfo.png";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-const MemberViewAndUpdateForm = () => {
+const GymSignUpForm = () => {
   useEffect(() => {
     Aos.init({ duration: 500 });
   });
+
+  //Input field Gym Sex Type validation
+  const [gender, setGender] = useState("unisex");
+  const handleChange = (event) => {
+    setGender(event.target.value);
+  };
+
+  //Input field location
+  const [options, setOptions] = useState(["Kelaniya", "Mathara", "Colombo"]);
+
   return (
     <section data-aos="zoom-in">
       <div className="container py-5 h-100">
@@ -28,7 +44,7 @@ const MemberViewAndUpdateForm = () => {
                   <div className="col-lg-6 bg-partone">
                     <div className="p-5">
                       <h3 className="fw-normal mb-5">
-                        General Infomation &emsp;
+                        Reqest Gym Registration&emsp;
                         <img className="img1" src={img1} alt="General Info" />
                       </h3>
 
@@ -38,7 +54,7 @@ const MemberViewAndUpdateForm = () => {
                             <MDBInput
                               type="text"
                               className="form-control form-control-lg"
-                              label="First name"
+                              label="Gym Name"
                             />
                           </div>
                         </div>
@@ -47,7 +63,7 @@ const MemberViewAndUpdateForm = () => {
                             <MDBInput
                               type="text"
                               className="form-control form-control-lg"
-                              label="Last name"
+                              label="Gym Owner's Name"
                             />
                           </div>
                         </div>
@@ -57,20 +73,31 @@ const MemberViewAndUpdateForm = () => {
                         <div className="col-md-6 mb-4 pb-2">
                           <div className="form-outline">
                             <MDBInput
-                              type="text"
+                              type="email"
                               className="form-control form-control-lg"
-                              label="Email"
+                              label="Gym Owner's Email"
                             />
                           </div>
                         </div>
                         <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="NIC"
-                            />
-                          </div>
+                          <FormControl>
+                            <InputLabel id="lableGender">
+                              Gym Sex Type
+                            </InputLabel>
+                            <Select
+                              sx={{ m: 1, minWidth: 150 }}
+                              size="small"
+                              labelId="lableGender"
+                              id="demo-select-small"
+                              value={gender}
+                              label="Gym Sex Type"
+                              onChange={handleChange}
+                            >
+                              <MenuItem value={"unisex"}>Unisex</MenuItem>
+                              <MenuItem value={"male"}>Male</MenuItem>
+                              <MenuItem value={"female"}>Female</MenuItem>
+                            </Select>
+                          </FormControl>
                         </div>
                       </div>
 
@@ -78,11 +105,9 @@ const MemberViewAndUpdateForm = () => {
                         <div className="col-md-6 mb-4 pb-2">
                           <div className="form-outline">
                             <MDBInput
-                              type="number"
+                              type="text"
                               className="form-control form-control-lg"
-                              label="Age"
-                              min="12"
-                              max="100"
+                              label="Contact No 1"
                             />
                           </div>
                         </div>
@@ -91,7 +116,7 @@ const MemberViewAndUpdateForm = () => {
                             <MDBInput
                               type="text"
                               className="form-control form-control-lg"
-                              label="Contact No"
+                              label="Contact No 2"
                             />
                           </div>
                         </div>
@@ -99,57 +124,39 @@ const MemberViewAndUpdateForm = () => {
 
                       <div className="row">
                         <div className="col-md-6 mb-4 pb-2">
-                          <label className="form-label">Gender</label>
-                          <select
-                            className="form-control"
-                            required
-                            name="userType"
-                          >
-                            <option value="student">Male</option>
-                            <option value="teacher">Female</option>
-                            <option value="regular">Rather not say</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="row">
-                        <div className="col-md-12 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="Address"
-                            />
-                          </div>
+                          <FormControl>
+                            <InputLabel id="labelLocation">Location</InputLabel>
+                            <Select
+                              sx={{ m: 1, minWidth: 150 }}
+                              size="small"
+                              labelId="labelLocation"
+                              id="demo-select-small"
+                              //value={gender}
+                              label="Gym Sex Type"
+                            >
+                              {options.map((element, index) => (
+                                <MenuItem value={index}>{element}</MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-md-6 mb-4 pb-2">
-                          <div className="form-outline">
-                            <MDBInput
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="Town"
-                            />
-                          </div>
-                        </div>
+                        <div className="col-md-6 mb-4 pb-2"></div>
                       </div>
                     </div>
                   </div>
 
                   <div className="col-lg-6 bg-parttwo text-white">
                     <div className="p-5">
-                      <h3 className="fw-normal mb-5">
-                        For Gym Use&emsp;&emsp;
-                        <img className="img1" src={img2} alt="General Info" />
-                      </h3>
+                      <h3 className="fw-normal mb-5">&emsp;&emsp;</h3>
                       <div className="row">
                         <div className="col-md-5 mb-4 pb-2">
                           <div className="form-outline form-white">
                             <MDBInput
                               type="number"
                               className="form-control form-control-lg"
-                              label="weight (kg)"
+                              label="Monthly Fee (Rs.)"
                               min="20"
                               style={{ backgroundColor: "transparent" }}
                             />
@@ -160,7 +167,7 @@ const MemberViewAndUpdateForm = () => {
                             <MDBInput
                               type="number"
                               className="form-control form-control-lg"
-                              label="Height (cm)"
+                              label="Annual Fee (Rs.)"
                               style={{ backgroundColor: "transparent" }}
                             />
                           </div>
@@ -168,35 +175,32 @@ const MemberViewAndUpdateForm = () => {
                       </div>
 
                       <div className="row">
-                        <div className="col-md-5 mb-4 pb-2">
+                        <div className="col-md-12 mb-4 pb-2">
                           <div className="form-outline form-white">
                             <MDBInput
-                              type="number"
+                              type="text"
                               className="form-control form-control-lg"
-                              label="Fat (%)"
-                              min="1"
-                              max="100"
+                              label="Address"
                               style={{ backgroundColor: "transparent" }}
                             />
                           </div>
                         </div>
                       </div>
-
-                      <div className="col-md-5 mb-4 pb-2"></div>
                       <div className="form-outline form-white">
                         <MDBTextArea
                           type="text"
                           className="form-control form-control-lg"
-                          label="Medical Conditions (Seperated by ',' )"
+                          label="Owner's Comment"
                           style={{ backgroundColor: "transparent" }}
                         />
                       </div>
                       <br />
-                      
 
-                      <MDBBtn type="submit" outline color="light">
-                        Register
-                      </MDBBtn>
+                      <Stack direction="row" spacing={2}>
+                        <Button variant="contained" endIcon={<SendIcon />}>
+                          Request
+                        </Button>
+                      </Stack>
                     </div>
                   </div>
                 </div>
@@ -208,4 +212,4 @@ const MemberViewAndUpdateForm = () => {
     </section>
   );
 };
-export default MemberViewAndUpdateForm;
+export default GymSignUpForm;

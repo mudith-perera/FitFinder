@@ -47,44 +47,46 @@ const LoginForm = () => {
               style={{ borderRadius: "1rem" }}
             >
               <div className="card-body p-3 text-center">
-              <form onSubmit={loginUser}>
-                <div className="mb-md-5 mt-md-4 pb-3">
-                  <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
-                  <p className="text-white-50 mb-5">
-                    Please enter your login and password!
-                  </p>
+                <form onSubmit={loginUser}>
+                  <div className="mb-md-5 mt-md-4 pb-3">
+                    <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
+                    <p className="text-white-50 mb-5">
+                      Please enter your login and password!
+                    </p>
 
-                  <div className="form-outline form-white">
-                    <MDBInput
-                      type="email"
-                      name="email"
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="form-control form-control-lg"
-                      label="Email"
-                      style={{ backgroundColor: "transparent" }}
-                    />
+                    <div className="form-outline form-white">
+                      <MDBInput
+                        type="email"
+                        name="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="form-control form-control-lg"
+                        label="Email"
+                        style={{ backgroundColor: "transparent" }}
+                        required
+                      />
+                    </div>
+                    <br />
+                    <div className="form-outline form-white">
+                      <MDBInput
+                        type="password"
+                        name="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="form-control form-control-lg"
+                        label="Password"
+                        style={{ backgroundColor: "transparent" }}
+                        required
+                      />
+                    </div>
+
+                    <p className="small mb-2 pb-lg-2">
+                      <a className="text-white-50" href="#!">
+                        Forgot password?
+                      </a>
+                    </p>
+
+                    <MDBBtn type="submit">Login</MDBBtn>
                   </div>
-                  <br />
-                  <div className="form-outline form-white">
-                    <MDBInput
-                      type="password"
-                      name="password"
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="form-control form-control-lg"
-                      label="Password"
-                      style={{ backgroundColor: "transparent" }}
-                    />
-                  </div>
-
-                  <p className="small mb-2 pb-lg-2">
-                    <a className="text-white-50" href="#!">
-                      Forgot password?
-                    </a>
-                  </p>
-
-                  <MDBBtn type="submit">Login</MDBBtn>
-                </div>
-</form>
+                </form>
                 <div>
                   <p className="mb-0">
                     Don't have an account?{" "}
