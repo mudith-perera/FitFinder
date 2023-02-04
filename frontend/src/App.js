@@ -14,6 +14,7 @@ import AdminHome from "./Views/Admin/AdminHome.js";
 import CoachHome from "./Views/Coach/CoachHome.js";
 import GymHome from "./Views/Gym/GymHome.js";
 import MemberHome from "./Views/Member/MemberHome.js";
+import MemberViewUpdate from "./Components/Member/MemberViewAndUpdateForm.js";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/coach-home" element={<CoachHome />} />
           <Route exact path="/gym-home" element={<GymHome />} />
           <Route exact path="/member-home" element={<MemberHome />} />
+          <Route exact path="/member-view-update" element={<MemberViewUpdate/>} />
         </Route>
 
         <Route element={<WithNavBar />}>
