@@ -10,7 +10,7 @@ import img2 from "../../Images/SignUpGymInfo.png";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-const SignUpForm = () => {
+const MemberViewAndUpdateForm = () => {
   useEffect(() => {
     Aos.init({ duration: 500 });
   });
@@ -208,4 +208,4 @@ const SignUpForm = () => {
     </section>
   );
 };
-export default SignUpForm;
+export default MemberViewAndUpdateForm;
