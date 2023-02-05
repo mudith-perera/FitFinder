@@ -25,6 +25,7 @@ const SignUpForm = () => {
   const [confirmPwd, setConfirmPwd] = useState("");
   const [pwsdMatch, setpwsdMatch] = useState("");
 
+  //Confirm Password Check
   const notifError = () => {
     toast.error("Passwords do not match 😥", {
       theme: "colored",
@@ -32,6 +33,7 @@ const SignUpForm = () => {
     });
   };
 
+  //Form Submit function
   const signUpMember = async (e) => {
     e.preventDefault();
     const formData = { email, password, confirmPwd };
@@ -143,7 +145,9 @@ const SignUpForm = () => {
                       <Link to={"/gym-sign-up"}>
                         <Button>Are you a Gym Owner ?</Button>
                       </Link>
+                      <Link to={"/Coach-sign-up"}>
                       <Button>Are you a Coach ?</Button>
+                      </Link>
                     </ButtonGroup>
                   </div>
                 </form>

@@ -71,6 +71,7 @@ const SearchBar = () => {
 
                           <div className="col-md-2 pb-2">
                             <Select
+                              name="gymSexType"
                               sx={{ m: 1, minWidth: 120 }}
                               size="small"
                               labelId="demo-select-small"

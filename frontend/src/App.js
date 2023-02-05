@@ -13,6 +13,7 @@ import Home from "./Views/Home.js";
 import AdminHome from "./Views/Admin/AdminHome.js";
 
 import CoachHome from "./Views/Coach/CoachHome.js";
+import CoachSignUpForm from "./Components/Coach/CoachSignUpForm.js";
 
 import GymHome from "./Views/Gym/GymHome.js";
 import GymSignUpForm from "./Components/Gym/GymSignUpForm.js";
@@ -26,8 +27,11 @@ function App() {
       <Routes>
         <Route element={<WithoutNavBar />}>
           <Route exact path="/admin-home" element={<AdminHome />} />
+
           <Route exact path="/coach-home" element={<CoachHome />} />
+
           <Route exact path="/gym-home" element={<GymHome />} />
+
           <Route exact path="/member-home" element={<MemberHome />} />
           <Route exact path="/member-view-update" element={<MemberViewUpdate/>} />
         </Route>
@@ -39,6 +43,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
 
           <Route exact path="/gym-sign-up" element={<GymSignUpForm />} />
+          <Route exact path="/Coach-sign-up" element={<CoachSignUpForm />} />
         </Route>
       </Routes>
       <Footer />
