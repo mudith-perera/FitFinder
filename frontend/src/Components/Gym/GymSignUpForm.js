@@ -1,4 +1,6 @@
-///////////////////////////////// Created By Mudith Perera //////////////////////////////
+///////////////////////// Developer       : Mudith Perera  /////////////////////////
+///////////////////////// Modified Date   : 07-02-2023     /////////////////////////
+/////////////////////////           (START)                /////////////////////////
 
 import React, { useEffect, useState } from "react";
 import "./GymSignUpForm.css";
@@ -45,6 +47,7 @@ const GymSignUpForm = () => {
   const [gymContactNo1, setGymContactNo1] = useState("");
   const [gymContactNo2, setGymContactNo2] = useState("");
   const [location, setLocation] = useState("");
+  const [images, setImages] = useState([]);
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [gymMonthlyFee, setGymMonthlyFee] = useState("");
@@ -55,6 +58,19 @@ const GymSignUpForm = () => {
   //Input field Gym Sex Type validation
   const handleChange = (event) => {
     setGymSexType(event.target.value);
+  };
+
+  const imageHandleChange = (e) => {
+    console.log(e.target.files)
+    if (e.target.files) {
+      //converting the image url to blob
+      const fileArray = Array.from(e.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+
+      setImages((prevImages) => prevImages.concat(fileArray));
+      Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
+    }
   };
 
   //Form Submit function
@@ -134,7 +150,6 @@ const GymSignUpForm = () => {
                                 className="form-control form-control-lg"
                                 label="Gym Name"
                                 onChange={(e) => setGymName(e.target.value)}
-                                required
                               />
                             </div>
                           </div>
@@ -148,7 +163,6 @@ const GymSignUpForm = () => {
                                 onChange={(e) =>
                                   setGymOwnerName(e.target.value)
                                 }
-                                required
                               />
                             </div>
                           </div>
@@ -165,7 +179,6 @@ const GymSignUpForm = () => {
                                 onChange={(e) =>
                                   setGymOwnerEmail(e.target.value)
                                 }
-                                required
                               />
                             </div>
                           </div>
@@ -183,7 +196,6 @@ const GymSignUpForm = () => {
                                 value={gymSexType}
                                 label="Gym Sex Type"
                                 onChange={handleChange}
-                                required
                               >
                                 <MenuItem value={"unisex"}>Unisex</MenuItem>
                                 <MenuItem value={"male"}>Male</MenuItem>
@@ -204,7 +216,6 @@ const GymSignUpForm = () => {
                                 onChange={(e) =>
                                   setGymContactNo1(e.target.value)
                                 }
-                                required
                               />
                             </div>
                           </div>
@@ -231,14 +242,13 @@ const GymSignUpForm = () => {
                               </InputLabel>
                               <Select
                                 name="Location"
-                                sx={{ m: 1, minWidth: 200 }}
+                                sx={{ m: 1, minWidth: 150 }}
                                 size="small"
                                 labelId="labelLocation"
                                 id="demo-select-small"
                                 value={location}
                                 label="Gym Sex Type"
                                 onChange={(e) => setLocation(e.target.value)}
-                                required
                               >
                                 {locations.map((element, index) => (
                                   <MenuItem key={index} value={element}>
@@ -248,9 +258,50 @@ const GymSignUpForm = () => {
                               </Select>
                             </FormControl>
                           </div>
+                          <div className="col-md-6 mb-4 pb-2">
+                            <div className="drop-container">
+                            <input
+                              type="file"
+                              multiple
+                              id="file"
+                              onChange={imageHandleChange}
+                            />
+                            </div>
+                          </div>
                         </div>
                         <div className="row">
-                          <div className="col-md-6 mb-4 pb-2"></div>
+                          <div className="col-md-12 mb-4 pb-2">
+                            <img className="p-1"
+                              src={images[0]}
+                              alt=""
+                              width="100"
+                              height="70"
+                            />
+                            <img className="p-1"
+                              src={images[1]}
+                              alt=""
+                              width="100"
+                              height="70"
+                            />
+                            <img className="p-1"
+                              src={images[2]}
+                              alt=""
+                              width="100"
+                              height="70"
+                            />
+                            <img className="p-1"
+                              src={images[3]}
+                              alt=""
+                              width="100"
+                              height="70"
+                            />
+                            <img className="p-1"
+                              src={images[4]}
+                              alt=""
+                              width="100"
+                              height="70"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -268,7 +319,6 @@ const GymSignUpForm = () => {
                                 className="form-control form-control-lg"
                                 label="Password"
                                 style={{ backgroundColor: "transparent" }}
-                                required
                               />
                             </div>
                           </div>
@@ -281,7 +331,6 @@ const GymSignUpForm = () => {
                                 className="form-control form-control-lg"
                                 label="Confirm Password"
                                 style={{ backgroundColor: "transparent" }}
-                                required
                               />
                             </div>
                           </div>
@@ -328,20 +377,25 @@ const GymSignUpForm = () => {
                                 label="Address"
                                 onChange={(e) => setGymAddress(e.target.value)}
                                 style={{ backgroundColor: "transparent" }}
-                                required
                               />
                             </div>
                           </div>
                         </div>
-                        <div className="form-outline form-white">
-                          <MDBTextArea
-                            name="ownerComment"
-                            type="text"
-                            className="form-control form-control-lg"
-                            label="Owner's Comment"
-                            onChange={(e) => setGymOwnerComment(e.target.value)}
-                            style={{ backgroundColor: "transparent" }}
-                          />
+                        <div className="row">
+                          <div className="col-md-12 mb-4 pb-2">
+                            <div className="form-outline form-white">
+                              <MDBTextArea
+                                name="ownerComment"
+                                type="text"
+                                className="form-control form-control-lg"
+                                label="Owner's Comment"
+                                onChange={(e) =>
+                                  setGymOwnerComment(e.target.value)
+                                }
+                                style={{ backgroundColor: "transparent" }}
+                              />
+                            </div>
+                          </div>
                         </div>
                         <br />
 
