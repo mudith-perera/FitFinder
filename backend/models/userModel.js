@@ -1,6 +1,7 @@
 ///////////////////////// Developer       : Mudith Perera  /////////////////////////
 ///////////////////////// Modified Date   : 07-02-2023     /////////////////////////
 /////////////////////////         (START)                  /////////////////////////
+///////////////////////// Description     : Model created to save all the users in the system (admin, coaches, members, gym-owners)
 
 //Schema and the model of the database is define here
 
@@ -26,12 +27,12 @@ const userSchema = new Schema({
     type: String,
     lowercase: true,
     required: [true, "An user must have an email"],
-    validate: {
-      validator: function (val) {
-        return validator.isEmail(val);
-      },
-      message: "Please provide a valid email",
-    },
+    // validate: {
+    //   validator: function (val) {
+    //     return validator.isEmail(val);
+    //   },
+    //   message: "Please provide a valid email",
+    // },
   },
   password: {
     type: String,
@@ -40,7 +41,6 @@ const userSchema = new Schema({
     select: false
   },
   nic: {
-    unique: true,
     type: String,
     required: false,
   },
@@ -50,7 +50,7 @@ const userSchema = new Schema({
       values: ["male", "female", "other"],
       message: "Gender Should be : [ 'male', 'female', 'other']",
     },
-    required: true,
+    required: false,
   },
   age: {
     type: Number,
@@ -97,7 +97,8 @@ const userSchema = new Schema({
   },
   activeStatus: {
     type: Boolean,
-    required: [true, "A user must be Active/Deactive"],
+    default : true,
+    required: [true, "A user must be Active/Deactive"]
   },
 }, {timestamps: true })
 //end of the Schema

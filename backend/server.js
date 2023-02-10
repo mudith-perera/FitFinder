@@ -11,8 +11,10 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' })
 
-//get Routers
-
+//get Routers(START)
+//get users Router
+const userRoutes = require('./routes/users')
+//get Routers(END)
 
 //connect to db(START)
 //removing a warning
@@ -52,6 +54,7 @@ app.use((req, res, next) => {
 })
 
 //routes handlers
+app.use('/api/users', userRoutes)
 
 //MIDDLE-WARE (END)
 
