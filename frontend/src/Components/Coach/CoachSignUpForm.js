@@ -36,9 +36,6 @@ const GymSignUpForm = () => {
     });
   };
 
-  //Input field location
-  const locations = ["Kelaniya", "Mathara", "Colombo"];
-
   //All Input Fields
   const [coachName, setCoachName] = useState("");
   const [coachEmail, setCoachEmail] = useState("");
@@ -46,7 +43,6 @@ const GymSignUpForm = () => {
   const [coachAge, setCoachAge] = useState("");
   const [coachType, setCoachType] = useState("");
   const [coachContactNo, setCoachContactNo] = useState("");
-  const [coachTechniques, setCoachTechniques] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [address, setAddress] = useState("");
@@ -59,7 +55,7 @@ const GymSignUpForm = () => {
 
   //Input field Coach techniques handler
   const coachTypeHandleChange = (event) => {
-    setCoachTechniques(event.target.value);
+    setCoachType(event.target.value);
   };
 
   //Form Submit function
@@ -72,7 +68,6 @@ const GymSignUpForm = () => {
       coachAge,
       coachType,
       coachContactNo,
-      coachTechniques,
       password,
       confirmPwd,
       address,

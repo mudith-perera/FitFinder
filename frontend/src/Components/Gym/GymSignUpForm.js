@@ -9,11 +9,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import SendIcon from "@mui/icons-material/Send";
+
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
 import img1 from "../../Images/gym.png";
+import SendIcon from "@mui/icons-material/Send";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -60,8 +62,11 @@ const GymSignUpForm = () => {
     setGymSexType(event.target.value);
   };
 
+  const removeImages = (e) => {
+    setImages([]); 
+  };
   const imageHandleChange = (e) => {
-    console.log(e.target.files)
+    console.log(e.target.files);
     if (e.target.files) {
       //converting the image url to blob
       const fileArray = Array.from(e.target.files).map((file) =>
@@ -260,47 +265,62 @@ const GymSignUpForm = () => {
                           </div>
                           <div className="col-md-6 mb-4 pb-2">
                             <div className="drop-container">
-                            <input
-                              type="file"
-                              multiple
-                              id="file"
-                              onChange={imageHandleChange}
-                            />
+                              <input
+                                type="file"
+                                multiple
+                                id="file"
+                                onChange={imageHandleChange}
+                              />
                             </div>
                           </div>
                         </div>
                         <div className="row">
                           <div className="col-md-12 mb-4 pb-2">
-                            <img className="p-1"
+                            <img
+                              className="p-1"
                               src={images[0]}
                               alt=""
                               width="100"
                               height="70"
                             />
-                            <img className="p-1"
+                            <img
+                              className="p-1"
                               src={images[1]}
                               alt=""
                               width="100"
                               height="70"
                             />
-                            <img className="p-1"
+                            <img
+                              className="p-1"
                               src={images[2]}
                               alt=""
                               width="100"
                               height="70"
                             />
-                            <img className="p-1"
+                            <img
+                              className="p-1"
                               src={images[3]}
                               alt=""
                               width="100"
                               height="70"
                             />
-                            <img className="p-1"
+                            <img
+                              className="p-1"
                               src={images[4]}
                               alt=""
                               width="100"
                               height="70"
                             />
+                          </div>
+                          <div className="col-md-12 mb-4 pb-2">
+                            <Button
+                              variant="contained"
+                              color="error"
+                              endIcon={<DeleteIcon />}
+                              onClick={removeImages}
+                            >
+                              Discard Images
+                            </Button>
                           </div>
                         </div>
                       </div>
