@@ -14,6 +14,8 @@ dotenv.config({ path: './config.env' })
 //get Routers(START)
 //get users Router
 const userRoutes = require('./routes/users')
+//get gym Router
+const gymRoutes = require('./routes/gyms')
 //get Routers(END)
 
 //connect to db(START)
@@ -55,6 +57,7 @@ app.use((req, res, next) => {
 
 //routes handlers
 app.use('/api/users', userRoutes)
+app.use('/api/gyms', gymRoutes)
 
 //MIDDLE-WARE (END)
 

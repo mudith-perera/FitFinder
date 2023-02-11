@@ -36,6 +36,7 @@ function App() {
           <Route exact path="/member-view-update" element={<MemberViewUpdate/>} />
         </Route>
 
+
         <Route element={<WithNavBar />}>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/uc" element={<UC />} />
