@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./SignUpForm.css";
 import { MDBInput } from "mdb-react-ui-kit";
@@ -27,6 +27,8 @@ const SignUpForm = () => {
   const [confirmPwd, setConfirmPwd] = useState("");
   const [pwsdMatch, setpwsdMatch] = useState("");
 
+  const navigate = useNavigate();
+
   //Confirm Password Check
   const notifError = () => {
     toast.error("Passwords do not match 😥", {
@@ -35,38 +37,62 @@ const SignUpForm = () => {
     });
   };
 
+  //user account create success alert
+  const userSuccess = () => {
+    toast.success("User Successfully Added 😊👍", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
+  //user account create error alert
+  const userError = (error) => {
+    toast.error("😢 " + error, {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
   //Form Submit function
   const signUpMember = async (e) => {
+    //Stopping the default action of refreshing the page
     e.preventDefault();
-    const formData = { email, password, confirmPwd };
-    console.log(formData);
+    const formData = { email, password };
 
     if (password === confirmPwd) {
-      console.log("matched");
       setpwsdMatch(true);
     } else {
-      console.log("not matched");
       setpwsdMatch(false);
       notifError();
     }
-
     console.log(pwsdMatch);
-    // try {
-    //   const res = await axios.post('http://127.0.0.1:8000/api/add-users',formData);
 
-    //   if (res.data.status === 200)
-    //     {
-    //       console.log(res.data.message);
-    //       notifSuccess();//Load toastify Alert
+    //Sends data to backend
+    const response = await fetch("/api/users", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
 
-    //       setTimeout(() => {
-    //         navigate("/login");
-    //       }, 3000);
+    if (!response.ok) {
+      userError(json.error);
+      console.log(json.error);
+    }
+    if (response.ok) {
+      userSuccess();
+      setEmail("");
+      setPassword("");
+      setConfirmPwd("");
+      console.log("new user added", json);
 
-    //     }
-    // } catch (err) {
-    //     notifError();
-    // }
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+      //window.location.reload(false);
+    }
   };
 
   return (
@@ -148,7 +174,7 @@ const SignUpForm = () => {
                         <Button>Are you a Gym Owner ?</Button>
                       </Link>
                       <Link to={"/Coach-sign-up"}>
-                      <Button>Are you a Coach ?</Button>
+                        <Button>Are you a Coach ?</Button>
                       </Link>
                     </ButtonGroup>
                   </div>
