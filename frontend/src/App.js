@@ -21,6 +21,9 @@ import GymSignUpForm from "./Components/Gym/GymSignUpForm.js";
 import MemberHome from "./Views/Member/MemberHome.js";
 import MemberViewUpdate from "./Components/Member/MemberViewAndUpdateForm.js";
 
+import Schedule from "./Components/Member/ScheduleForm.js";
+import ScheduleManage from "./Components/Coach/ManageSchedule.js";
+
 function App() {
   return (
     <Router>
@@ -44,6 +47,9 @@ function App() {
 
           <Route exact path="/gym-sign-up" element={<GymSignUpForm />} />
           <Route exact path="/Coach-sign-up" element={<CoachSignUpForm />} />
+
+          <Route exact path="/Schedule" element={<Schedule/>} />
+          <Route exact path="/ManageSchedule" element={<ScheduleManage/>} />
         </Route>
       </Routes>
       <Footer />

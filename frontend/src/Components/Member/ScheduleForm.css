@@ -1,0 +1,226 @@
+/*//////////////////////////////// Created By Sachintha Imindhu /////////////////////////////*/
+
+.app-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100vh;
+	font-family: sans-serif;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 20px;
+}
+
+.day-selector-container {
+	display: flex;
+}
+
+.day-selector {
+	margin-right: 20px;
+	cursor: pointer;
+	font-size: 18px;
+	color: rgba(255, 255, 255, 0.5);
+	transition: color 0.2s ease-in-out;
+}
+
+.day-selector:last-child {
+	margin-right: 0;
+}
+
+.day-selector.selected {
+	color: white;
+	font-weight: bold;
+}
+
+.schedule-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	max-height: calc(100vh - 80px);
+	overflow: auto;
+}
+
+.schedule-card {
+	width: 100%;
+	max-width: 900px;
+	height: 90px;
+	background: #212529;
+	border-radius: 10px;
+	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+	margin: 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	text-align: center;
+	color: white;
+	font-size: 18px;
+	padding: 20px;
+}
+
+.exercise-container {
+	width: 70px;
+	background: linear-gradient(to bottom, #ff8a00, #e52e71);
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	position: relative;
+}
+
+.exercise-title {
+	width: 100px;
+	font-size: 22px;
+	font-weight: bold;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	word-wrap: break-word;
+}
+
+.instructions-container {
+	width: 33.33%;
+	background: #6a11cb;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	position: relative;
+	height: 70px;
+	border-radius: 10px;
+}
+
+.reps-container,
+.time-container {
+	width: 20.00%;
+	background: #6a11cb;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	position: relative;
+	height: 70px;
+	border-radius: 10px;
+}
+
+.reps-label,
+.time-label,
+.instructions-label {
+	font-size: 15px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.reps-value,
+.time-value,
+.instructions-value {
+	font-size: 15px;
+	font-weight: bold;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-overflow: ellipsis;
+}
+
+.responsive-day-selector {
+	display: none;
+}
+
+@media (max-width: 767px) {
+	.instructions-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		max-height: 70px;
+	}
+
+	.instructions-value {
+		max-height: 200px;
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
+		text-overflow: ellipsis;
+	}
+
+	.instructions-label {
+		margin-top: -10px;
+	}
+
+
+	.day-selector-container {
+		display: none;
+	}
+
+	.responsive-day-selector {
+		display: block;
+		text-align: center;
+		margin: 10px 0;
+	}
+
+	.day-selector-dropdown {
+		display: inline-block;
+		width: 100%;
+	}
+
+	.day-selector-dropdown select {
+		width: 100%;
+		padding: 10px;
+		border: 1px solid #ccc;
+		border-radius: 10px;
+	}
+}
+
+@media screen and (max-device-width: 640px) {
+	.instructions-container {
+		max-width: 500px;
+		word-wrap: break-word;
+	}
+
+	.instructions-value {
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.day-selector-container {
+		display: none;
+	}
+
+	.responsive-day-selector {
+		display: block;
+		text-align: center;
+		margin: 10px 0;
+	}
+
+	.day-selector-dropdown {
+		display: inline-block;
+		width: 100%;
+	}
+
+	.day-selector-dropdown select {
+		width: 100%;
+		padding: 10px;
+		border: 1px solid #ccc;
+		border-radius: 10px;
+	}
+}
