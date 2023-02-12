@@ -4,6 +4,8 @@
 
 import React, { useEffect, useState } from "react";
 import "./GymSignUpForm.css";
+import { useNavigate } from "react-router-dom";
+
 import { MDBInput, MDBTextArea } from "mdb-react-ui-kit";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -50,20 +52,41 @@ const GymSignUpForm = () => {
   const [gymContactNo2, setGymContactNo2] = useState("");
   const [location, setLocation] = useState("");
   const [images, setImages] = useState([]);
-  const [password, setPassword] = useState("");
-  const [confirmPwd, setConfirmPwd] = useState("");
+  const [openingTime, setOpeningTime] = useState("");
+  const [closingTime, setClosingTime] = useState("");
   const [gymMonthlyFee, setGymMonthlyFee] = useState("");
   const [gymAnnualFee, setGymAnnualFee] = useState("");
   const [gymAddress, setGymAddress] = useState("");
   const [gymOwnerComment, setGymOwnerComment] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPwd, setConfirmPwd] = useState("");
+
+  const navigate = useNavigate();
 
   //Input field Gym Sex Type validation
   const handleChange = (event) => {
     setGymSexType(event.target.value);
   };
 
+  //user account create success alert
+  const userSuccess = () => {
+    toast.success("Request was sent 😊👍", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
+  //user account create error alert
+  const userError = (error) => {
+    toast.error("😢 " + error, {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
+  //set images to null
   const removeImages = (e) => {
-    setImages([]); 
+    setImages([]);
   };
   const imageHandleChange = (e) => {
     console.log(e.target.files);
@@ -89,18 +112,42 @@ const GymSignUpForm = () => {
       gymContactNo1,
       gymContactNo2,
       location,
-      password,
-      confirmPwd,
+      openingTime,
+      closingTime,
       gymMonthlyFee,
       gymAnnualFee,
       gymAddress,
       gymOwnerComment,
+      password,
     };
     console.log(formData);
 
     if (password === confirmPwd) {
       console.log("matched");
       setpwsdMatch(true);
+
+      //sending data to the backend
+      const response = await fetch("/api/gyms", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const json = await response.json();
+      if (!response.ok) {
+        userError(json.error);
+        //console.log(json.error);
+      }
+      if (response.ok) {
+        userSuccess();
+        //console.log("new user added", json);
+
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+        window.location.reload(false);
+      }
     } else {
       console.log("not matched");
       setpwsdMatch(false);
@@ -108,22 +155,6 @@ const GymSignUpForm = () => {
     }
 
     console.log(pwsdMatch);
-    // try {
-    //   const res = await axios.post('http://127.0.0.1:8000/api/add-users',formData);
-
-    //   if (res.data.status === 200)
-    //     {
-    //       console.log(res.data.message);
-    //       notifSuccess();//Load toastify Alert
-
-    //       setTimeout(() => {
-    //         navigate("/login");
-    //       }, 3000);
-
-    //     }
-    // } catch (err) {
-    //     notifError();
-    // }
   };
 
   return (
@@ -333,11 +364,11 @@ const GymSignUpForm = () => {
                           <div className="col-md-5 mb-4 pb-2">
                             <div className="form-outline form-white">
                               <MDBInput
-                                name="password"
-                                type="password"
-                                onChange={(e) => setPassword(e.target.value)}
+                                name="openingTime"
+                                type="time"
+                                onChange={(e) => setOpeningTime(e.target.value)}
                                 className="form-control form-control-lg"
-                                label="Password"
+                                label="Opeing Time"
                                 style={{ backgroundColor: "transparent" }}
                               />
                             </div>
@@ -345,11 +376,11 @@ const GymSignUpForm = () => {
                           <div className="col-md-5 mb-4 pb-2">
                             <div className="form-outline form-white">
                               <MDBInput
-                                name="confirmPwd"
-                                type="password"
-                                onChange={(e) => setConfirmPwd(e.target.value)}
+                                name="closingTime"
+                                type="time"
+                                onChange={(e) => setClosingTime(e.target.value)}
                                 className="form-control form-control-lg"
-                                label="Confirm Password"
+                                label="Closing Time"
                                 style={{ backgroundColor: "transparent" }}
                               />
                             </div>
@@ -412,6 +443,32 @@ const GymSignUpForm = () => {
                                 onChange={(e) =>
                                   setGymOwnerComment(e.target.value)
                                 }
+                                style={{ backgroundColor: "transparent" }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-md-5 mb-4 pb-2">
+                            <div className="form-outline form-white">
+                              <MDBInput
+                                name="password"
+                                type="password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="form-control form-control-lg"
+                                label="Password"
+                                style={{ backgroundColor: "transparent" }}
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-5 mb-4 pb-2">
+                            <div className="form-outline form-white">
+                              <MDBInput
+                                name="confirmPwd"
+                                type="password"
+                                onChange={(e) => setConfirmPwd(e.target.value)}
+                                className="form-control form-control-lg"
+                                label="Confirm Password"
                                 style={{ backgroundColor: "transparent" }}
                               />
                             </div>

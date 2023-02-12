@@ -1,8 +1,9 @@
 ///////////////////////// Developer       : Mudith Perera  /////////////////////////
 ///////////////////////// Modified Date   : 07-02-2023     /////////////////////////
 /////////////////////////         (START)                  /////////////////////////
+///////////////////////// Description     : Model created to save all the users in the system (admin, coaches, members, gym-owners)
 
-//Schema and the model of the database is define here
+//Schema and the model of the user is define here
 
 //Schema :  defines the structure of the document inside the db
 //Model  :  apply the schema to the model and use the model to access the db
@@ -26,21 +27,14 @@ const userSchema = new Schema({
     type: String,
     lowercase: true,
     required: [true, "An user must have an email"],
-    validate: {
-      validator: function (val) {
-        return validator.isEmail(val);
-      },
-      message: "Please provide a valid email",
-    },
   },
   password: {
     type: String,
     required: [true, "A user must have a password"],
     //minlength: 8,
-    select: false
+    require: true,
   },
   nic: {
-    unique: true,
     type: String,
     required: false,
   },
@@ -50,7 +44,7 @@ const userSchema = new Schema({
       values: ["male", "female", "other"],
       message: "Gender Should be : [ 'male', 'female', 'other']",
     },
-    required: true,
+    required: false,
   },
   age: {
     type: Number,
@@ -62,7 +56,7 @@ const userSchema = new Schema({
   },
   location:{
     type: String,
-    required: false
+    required: false,
   },
   contact: {
     type: String,
@@ -84,6 +78,23 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
+  userType: {
+    type: String,
+    enum: {
+      values: ["member", "gym", "coach","admin"],
+      message: "user type Should be : ['member', 'gym', 'coach','admin']",
+    },
+    required: true,
+    default : "member",
+  },
+  userComments: {
+    type: String,
+    required: false,
+  },
+  coachType: {
+    type: String,
+    required: false,
+  },
 
   //Below Fields are use to make relationships with other Schemas
 
@@ -97,8 +108,9 @@ const userSchema = new Schema({
   },
   activeStatus: {
     type: Boolean,
+    default : true,
     required: [true, "A user must be Active/Deactive"],
-  },
+  }, 
 }, {timestamps: true })
 //end of the Schema
 
