@@ -3,10 +3,14 @@
 /////////////////////////           (START)                /////////////////////////
 
 import React, { useEffect, useState } from "react";
-import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
+import { MDBInput } from "mdb-react-ui-kit";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
+import "./GoogleButton.css";
+import googlepng from "../../Images/google.png";
 
 const LoginForm = () => {
   useEffect(() => {
@@ -50,7 +54,7 @@ const LoginForm = () => {
             >
               <div className="card-body p-3 text-center">
                 <form onSubmit={loginUser}>
-                  <div className="mb-md-5 mt-md-4 pb-3">
+                  <div className="mb-md-2 mt-md-4 pb-2">
                     <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
                     <p className="text-white-50 mb-5">
                       Please enter your login and password!
@@ -85,12 +89,28 @@ const LoginForm = () => {
                         Forgot password?
                       </a>
                     </p>
-
-                    <MDBBtn type="submit">Login</MDBBtn>
+                    <Box sx={{ "& button": { m: 3 } }}>
+                      <Button size="large" variant="contained" type="submit">
+                        Login
+                      </Button>
+                    </Box>
                   </div>
                 </form>
+                <p className="large mb-4 text-white-50">Or</p>
+                <div className="googleButton mt-md-3 mb-3">
+                  <button className="google-sign-up">
+                    <img
+                      className="google-image"
+                      src={googlepng}
+                      alt="google"
+                    />{" "}
+                    <span> &nbsp;&nbsp; </span>
+                    Sign Up with Google
+                  </button>
+                </div>
+
                 <div>
-                  <p className="mb-0">
+                  <p className="mb-2 mt-md-5">
                     Don't have an account?{" "}
                     <a href="/sign-up" className="text-white-50 fw-bold">
                       Sign Up
