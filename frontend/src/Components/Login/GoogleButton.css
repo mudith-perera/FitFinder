@@ -1,0 +1,29 @@
+.google-sign-up {
+  
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+
+  padding: 5px 40px;
+  
+}
+
+.google-image{
+  width: 40px;
+  height: 40px;
+  /* padding-right: 10px; */
+}
+
+.google-image:hover{
+  transform: rotate(360deg);
+  transition: 0.5s;
+}
+
+.google-sign-up:hover {
+  background-color: #000000;
+  color: #ffffff;
+  transition: 0.5s;
+}
