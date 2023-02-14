@@ -5,7 +5,8 @@ const express = require("express")
 const { 
   createUser,
   getUsers,
-  getUser
+  getUser,
+  getUserEmailPwd
 } = require('../controllers/userController')
 
 //get the Router instatnce from the express package
@@ -35,6 +36,14 @@ router.get('/',getUsers)
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
 router.get('/:id',getUser)
+/////////////////////////  (END)
+
+/////////////////////////  Handler          : /getUserEmailPwd
+/////////////////////////  Controller       : getUserEmailPwd()
+/////////////////////////  Description      : Get a user to given email and password
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+router.post('/getUserEmailPwd/',getUserEmailPwd)
 /////////////////////////  (END)
 
 ////////////////////////////////////////     Request Handlers (END)    ////////////////////////////////////////

@@ -4,6 +4,9 @@
 //import mongoose
 const mongoose = require("mongoose");
 
+//importing bycrypt to encrypt passwords
+const bcrypt = require("bcrypt");
+
 //importing the model
 const User = require("../models/userModel.js");
 
@@ -100,10 +103,38 @@ const getUser = async (req, res) => {
 };
 /////////////////////////  (END)
 
+/////////////////////////  Controller       : getUserEmailPwd()
+/////////////////////////  Description      : Get a single user to the given email and password. Used in login
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+const getUserEmailPwd = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await User.findOne({ username });
+    if (!user.activeStatus) {
+      return res.status(401).json({ message: "Account has been Deactivated" });
+    }
+    if (!user) {
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    // Handle error
+    return res.status(401).json({ message: "Invalid username or password" });
+  }
+};
+
+/////////////////////////  (END)
+
 ////////////////////////////////////////     Controllers (END)    ////////////////////////////////////////
 
 module.exports = {
   createUser,
   getUsers,
   getUser,
+  getUserEmailPwd,
 };

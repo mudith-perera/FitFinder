@@ -18,7 +18,7 @@ const createGym = async (req, res) => {
   const {
     gymName,
     gymOwnerName,
-    gymOwnerEmail,
+    email,
     gymSexType,
     gymContactNo1,
     gymContactNo2,
@@ -43,7 +43,7 @@ const createGym = async (req, res) => {
     const gym = await Gym.create({
       gymName,
       gymOwnerName,
-      gymOwnerEmail,
+      email,
       gymSexType,
       gymContactNo1,
       gymContactNo2,

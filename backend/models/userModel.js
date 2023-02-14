@@ -10,6 +10,9 @@
 
 const mongoose = require("mongoose");
 
+//importing bycrypt to encrypt passwords
+const bcrypt = require("bcrypt");
+
 //creating the schema
 const Schema = mongoose.Schema;
 
@@ -113,6 +116,34 @@ const userSchema = new Schema({
   }, 
 }, {timestamps: true })
 //end of the Schema
+
+// Hash the password before saving the user object
+userSchema.pre('save', function (next) {
+  const user = this;
+
+  // Only hash the password if it has been modified or is new
+  if (!user.isModified('password')) {
+    return next();
+  }
+
+  // Generate a salt
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) {
+      return next(err);
+    }
+
+    // Hash the password with the generated salt
+    bcrypt.hash(user.password, salt, (err, hash) => {
+      if (err) {
+        return next(err);
+      }
+
+      // Replace the plain text password with the hashed password
+      user.password = hash;
+      next();
+    });
+  });
+});
 
 //creating the collection called "Users"
 module.exports = mongoose.model('Users',userSchema)

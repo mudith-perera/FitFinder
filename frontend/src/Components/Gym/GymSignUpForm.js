@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./GymSignUpForm.css";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 import { MDBInput, MDBTextArea } from "mdb-react-ui-kit";
 import MenuItem from "@mui/material/MenuItem";
@@ -46,7 +46,7 @@ const GymSignUpForm = () => {
   //All Input Fields
   const [gymName, setGymName] = useState("");
   const [gymOwnerName, setGymOwnerName] = useState("");
-  const [gymOwnerEmail, setGymOwnerEmail] = useState("");
+  const [email, setGymOwnerEmail] = useState("");
   const [gymSexType, setGymSexType] = useState("unisex");
   const [gymContactNo1, setGymContactNo1] = useState("");
   const [gymContactNo2, setGymContactNo2] = useState("");
@@ -61,7 +61,9 @@ const GymSignUpForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
 
-  const navigate = useNavigate();
+  const userType = "gym";
+
+  //const navigate = useNavigate();
 
   //Input field Gym Sex Type validation
   const handleChange = (event) => {
@@ -69,8 +71,8 @@ const GymSignUpForm = () => {
   };
 
   //user account create success alert
-  const userSuccess = () => {
-    toast.success("Request was sent 😊👍", {
+  const userSuccess = (success) => {
+    toast.success(success + "😊👍", {
       theme: "colored",
       position: toast.POSITION.TOP_LEFT,
     });
@@ -104,10 +106,10 @@ const GymSignUpForm = () => {
   //Form Submit function
   const signUpGym = async (e) => {
     e.preventDefault();
-    const formData = {
+    const formDataGym = {
       gymName,
       gymOwnerName,
-      gymOwnerEmail,
+      email,
       gymSexType,
       gymContactNo1,
       gymContactNo2,
@@ -120,36 +122,55 @@ const GymSignUpForm = () => {
       gymOwnerComment,
       password,
     };
-    console.log(formData);
+
+    const formDataUser = {
+      email,
+      password,
+      userType,
+    };
 
     if (password === confirmPwd) {
       console.log("matched");
       setpwsdMatch(true);
 
       //sending data to the backend
-      const response = await fetch("/api/gyms", {
+      const responseGym = await fetch("/api/gyms", {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formDataGym),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const json = await response.json();
-      if (!response.ok) {
-        userError(json.error);
+
+      const responseUser = await fetch("/api/users",{
+        method: "POST",
+        body: JSON.stringify(formDataUser),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+
+      const jsonGym = await responseGym.json();
+      const jsonUser = await responseUser.json();
+
+      if(!responseUser.ok){
+        userError(jsonUser.message);
+      }
+      if (responseUser.ok) {
+        userSuccess("User Account Created");
+      }
+
+
+      if (!responseGym.ok) {
+        userError(jsonGym.message);
         //console.log(json.error);
       }
-      if (response.ok) {
-        userSuccess();
-        //console.log("new user added", json);
-
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
-        window.location.reload(false);
+      if (responseGym.ok) {
+        userSuccess("Gym Registration Request Send");
       }
     } else {
-      console.log("not matched");
+      console.log("passwords not matched");
       setpwsdMatch(false);
       notifError();
     }
@@ -208,7 +229,7 @@ const GymSignUpForm = () => {
                           <div className="col-md-6 mb-4 pb-2">
                             <div className="form-outline">
                               <MDBInput
-                                name="gymOwnerEmail"
+                                name="email"
                                 type="email"
                                 className="form-control form-control-lg"
                                 label="Gym Owner's Email"

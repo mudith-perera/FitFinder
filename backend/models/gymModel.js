@@ -18,7 +18,7 @@ const gymSchema = new Schema({
     type: String,
     required: false,
   },
-  gymOwnerEmail: {
+  email: {
     unique: true,
     type: String,
     lowercase: true,
@@ -79,18 +79,23 @@ const gymSchema = new Schema({
   },
   image1: {
     type: String,
+    required: false,
   },
   image2: {
     type: String,
+    required: false,
   },
   image3: {
     type: String,
+    required: false,
   },
   image4: {
     type: String,
+    required: false,
   },
   image5: {
     type: String,
+    required: false,
   },
   gymOwnerId: {
     type: mongoose.Schema.ObjectId,
