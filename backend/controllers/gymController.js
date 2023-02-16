@@ -7,6 +7,10 @@ const mongoose = require("mongoose");
 //importing the model
 const Gym = require("../models/gymModel.js");
 
+//importing multer image handler
+const multer = require("multer");
+const path = require("path");
+
 ////////////////////////////////////////    Controllers (START)   ////////////////////////////////////////
 
 /////////////////////////  Controller       : createGym()
@@ -18,7 +22,7 @@ const createGym = async (req, res) => {
   const {
     gymName,
     gymOwnerName,
-    gymOwnerEmail,
+    email,
     gymSexType,
     gymContactNo1,
     gymContactNo2,
@@ -29,21 +33,23 @@ const createGym = async (req, res) => {
     gymAnnualFee,
     gymAddress,
     gymOwnerComment,
-    password,
     activeStatus,
-    image1,
-    image2,
-    image3,
-    image4,
-    image5,
     gymOwnerId,
   } = req.body;
 
   try {
+    let images = []; // Initialize an empty array to store the URLs of the uploaded images
+    req.files.forEach(function (file) {
+      const url = "http://" + req.headers.host + "/" + file.filename; // Get the URL of the uploaded file
+      images.push(url); // Push the URL to the array
+    });
+    console.log(images); // Log the array of URLs to the console
+
+    //res.send("Files uploaded!");
     const gym = await Gym.create({
       gymName,
       gymOwnerName,
-      gymOwnerEmail,
+      email,
       gymSexType,
       gymContactNo1,
       gymContactNo2,
@@ -54,18 +60,14 @@ const createGym = async (req, res) => {
       gymAnnualFee,
       gymAddress,
       gymOwnerComment,
-      password,
       activeStatus,
-      image1,
-      image2,
-      image3,
-      image4,
-      image5,
+      images,
       gymOwnerId,
     });
     res.status(200).json(gym);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error });
+    console.error(error);
   }
 };
 /////////////////////////  (END)
@@ -84,7 +86,71 @@ const getGyms = async (req, res) => {
 };
 /////////////////////////  (END)
 
+/////////////////////////  Controller       : uploadImages()
+/////////////////////////  Description      : Upload Images
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+
+//Validate Images (START)
+function checkFileType(file, cb) {
+  // Allowed extensions
+  const filetypes = /jpeg|jpg|png|gif/;
+  // Check the extension
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check the MIME type
+  const mimetype = filetypes.test(file.mimetype);
+  // Return an error if the file type is not allowed
+  if (extname && mimetype) {
+    return cb(null, true);
+  } else {
+    cb("Error: Images Only!");
+  }
+}
+//Validate Images (END)
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/"); // specify the destination folder
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname); // generate a unique filename
+  },
+});
+const uploadImages = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
+});
+
+/////////////////////////  (END)
+
+/////////////////////////  Controller       : updateGym()
+/////////////////////////  Description      : Update a Gym using gym id
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+const updateGym = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such Gym" });
+  }
+
+  const gym = await Gym.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+    }
+  );
+
+  if (!gym) {
+    return res.status(400).json({ error: "No such Gym" });
+  }
+
+  res.status(200).json(gym);
+};
 module.exports = {
   createGym,
   getGyms,
+  uploadImages,
+  updateGym,
 };

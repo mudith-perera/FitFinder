@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./CoachSignUpForm.css";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 import { MDBInput, MDBTextArea } from "mdb-react-ui-kit";
 import MenuItem from "@mui/material/MenuItem";
@@ -67,7 +67,7 @@ const GymSignUpForm = () => {
   const [userType] = useState("coach");
   const activeStatus = false;
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   //Input field gender handler
   const genderHandleChange = (event) => {
@@ -121,10 +121,10 @@ const GymSignUpForm = () => {
         setConfirmPwd("");
         //console.log("new user added", json);
 
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
-        window.location.reload(false);
+        // setTimeout(() => {
+        //   navigate("/");
+        // }, 3000);
+        //window.location.reload(false);
       }
     } else {
       setpwsdMatch(false);

@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./GymSignUpForm.css";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 import { MDBInput, MDBTextArea } from "mdb-react-ui-kit";
 import MenuItem from "@mui/material/MenuItem";
@@ -46,7 +46,7 @@ const GymSignUpForm = () => {
   //All Input Fields
   const [gymName, setGymName] = useState("");
   const [gymOwnerName, setGymOwnerName] = useState("");
-  const [gymOwnerEmail, setGymOwnerEmail] = useState("");
+  const [email, setGymOwnerEmail] = useState("");
   const [gymSexType, setGymSexType] = useState("unisex");
   const [gymContactNo1, setGymContactNo1] = useState("");
   const [gymContactNo2, setGymContactNo2] = useState("");
@@ -61,7 +61,28 @@ const GymSignUpForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
 
-  const navigate = useNavigate();
+  const userType = "gym";
+
+  //Showing images in frontend (START)
+  const [imagesFrontend, setImagesFrontend] = useState([]);
+  const imageHandleChange = (e) => {
+    
+      const files = e.target.files;
+      setImages(files);
+      
+    if (e.target.files) {
+      //converting the image url to blob
+      const fileArray = Array.from(e.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+
+      setImagesFrontend((prevImages) => prevImages.concat(fileArray));
+      Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
+    }
+  };
+  //Showing images in frontend (END)
+
+  //const navigate = useNavigate();
 
   //Input field Gym Sex Type validation
   const handleChange = (event) => {
@@ -69,8 +90,8 @@ const GymSignUpForm = () => {
   };
 
   //user account create success alert
-  const userSuccess = () => {
-    toast.success("Request was sent 😊👍", {
+  const userSuccess = (success) => {
+    toast.success(success + "😊👍", {
       theme: "colored",
       position: toast.POSITION.TOP_LEFT,
     });
@@ -88,68 +109,75 @@ const GymSignUpForm = () => {
   const removeImages = (e) => {
     setImages([]);
   };
-  const imageHandleChange = (e) => {
-    console.log(e.target.files);
-    if (e.target.files) {
-      //converting the image url to blob
-      const fileArray = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file)
-      );
-
-      setImages((prevImages) => prevImages.concat(fileArray));
-      Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
-    }
-  };
 
   //Form Submit function
   const signUpGym = async (e) => {
     e.preventDefault();
-    const formData = {
-      gymName,
-      gymOwnerName,
-      gymOwnerEmail,
-      gymSexType,
-      gymContactNo1,
-      gymContactNo2,
-      location,
-      openingTime,
-      closingTime,
-      gymMonthlyFee,
-      gymAnnualFee,
-      gymAddress,
-      gymOwnerComment,
+    const formDataGym = new FormData();
+    formDataGym.append("gymName", gymName);
+    formDataGym.append("gymOwnerName", gymOwnerName);
+    formDataGym.append("email", email);
+    formDataGym.append("gymSexType", gymSexType);
+    formDataGym.append("gymContactNo1", gymContactNo1);
+    formDataGym.append("gymContactNo2", gymContactNo2);
+    formDataGym.append("location", location);
+    formDataGym.append("openingTime", openingTime);
+    formDataGym.append("closingTime", closingTime);
+    formDataGym.append("gymMonthlyFee", gymMonthlyFee);
+    formDataGym.append("gymAnnualFee", gymAnnualFee);
+    formDataGym.append("gymAddress", gymAddress);
+    formDataGym.append("gymOwnerComment", gymOwnerComment);
+    formDataGym.append("password", password);
+
+    for (let i = 0; i < images.length; i++) {
+      formDataGym.append("images", images[i]);
+    }
+
+    console.log(formDataGym);
+
+    const formDataUser = {
+      email,
       password,
+      userType,
     };
-    console.log(formData);
 
     if (password === confirmPwd) {
       console.log("matched");
       setpwsdMatch(true);
 
       //sending data to the backend
-      const response = await fetch("/api/gyms", {
+      const responseGym = await fetch("/api/gyms", {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: formDataGym,
+      });
+
+      const responseUser = await fetch("/api/users", {
+        method: "POST",
+        body: JSON.stringify(formDataUser),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const json = await response.json();
-      if (!response.ok) {
-        userError(json.error);
-        //console.log(json.error);
-      }
-      if (response.ok) {
-        userSuccess();
-        //console.log("new user added", json);
 
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
-        window.location.reload(false);
+      const jsonGym = await responseGym.json();
+      const jsonUser = await responseUser.json();
+
+      if (!responseUser.ok) {
+        userError(jsonUser.message);
+      }
+      if (responseUser.ok) {
+        userSuccess("User Account Created");
+      }
+
+      if (!responseGym.ok) {
+        userError(jsonGym.error);
+        console.log(jsonGym.error);
+      }
+      if (responseGym.ok) {
+        userSuccess("Gym Registration Request Send");
       }
     } else {
-      console.log("not matched");
+      console.log("passwords not matched");
       setpwsdMatch(false);
       notifError();
     }
@@ -208,7 +236,7 @@ const GymSignUpForm = () => {
                           <div className="col-md-6 mb-4 pb-2">
                             <div className="form-outline">
                               <MDBInput
-                                name="gymOwnerEmail"
+                                name="email"
                                 type="email"
                                 className="form-control form-control-lg"
                                 label="Gym Owner's Email"
@@ -299,7 +327,7 @@ const GymSignUpForm = () => {
                               <input
                                 type="file"
                                 multiple
-                                id="file"
+                                name="images"
                                 onChange={imageHandleChange}
                               />
                             </div>
@@ -309,35 +337,35 @@ const GymSignUpForm = () => {
                           <div className="col-md-12 mb-4 pb-2">
                             <img
                               className="p-1"
-                              src={images[0]}
+                              src={imagesFrontend[0]}
                               alt=""
                               width="100"
                               height="70"
                             />
                             <img
                               className="p-1"
-                              src={images[1]}
+                              src={imagesFrontend[1]}
                               alt=""
                               width="100"
                               height="70"
                             />
                             <img
                               className="p-1"
-                              src={images[2]}
+                              src={imagesFrontend[2]}
                               alt=""
                               width="100"
                               height="70"
                             />
                             <img
                               className="p-1"
-                              src={images[3]}
+                              src={imagesFrontend[3]}
                               alt=""
                               width="100"
                               height="70"
                             />
                             <img
                               className="p-1"
-                              src={images[4]}
+                              src={imagesFrontend[4]}
                               alt=""
                               width="100"
                               height="70"

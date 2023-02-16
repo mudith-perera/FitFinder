@@ -7,6 +7,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import "./SignUpForm.css";
+import "./GoogleButton.css";
+import googlepng from "../../Images/google.png";
+
 import { MDBInput } from "mdb-react-ui-kit";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
@@ -107,7 +110,7 @@ const SignUpForm = () => {
             >
               <div className="card-body p-3 text-center">
                 <form onSubmit={signUpMember}>
-                  <div className="mb-md-5 mt-md-4 pb-3">
+                  <div className="mb-md-1 mt-md-4 pb-3">
                     <h2 className="fw-bold mb-2 text-uppercase">Sign Up</h2>
                     <p className="text-white-50 mb-5">
                       Please Enter Below Information
@@ -159,15 +162,24 @@ const SignUpForm = () => {
                       </label>
                     </div>
                     <br />
-                    {/* <p className="small mb-2 pb-lg-2">
-                    <a className="text-white-50" href="#!">
-                      Forgot password?
-                    </a>
-                  </p> */}
                     <Button variant="contained" type="submit">
                       Sign Up
                     </Button>
-                    <br />
+                    
+                  </div>
+                </form>
+                <p className="large mt-md">Or</p>
+                    <div className="googleButton mt-md-3 mb-3">
+                      <button className="google-sign-up">
+                        <img
+                          className="google-image"
+                          src={googlepng}
+                          alt="google"
+                        />{" "}
+                        <span> &nbsp;&nbsp; </span>
+                        Sign Up with Google
+                      </button>
+                    </div>
                     <br />
                     <ButtonGroup>
                       <Link to={"/gym-sign-up"}>
@@ -177,10 +189,8 @@ const SignUpForm = () => {
                         <Button>Are you a Coach ?</Button>
                       </Link>
                     </ButtonGroup>
-                  </div>
-                </form>
                 <div>
-                  <p className="mb-0">
+                  <p className="mb-3 mt-2">
                     Already have an account?{" "}
                     <a href="/login" className="text-white-50 fw-bold">
                       Login
