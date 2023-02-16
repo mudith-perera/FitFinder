@@ -63,6 +63,25 @@ const GymSignUpForm = () => {
 
   const userType = "gym";
 
+  //Showing images in frontend (START)
+  const [imagesFrontend, setImagesFrontend] = useState([]);
+  const imageHandleChange = (e) => {
+    
+      const files = e.target.files;
+      setImages(files);
+      
+    if (e.target.files) {
+      //converting the image url to blob
+      const fileArray = Array.from(e.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+
+      setImagesFrontend((prevImages) => prevImages.concat(fileArray));
+      Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
+    }
+  };
+  //Showing images in frontend (END)
+
   //const navigate = useNavigate();
 
   //Input field Gym Sex Type validation
@@ -90,38 +109,31 @@ const GymSignUpForm = () => {
   const removeImages = (e) => {
     setImages([]);
   };
-  const imageHandleChange = (e) => {
-    console.log(e.target.files);
-    if (e.target.files) {
-      //converting the image url to blob
-      const fileArray = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file)
-      );
-
-      setImages((prevImages) => prevImages.concat(fileArray));
-      Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
-    }
-  };
 
   //Form Submit function
   const signUpGym = async (e) => {
     e.preventDefault();
-    const formDataGym = {
-      gymName,
-      gymOwnerName,
-      email,
-      gymSexType,
-      gymContactNo1,
-      gymContactNo2,
-      location,
-      openingTime,
-      closingTime,
-      gymMonthlyFee,
-      gymAnnualFee,
-      gymAddress,
-      gymOwnerComment,
-      password,
-    };
+    const formDataGym = new FormData();
+    formDataGym.append("gymName", gymName);
+    formDataGym.append("gymOwnerName", gymOwnerName);
+    formDataGym.append("email", email);
+    formDataGym.append("gymSexType", gymSexType);
+    formDataGym.append("gymContactNo1", gymContactNo1);
+    formDataGym.append("gymContactNo2", gymContactNo2);
+    formDataGym.append("location", location);
+    formDataGym.append("openingTime", openingTime);
+    formDataGym.append("closingTime", closingTime);
+    formDataGym.append("gymMonthlyFee", gymMonthlyFee);
+    formDataGym.append("gymAnnualFee", gymAnnualFee);
+    formDataGym.append("gymAddress", gymAddress);
+    formDataGym.append("gymOwnerComment", gymOwnerComment);
+    formDataGym.append("password", password);
+
+    for (let i = 0; i < images.length; i++) {
+      formDataGym.append("images", images[i]);
+    }
+
+    console.log(formDataGym);
 
     const formDataUser = {
       email,
@@ -136,13 +148,10 @@ const GymSignUpForm = () => {
       //sending data to the backend
       const responseGym = await fetch("/api/gyms", {
         method: "POST",
-        body: JSON.stringify(formDataGym),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: formDataGym,
       });
 
-      const responseUser = await fetch("/api/users",{
+      const responseUser = await fetch("/api/users", {
         method: "POST",
         body: JSON.stringify(formDataUser),
         headers: {
@@ -150,21 +159,19 @@ const GymSignUpForm = () => {
         },
       });
 
-
       const jsonGym = await responseGym.json();
       const jsonUser = await responseUser.json();
 
-      if(!responseUser.ok){
+      if (!responseUser.ok) {
         userError(jsonUser.message);
       }
       if (responseUser.ok) {
         userSuccess("User Account Created");
       }
 
-
       if (!responseGym.ok) {
-        userError(jsonGym.message);
-        //console.log(json.error);
+        userError(jsonGym.error);
+        console.log(jsonGym.error);
       }
       if (responseGym.ok) {
         userSuccess("Gym Registration Request Send");
@@ -320,7 +327,7 @@ const GymSignUpForm = () => {
                               <input
                                 type="file"
                                 multiple
-                                id="file"
+                                name="images"
                                 onChange={imageHandleChange}
                               />
                             </div>
@@ -330,35 +337,35 @@ const GymSignUpForm = () => {
                           <div className="col-md-12 mb-4 pb-2">
                             <img
                               className="p-1"
-                              src={images[0]}
+                              src={imagesFrontend[0]}
                               alt=""
                               width="100"
                               height="70"
                             />
                             <img
                               className="p-1"
-                              src={images[1]}
+                              src={imagesFrontend[1]}
                               alt=""
                               width="100"
                               height="70"
                             />
                             <img
                               className="p-1"
-                              src={images[2]}
+                              src={imagesFrontend[2]}
                               alt=""
                               width="100"
                               height="70"
                             />
                             <img
                               className="p-1"
-                              src={images[3]}
+                              src={imagesFrontend[3]}
                               alt=""
                               width="100"
                               height="70"
                             />
                             <img
                               className="p-1"
-                              src={images[4]}
+                              src={imagesFrontend[4]}
                               alt=""
                               width="100"
                               height="70"

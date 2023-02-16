@@ -83,7 +83,6 @@ const LoginForm = () => {
       //window.location.reload(false);
     }
   };
-
   return (
     <section data-aos="flip-right" className="vh-800 gradient-custom">
       <ToastContainer />

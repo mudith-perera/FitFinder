@@ -1,14 +1,20 @@
 //Create routes using express package
-const express = require("express")
+const express = require("express");
+
+//importing multer image handler
+const multer = require("multer");
+const path = require("path");
 
 //importing the controller
-const { 
+const {
   createGym,
   getGyms,
-} = require('../controllers/gymController.js')
+  uploadImages,
+  updateGym,
+} = require("../controllers/gymController.js");
 
 //get the Router instatnce from the express package
-const router = express.Router()
+const router = express.Router();
 ////////////////////////////////////////     Request Handlers (START)    ////////////////////////////////////////
 
 /////////////////////////  Handler          : /
@@ -16,7 +22,7 @@ const router = express.Router()
 /////////////////////////  Description      : create a single gym
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
-router.post('/',createGym)
+router.post("/",uploadImages.array("images", 5),createGym);
 /////////////////////////  (END)
 
 /////////////////////////  Handler          : /
@@ -24,8 +30,16 @@ router.post('/',createGym)
 /////////////////////////  Description      : get all the gyms
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
-router.get('/',getGyms)
+router.get("/", getGyms);
+/////////////////////////  (END)
+
+/////////////////////////  Handler          : /:id
+/////////////////////////  Controller       : updateGym()
+/////////////////////////  Description      : update gym
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+router.patch("/:id", updateGym);
 /////////////////////////  (END)
 
 //export the created routes
-module.exports = router
+module.exports = router;
