@@ -28,13 +28,17 @@ import SearchResultElement from "./Components/Home/SearchResultElement";
 
 import FNQ from "./Components/Home/FNQ";
 
+import Test1 from "./Components/Admin/test1.js";
+import Test2 from "./Components/Admin/test2.js";
 function App() {
   return (
     <Router>
       <Routes>
         <Route element={<WithoutNavBar />}>
           <Route exact path="/admin-home" element={<AdminHome />} />
-
+          <Route exact path="/test1" element={<Test1 />} />
+          <Route exact path="/test2" element={<Test2 />} />
+          
           <Route exact path="/coach-home" element={<CoachHome />} />
 
           <Route exact path="/gym-home" element={<GymHome />} />
