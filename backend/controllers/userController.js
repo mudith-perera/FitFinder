@@ -108,9 +108,9 @@ const getUser = async (req, res) => {
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
 const getUserEmailPwd = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user.activeStatus) {
       return res.status(401).json({ message: "Account has been Deactivated" });
     }
