@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import SideNavBar from '../../Components/SideNavBar.js';
 
 const MemberHome = () => {
   return (
     <div>
-    member
+    <SideNavBar userRole='member'/>
     </div>
   );
 }
