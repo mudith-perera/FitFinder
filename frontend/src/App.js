@@ -49,8 +49,8 @@ function App() {
           <Route exact path="/gym-sign-up" element={<GymSignUpForm />} />
           <Route exact path="/Coach-sign-up" element={<CoachSignUpForm />} />
 
-          <Route exact path="/Schedule" element={<Schedule/>} />
-          <Route exact path="/ManageSchedule" element={<ScheduleManage/>} />
+          <Route exact path="/schedule" element={<Schedule/>} />
+          <Route exact path="/manage-schedule" element={<ScheduleManage/>} />
         </Route>
       </Routes>
       <Footer />

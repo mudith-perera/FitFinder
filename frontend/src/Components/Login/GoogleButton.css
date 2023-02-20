@@ -14,15 +14,15 @@
 .google-image{
   width: 40px;
   height: 40px;
+  transition: transform .7s ease-in-out;
   /* padding-right: 10px; */
 }
 
-.google-image:hover{
+.google-sign-up:hover .google-image {
   transform: rotate(360deg);
   transition: 0.5s;
 }
-
-.google-sign-up:hover {
+.google-sign-up:hover  {
   background-color: #000000;
   color: #ffffff;
   transition: 0.5s;

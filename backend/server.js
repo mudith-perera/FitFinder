@@ -38,7 +38,7 @@ mongoose.connect(process.env.MONG_URI)
 //above created constant is a accually a function that we invoked
 //express app
 const app = express()
-
+app.use(express.static('./uploads/'));
 //use the given port in the env file or use 5000 as default port
 const port = process.env.PORT || 5000
 
