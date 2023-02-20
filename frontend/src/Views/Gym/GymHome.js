@@ -1,9 +1,9 @@
-import React from 'react'
-
+import React from 'react';
+import SideNavBar from '../../Components/SideNavBar.js';
 const GymHome = () => {
   return (
     <div>
-    gym
+    <SideNavBar userRole='gym'/>
     </div>
   );
 }
