@@ -24,6 +24,10 @@ import MemberViewUpdate from "./Components/Member/MemberViewAndUpdateForm.js";
 import Schedule from "./Components/Member/ScheduleForm.js";
 import ScheduleManage from "./Components/Coach/ManageSchedule.js";
 
+import SearchResultElement from "./Components/Home/SearchResultElement";
+
+import FNQ from "./Components/Home/FNQ";
+
 function App() {
   return (
     <Router>
@@ -51,6 +55,8 @@ function App() {
 
           <Route exact path="/schedule" element={<Schedule/>} />
           <Route exact path="/manage-schedule" element={<ScheduleManage/>} />
+          <Route exact path="/element/:id" element={<SearchResultElement/>}/>
+          <Route exact path="/FNQ" element={<FNQ/>}/>
         </Route>
       </Routes>
       <Footer />

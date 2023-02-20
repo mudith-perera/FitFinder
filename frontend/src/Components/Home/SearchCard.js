@@ -2,6 +2,12 @@ import React from "react";
 // import 'react-toastify/dist/ReactToastify.css';
 
 import Rating from "@mui/material/Rating";
+
+
+//import { Button, CardActionArea, CardActions } from "@mui/material";
+//import Card from "@mui/material/Card";
+
+
 import { Link } from "react-router-dom";
 
 import img01 from "../../Images/gym1.png";
@@ -82,15 +88,12 @@ const SearchCard = () => {
 
               <p className="card-text">{card.bdDescription}</p>
 
-              {/* <Link to={`/element/${card.id}`} >View</Link>
-        &nbsp;
-        &nbsp;
-      <Link>Save</Link> */}
+             
             </div>
           </div>
 
           <div className="card-body">
-            <p className="card-text">{card.bdDescription}</p>
+            
             <Link to={`/element/${card.id}`} className="btn btn-dark">
               View
             </Link>
