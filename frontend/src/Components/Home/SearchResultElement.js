@@ -2,6 +2,7 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 
 import Table from "react-bootstrap/Table";
+import InputGroup from "react-bootstrap/InputGroup";
 
 //import { BsFilter } from "react-icons/bs";
 
@@ -12,7 +13,7 @@ import first from "../../Images/gym1.png";
 import sec from "../../Images/gym2.png";
 import third from "../../Images/gym3.png";
 
-import { useNavigate } from "react-router-dom";
+import { Link, Routes, Route, useNavigate } from "react-router-dom";
 
 const SearchResultElement = () => {
   const { id } = useParams();
@@ -108,12 +109,28 @@ const SearchResultElement = () => {
   ];
 
   const Info = cardInfo.filter((cardInfo) => {
-    return Number(cardInfo.id) === id;
+    return cardInfo.id == id;
   });
 
   console.log(Info);
   return (
     <div data-aos="zoom-in-up" className="container ">
+      {/* <div className="py-4 px-5" >
+
+        <InputGroup size="lg" className="mb-3">
+        
+        <Form.Control
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="basic-addon1"
+        />
+        <InputGroup.Text id="basic-addon1" className='btn btn-dark'>Search</InputGroup.Text>
+        <InputGroup.Text className="btn btn-secondary" id="basic-addon1">
+        <BsFilter/>
+        </InputGroup.Text>
+      </InputGroup>
+      </div>
+            <HomeCard/> */}
 
       <ToastContainer />
       <div className="py-5">

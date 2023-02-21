@@ -24,7 +24,7 @@ import MemberViewUpdate from "./Components/Member/MemberViewAndUpdateForm.js";
 import Schedule from "./Components/Member/ScheduleForm.js";
 import ScheduleManage from "./Components/Coach/ManageSchedule.js";
 
-import SearchResultElement from "./Components/Home/SearchResultElement";
+import SearchResultElement from "./Components/Home/SearchResultElement.js";
 
 import FNQ from "./Components/Home/FNQ";
 
