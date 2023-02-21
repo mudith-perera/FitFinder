@@ -30,6 +30,10 @@ import FNQ from "./Components/Home/FNQ";
 
 import Test1 from "./Components/Admin/test1.js";
 import Test2 from "./Components/Admin/test2.js";
+
+import UserGymHome from "./Components/Shared/UserGymHome.js";
+
+
 function App() {
   return (
     <Router>
@@ -45,6 +49,8 @@ function App() {
 
           <Route exact path="/member-home" element={<MemberHome />} />
           <Route exact path="/member-view-update" element={<MemberViewUpdate/>} />
+
+          <Route exact path="/user-gym-home" element={<UserGymHome />} />
         </Route>
 
 
