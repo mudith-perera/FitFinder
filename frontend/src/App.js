@@ -9,6 +9,10 @@ import Footer from "./Components/Footer.js";
 import Login from "./Views/Login.js";
 import SignUp from "./Views/SignUp.js";
 import Home from "./Views/Home.js";
+import AboutUs from "./Components/About/AboutUs.js";
+import ForgotPassword from "./Components/Password/ForgotPasswordForm.js";
+import FAQ from "./Components/Home/FNQ";
+import SearchResultElement from "./Components/Home/SearchResultElement.js";
 
 import AdminHome from "./Views/Admin/AdminHome.js";
 
@@ -24,14 +28,13 @@ import MemberViewUpdate from "./Components/Member/MemberViewAndUpdateForm.js";
 import Schedule from "./Components/Member/ScheduleForm.js";
 import ScheduleManage from "./Components/Coach/ManageSchedule.js";
 
-import SearchResultElement from "./Components/Home/SearchResultElement.js";
-
-import FNQ from "./Components/Home/FNQ";
+import UserGymHome from "./Components/Shared/UserGymHome.js";
+import PasswordReset from "./Components/Password/ResetPasswordForm.js";
 
 import Test1 from "./Components/Admin/test1.js";
 import Test2 from "./Components/Admin/test2.js";
 
-import UserGymHome from "./Components/Shared/UserGymHome.js";
+
 
 
 function App() {
@@ -51,6 +54,7 @@ function App() {
           <Route exact path="/member-view-update" element={<MemberViewUpdate/>} />
 
           <Route exact path="/user-gym-home" element={<UserGymHome />} />
+          <Route exact path="/password-reset" element={<PasswordReset />} />
         </Route>
 
 
@@ -59,6 +63,8 @@ function App() {
           <Route exact path="/uc" element={<UC />} />
           <Route exact path="/sign-up" element={<SignUp />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/about-us" element={<AboutUs/>} />
+          <Route exact path="/forgot-password" element={<ForgotPassword/>} />
 
           <Route exact path="/gym-sign-up" element={<GymSignUpForm />} />
           <Route exact path="/Coach-sign-up" element={<CoachSignUpForm />} />
@@ -66,7 +72,7 @@ function App() {
           <Route exact path="/schedule" element={<Schedule/>} />
           <Route exact path="/manage-schedule" element={<ScheduleManage/>} />
           <Route exact path="/element/:id" element={<SearchResultElement/>}/>
-          <Route exact path="/FNQ" element={<FNQ/>}/>
+          <Route exact path="/faq" element={<FAQ/>}/>
         </Route>
       </Routes>
       <Footer />
