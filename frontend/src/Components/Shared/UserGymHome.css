@@ -1,10 +1,10 @@
-
-.container {
+/* 
+.containerUserGymHome {
     display: flex; 
     align-items: center;
   }
   
-  .card-header {
+  .card-headerUserGymHome {
     margin-left: 1rem;
     margin-right: 1rem;
     display: flex;
@@ -12,7 +12,7 @@
     align-items: center;
   }
   
-  .card-title{
+  .card-titleUserGymHome{
     width: 100%;
     color: #000;
     font-weight: 600;
@@ -21,18 +21,18 @@
     text-align: center;
   }
 
-  .card-defaultimage {
+  .card-defaultimageUserGymHome {
     height: "50px";
     margin-right: 63%;
   }
   
 
-  th{
+  .thUserGymHome{
     font-size: large;
     width: 240px;
   } 
 
-  td{
+  .tdUserGymHome{
     font-size: large;
     width: fit-content;
-  }
+  } */
