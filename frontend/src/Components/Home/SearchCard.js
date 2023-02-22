@@ -1,18 +1,16 @@
-import React from "react";
-// import 'react-toastify/dist/ReactToastify.css';
-
+import React, { useEffect } from "react";
 import Rating from "@mui/material/Rating";
-
-
-//import { Button, CardActionArea, CardActions } from "@mui/material";
-//import Card from "@mui/material/Card";
-
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 import { Link } from "react-router-dom";
 
 import img01 from "../../Images/gym1.png";
 
 const SearchCard = () => {
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+  });
   const value = 2;
 
   const cardInfo = [
@@ -64,43 +62,44 @@ const SearchCard = () => {
 
   const cardRender = (card, index) => {
     return (
-      <div
-        className="col-xl-4 col-md-6 py-4 px-4 col d-flex justify-content-center"
-        key={index}
-      >
-        <div className="card " style={{ width: "20rem" }}>
-          <img src={imagUrl} alt="card" />
-          <div className="card-body">
-            <div className="container">
-              <div className="row">
-                <div className=" col-12">
-                  <h5 className="card-title">
-                    {card.bdCity}-{card.bdTown}
-                  </h5>
-                  <p>
-                    <Rating name="read-only" value={value} readOnly />
-                  </p>
-                  {/* <p className="card-subtitle">{card.bdCode}</p> */}
+      < >
+        <div
+          className="col-lg-4 col-md-2 py-3 col d-flex justify-content-center"
+          key={index}
+        >
+          <section data-aos="flip-left">
+          <div className="card " style={{ width: "20rem" }}>
+            <img src={imagUrl} alt="card" />
+            <div className="card-body">
+              <div className="container">
+                <div className="row">
+                  <div className=" col-12">
+                    <h5 className="card-title">
+                      {card.bdCity}-{card.bdTown}
+                    </h5>
+                    <p>
+                      <Rating name="read-only" value={value} readOnly />
+                    </p>
+                    {/* <p className="card-subtitle">{card.bdCode}</p> */}
+                  </div>
                 </div>
+
+                {/* <img src={imagUrl} alt="card" /> */}
+
+                <p className="card-text">{card.bdDescription}</p>
               </div>
+            </div>
 
-              {/* <img src={imagUrl} alt="card" /> */}
-
-              <p className="card-text">{card.bdDescription}</p>
-
-             
+            <div className="card-body">
+              <Link to={`/element/${card.id}`} className="btn btn-dark">
+                View
+              </Link>
+              <button className="btn btn-secondary float-end">Save</button>
             </div>
           </div>
-
-          <div className="card-body">
-            
-            <Link to={`/element/${card.id}`} className="btn btn-dark">
-              View
-            </Link>
-            <button className="btn btn-secondary float-end">Save</button>
-          </div>
+          </section>
         </div>
-      </div>
+      </>
     );
   };
 

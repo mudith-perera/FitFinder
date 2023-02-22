@@ -2,10 +2,6 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 
 import Table from "react-bootstrap/Table";
-
-//import { BsFilter } from "react-icons/bs";
-
-import { ToastContainer } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 import first from "../../Images/gym1.png";
@@ -108,15 +104,13 @@ const SearchResultElement = () => {
   ];
 
   const Info = cardInfo.filter((cardInfo) => {
-    return Number(cardInfo.id) === id;
+    return String(cardInfo.id) === id;
   });
 
   console.log(Info);
   return (
-    <div data-aos="zoom-in-up" className="container ">
-
-      <ToastContainer />
-      <div className="py-5">
+    <div data-aos="zoom-in-up" className="container py-5 ">
+      <div className=" ">
         {Info.map((cardInfo) => {
           return (
             <div className="card " key={cardInfo.id}>
@@ -163,7 +157,7 @@ const SearchResultElement = () => {
                             <th>Type</th>
                             <td>{cardInfo.type}</td>
                           </tr>
-                          
+
                           <tr>
                             <th>Description</th>
                             <td>{cardInfo.bdDescription}</td>
@@ -183,10 +177,6 @@ const SearchResultElement = () => {
                             src={sec}
                             alt="First slide"
                           />
-                          <Carousel.Caption>
-                            {/* <h3>First slide label</h3>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-                          </Carousel.Caption>
                         </Carousel.Item>
                         <Carousel.Item>
                           <img
@@ -194,11 +184,6 @@ const SearchResultElement = () => {
                             src={first}
                             alt="Second slide"
                           />
-
-                          <Carousel.Caption>
-                            {/* <h3>Second slide label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
-                          </Carousel.Caption>
                         </Carousel.Item>
                         <Carousel.Item>
                           <img
@@ -206,13 +191,6 @@ const SearchResultElement = () => {
                             src={third}
                             alt="Third slide"
                           />
-
-                          <Carousel.Caption>
-                            {/* <h3>Third slide label</h3>
-                        <p>
-                            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-                        </p> */}
-                          </Carousel.Caption>
                         </Carousel.Item>
                       </Carousel>
                     </td>

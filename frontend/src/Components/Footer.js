@@ -47,13 +47,13 @@ export default function App() {
                 </Link>
               </Link1>
               <Link1 className="FooterLink">
-                <Link to = "/uc" style={{color:"inherit", textDecoration: 'none'}}>
+                <Link to = "/faq" style={{color:"inherit", textDecoration: 'none'}}>
                   FnQ
                 <Span className="Ho"></Span>
                 </Link>
               </Link1>
               <Link1 className="FooterLink">
-                <Link to = "/uc" style={{color:"inherit", textDecoration: 'none'}}>
+                <Link to = "/about-us" style={{color:"inherit", textDecoration: 'none'}}>
                   About Us
                 <Span className="Ho"></Span>
                 </Link>

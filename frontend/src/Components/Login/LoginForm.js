@@ -126,7 +126,7 @@ const LoginForm = () => {
                     </div>
 
                     <p className="small mb-2 pb-lg-2">
-                      <a className="text-white-50" href="#!">
+                      <a className="text-white-50" href="/forgot-password">
                         Forgot password?
                       </a>
                     </p>
