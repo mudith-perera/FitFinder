@@ -1,17 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import Box from "@mui/material/Box";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
-import { ToastContainer, toast } from "react-toastify";
 
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-
-import ListSubheader from "@mui/material/ListSubheader";
-import IconButton from "@mui/material/IconButton";
-import InfoIcon from "@mui/icons-material/Info";
 import img1 from "../../Images/coach.png";
 
 import Aos from "aos";
@@ -22,11 +11,7 @@ const AboutUs = () => {
     Aos.init({ duration: 500 });
   });
 
-  const darkTheme = createTheme({
-    palette: {
-      mode: "dark",
-    },
-  });
+
 
   const itemData = [
     {
@@ -68,10 +53,10 @@ const AboutUs = () => {
       featured: true,
     },
   ];
+  console.log(itemData);
 
   return (
     <section data-aos="zoom-in">
-      <ToastContainer />
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12">

@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { MDBInput } from "mdb-react-ui-kit";
 import Button from "@mui/material/Button";
-import DeleteIcon from '@mui/icons-material/Delete';
-import { ToastContainer, toast } from "react-toastify";
+//import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -13,12 +12,27 @@ const ForgotPasswordForm = () => {
   useEffect(() => {
     Aos.init({ duration: 500 });
   });
+//on Success
+// const notifError = () => {
+//   toast.error("Passwords do not match 😥", {
+//     theme: "colored",
+//     position: toast.POSITION.TOP_LEFT,
+//   });
+// };
 
+//On Error
+// const notifSuccess = () => {
+//   toast.success("User Successfully Added 😊👍", {
+//     theme: "colored",
+//     position: toast.POSITION.TOP_LEFT,
+//   });
+// };
   
   const [email, setEmail] = useState("");
+  console.log(email);
     return (
     <section data-aos="flip-left" className="vh-800 gradient-custom">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="container py-5 h-80">
         <div className="row d-flex justify-content-center align-items-center h-800">
           <div className="col-12 col-md-8 col-lg-6 col-xl-5">

@@ -30,12 +30,12 @@ function NavBar() {
                 Home<Span className="Ho me-5"></Span>
               </Link1>
             </Nav.Link>
-            <Nav.Link style={{ color: "white" }} href="/FNQ">
+            <Nav.Link style={{ color: "white" }} href="/faq">
               <Link1>
                 fnq<Span className="Ho"></Span>
               </Link1>
             </Nav.Link>
-            <Nav.Link style={{ color: "white" }} href="/uc">
+            <Nav.Link style={{ color: "white" }} href="/about-us">
               <Link1>
                 About Us<Span className="Ho"></Span>
               </Link1>
