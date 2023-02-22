@@ -1,10 +1,11 @@
 ///////////////////////// Developer       : Mudith Perera  /////////////////////////
 ///////////////////////// Modified Date   : 07-02-2023     /////////////////////////
-/////////////////////////           (START)                /////////////////////////
+/////////////////////////              (START)             /////////////////////////
 
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+//import JWT from "jwt-decode";
 
 import { MDBInput } from "mdb-react-ui-kit";
 import Button from "@mui/material/Button";
@@ -13,7 +14,7 @@ import Box from "@mui/material/Box";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import "./GoogleButton.css";
-import googlepng from "../../Images/google.png";
+//import googlepng from "../../Images/google.png";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,6 +24,19 @@ const LoginForm = () => {
     //removing the current cookie when page loads
     removeCookie("LoggedUser");
     Aos.init({ duration: 1000 });
+
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "338037268448-96oj399dqcc7l8a5ie31ke0t6fb8r6ut.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "light",
+      size: "large",
+      longtitle: "google",
+    });
   });
 
   const [email, setEmail] = useState("");
@@ -38,6 +52,32 @@ const LoginForm = () => {
       position: toast.POSITION.TOP_LEFT,
     });
   };
+  async function handleCallbackResponse(response) {
+    //console.log("Encoded JWT ID token : " + response.credential);
+    var token = response.credential;
+    const responseGoogle = await fetch("api/users/googleSignInUp/", {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    const googleJson = await responseGoogle.json();
+
+    if (!responseGoogle.ok) {
+      userError(googleJson.message);
+    } else {
+      const loggedUserDetails = [
+        googleJson["userType"],
+        googleJson["activeStatus"],
+        googleJson["firstname"],
+        googleJson["lastname"],
+        googleJson["email"],
+        googleJson["_id"],
+      ];
+
+      setCookieAndNavigate(loggedUserDetails);
+    }
+  }
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -59,30 +99,35 @@ const LoginForm = () => {
     }
     if (response.ok) {
       console.log("User Logged in");
-      console.log(json["activeStatus"]);
       const loggedUserDetails = [
-        json["activeStatus"],
-        json["email"],
-        json["updatedAt"],
-        json["createdAt"],
         json["userType"],
+        json["activeStatus"],
+        json["firstname"],
+        json["lastname"],
+        json["email"],
         json["_id"],
       ];
-      setCookie("LoggedUser", loggedUserDetails, { path: "/" });
-      console.log(cookie);
 
-      if (json["userType"] === "member") {
-        navigate("/member-home");
-      } else if (json["userType"] === "gym") {
-        navigate("/gym-home");
-      } else if (json["userType"] === "coach") {
-        navigate("/coach-home");
-      } else if (json["userType"] === "admin") {
-        navigate("/admin-home");
-      }
-      //window.location.reload(false);
+      setCookieAndNavigate(loggedUserDetails);
     }
   };
+
+  function setCookieAndNavigate(loggedUserDetails) {
+    console.log(loggedUserDetails);
+    setCookie("LoggedUser", loggedUserDetails, { path: "/" });
+    console.log(cookie);
+
+    if (loggedUserDetails[0] === "member") {
+      navigate("/member-home");
+    } else if (loggedUserDetails[0] === "gym") {
+      navigate("/gym-home");
+    } else if (loggedUserDetails[0] === "coach") {
+      navigate("/coach-home");
+    } else if (loggedUserDetails[0] === "admin") {
+      navigate("/admin-home");
+    }
+  };
+
   return (
     <section data-aos="flip-right" className="vh-800 gradient-custom">
       <ToastContainer />
@@ -138,18 +183,15 @@ const LoginForm = () => {
                   </div>
                 </form>
                 <p className="large text-white-50">Or</p>
-                <div className="googleButton mt-md-2 mb-2">
-                  <button className="google-sign-up">
-                    <img
-                      className="google-image"
-                      src={googlepng}
-                      alt="google"
-                    />{" "}
-                    <span> &nbsp;&nbsp; </span>
-                    Sign Up with Google
-                  </button>
-                </div>
-
+                <div
+                  id="signInDiv"
+                  style={{
+                    textAlign: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                ></div>
                 <div>
                   <p className="mb-2 mt-md-5">
                     Don't have an account?{" "}

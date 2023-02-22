@@ -5,10 +5,10 @@
 import React, { useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-
+import { useCookies } from "react-cookie";
 import "./SignUpForm.css";
 import "./GoogleButton.css";
-import googlepng from "../../Images/google.png";
+//import googlepng from "../../Images/google.png";
 
 import { MDBInput } from "mdb-react-ui-kit";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -22,15 +22,58 @@ import "aos/dist/aos.css";
 
 const SignUpForm = () => {
   useEffect(() => {
-    Aos.init({ duration: 500 });
+    //removing the current cookie when page loads
+    removeCookie("LoggedUser");
+    Aos.init({ duration: 1000 });
+
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "338037268448-96oj399dqcc7l8a5ie31ke0t6fb8r6ut.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "light",
+      size: "large",
+      longtitle: "google",
+    });
   });
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [pwsdMatch, setpwsdMatch] = useState("");
+  const [cookie, setCookie, removeCookie] = useCookies([""]);
 
   const navigate = useNavigate();
+
+  async function handleCallbackResponse(response) {
+    //console.log("Encoded JWT ID token : " + response.credential);
+    var token = response.credential;
+    const responseGoogle = await fetch("api/users/googleSignInUp/", {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    const googleJson = await responseGoogle.json();
+
+    if (!responseGoogle.ok) {
+      userError(googleJson.message);
+    } else {
+      const loggedUserDetails = [
+        googleJson["userType"],
+        googleJson["activeStatus"],
+        googleJson["firstname"],
+        googleJson["lastname"],
+        googleJson["email"],
+        googleJson["_id"],
+      ];
+
+      setCookieAndNavigate(loggedUserDetails);
+    }
+  }
 
   //Confirm Password Check
   const notifError = () => {
@@ -97,6 +140,22 @@ const SignUpForm = () => {
       //window.location.reload(false);
     }
   };
+
+  function setCookieAndNavigate(loggedUserDetails) {
+    console.log(loggedUserDetails);
+    setCookie("LoggedUser", loggedUserDetails, { path: "/" });
+    console.log(cookie);
+
+    if (loggedUserDetails[0] === "member") {
+      navigate("/member-home");
+    } else if (loggedUserDetails[0] === "gym") {
+      navigate("/gym-home");
+    } else if (loggedUserDetails[0] === "coach") {
+      navigate("/coach-home");
+    } else if (loggedUserDetails[0] === "admin") {
+      navigate("/admin-home");
+    }
+  }
 
   return (
     <section data-aos="flip-left" className="vh-800 gradient-custom">
@@ -165,30 +224,27 @@ const SignUpForm = () => {
                     <Button variant="contained" type="submit">
                       Sign Up
                     </Button>
-                    
                   </div>
                 </form>
                 <p className="large mt-md">Or</p>
-                    <div className="googleButton mt-md-3 mb-3">
-                      <button className="google-sign-up">
-                        <img
-                          className="google-image"
-                          src={googlepng}
-                          alt="google"
-                        />{" "}
-                        <span> &nbsp;&nbsp; </span>
-                        Sign Up with Google
-                      </button>
-                    </div>
-                    <br />
-                    <ButtonGroup>
-                      <Link to={"/gym-sign-up"}>
-                        <Button>Are you a Gym Owner ?</Button>
-                      </Link>
-                      <Link to={"/Coach-sign-up"}>
-                        <Button>Are you a Coach ?</Button>
-                      </Link>
-                    </ButtonGroup>
+                <div
+                  id="signInDiv"
+                  style={{
+                    textAlign: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                ></div>
+                <br />
+                <ButtonGroup>
+                  <Link to={"/gym-sign-up"}>
+                    <Button>Are you a Gym Owner ?</Button>
+                  </Link>
+                  <Link to={"/Coach-sign-up"}>
+                    <Button>Are you a Coach ?</Button>
+                  </Link>
+                </ButtonGroup>
                 <div>
                   <p className="mb-3 mt-2">
                     Already have an account?{" "}
