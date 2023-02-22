@@ -6,7 +6,9 @@ const Home = () => {
   return (
     <div>
     <SearchBar/>
+    <div style={{ width: '80%', margin: '0 auto' }}>
     <SearchResult />
+    </div>
     </div>
   );
 }
