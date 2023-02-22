@@ -1,6 +1,6 @@
 ///////////////////////// Developer       : Mudith Perera  /////////////////////////
 ///////////////////////// Modified Date   : 07-02-2023     /////////////////////////
-/////////////////////////         (START)                  /////////////////////////
+/////////////////////////              (START)             /////////////////////////
 ///////////////////////// Description     : Model created to save all the users in the system (admin, coaches, members, gym-owners)
 
 //Schema and the model of the user is define here
@@ -34,9 +34,8 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, "A user must have a password"],
+      required: [false, "A user must have a password"],
       //minlength: 8,
-      require: true,
     },
     nic: {
       type: String,
