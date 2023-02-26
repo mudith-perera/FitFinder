@@ -10,7 +10,7 @@ import { CDBSidebarMenuItem } from "cdbreact";
 
 import { MdManageAccounts, MdScheduleSend } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
-import { FaUsers, FaUserEdit, FaUserTag, FaUserPlus, FaBars } from "react-icons/fa";
+import { FaUsers, FaUserEdit, FaUserPlus, FaBars } from "react-icons/fa";
 
 let iconStyle = { fontWeight: "600", color: "#fff", fontSize: "2rem" };
 
@@ -194,7 +194,7 @@ const Footer = styled.div`
     }
 `
 const SideNavbar = (props) => {
-    const [userType, setUserType] = useState(props.userRole);
+    const [userType] = useState(props.userRole);
 
     const [isOpen, setIsOpen] = useState(true);
 

@@ -5,17 +5,14 @@ import SideNavbar from "../Shared/SideNavbar.js";
 //import Typography from '@material-ui/core/Typography'
 
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  IconButton,
   MenuItem,
   Stack,
   TextField,
-  Tooltip,
 } from "@mui/material";
 //import { Delete, Edit } from '@mui/icons-material';
 //import { data, states } from './makeData';
@@ -52,9 +49,9 @@ const ViewAllGymMembersTable = () => {
       .then((response) => response.json())
       .then((response) => setTableData(response));
   };
-  const [createModalOpen, setCreateModalOpen] = useState(false);
+  //const [createModalOpen, setCreateModalOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-
+  
   //new row addding
 
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
@@ -97,7 +94,7 @@ const ViewAllGymMembersTable = () => {
         error: !!validationErrors[cell.id],
         helperText: validationErrors[cell.id],
         onBlur: (event) => {
-          const isValid = cell.column.id === "email";
+          //const isValid = cell.column.id === "email";
           //? validateEmail(event.target.value)
           //: cell.column.id === 'age'
           //? validateAge(+event.target.value)

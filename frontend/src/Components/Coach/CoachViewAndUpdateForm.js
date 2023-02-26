@@ -13,7 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import img1 from "../../Images/coach.png";
 
-import { ToastContainer, toast } from "react-toastify";
+//import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Aos from "aos";
@@ -26,19 +26,6 @@ const CoachViewAndUpdateForm = () => {
     Aos.init({ duration: 500 });
   });
 
-  const [pwsdMatch, setpwsdMatch] = useState("");
-
-  //Confirm Password Check
-  const notifError = () => {
-    toast.error("Passwords do not match 😥", {
-      theme: "colored",
-      position: toast.POSITION.TOP_LEFT,
-    });
-  };
-
-  //Input field location
-  const locations = ["Kelaniya", "Mathara", "Colombo"];
-
   //All Input Fields
   const [coachName, setCoachName] = useState("");
   const [coachEmail, setCoachEmail] = useState("");
@@ -46,9 +33,6 @@ const CoachViewAndUpdateForm = () => {
   const [coachAge, setCoachAge] = useState("");
   const [coachType, setCoachType] = useState("");
   const [coachContactNo, setCoachContactNo] = useState("");
-  const [coachTechniques, setCoachTechniques] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPwd, setConfirmPwd] = useState("");
   const [address, setAddress] = useState("");
   const [coachComment, setCoachComment] = useState("");
 
@@ -59,7 +43,7 @@ const CoachViewAndUpdateForm = () => {
 
   //Input field Coach techniques handler
   const coachTypeHandleChange = (event) => {
-    setCoachTechniques(event.target.value);
+    setCoachType(event.target.value);
   };
 
   //Form Submit function
@@ -72,40 +56,10 @@ const CoachViewAndUpdateForm = () => {
       coachAge,
       coachType,
       coachContactNo,
-      coachTechniques,
-      password,
-      confirmPwd,
       address,
       coachComment,
     };
     console.log(formData);
-
-    if (password === confirmPwd) {
-      console.log("matched");
-      setpwsdMatch(true);
-    } else {
-      console.log("not matched");
-      setpwsdMatch(false);
-      notifError();
-    }
-
-    console.log(pwsdMatch);
-    // try {
-    //   const res = await axios.post('http://127.0.0.1:8000/api/add-users',formData);
-
-    //   if (res.data.status === 200)
-    //     {
-    //       console.log(res.data.message);
-    //       notifSuccess();//Load toastify Alert
-
-    //       setTimeout(() => {
-    //         navigate("/login");
-    //       }, 3000);
-
-    //     }
-    // } catch (err) {
-    //     notifError();
-    // }
   };
 
   return (
@@ -114,7 +68,7 @@ const CoachViewAndUpdateForm = () => {
         <SideNavbar userRole="coach" />
       </div>
       <section data-aos="zoom-in">
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-12">
