@@ -2,7 +2,7 @@
 ///////////////////////// Modified Date   : 19-02-2023     /////////////////////////
 /////////////////////////           (START)                /////////////////////////
 
-import React, { useState } from "react";
+import React from "react";
 import "./UserGymHome.css";
 
 import Carousel from "react-bootstrap/Carousel";

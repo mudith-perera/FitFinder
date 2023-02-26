@@ -54,24 +54,25 @@ const ViewAllGymCoachesTable = () => {
   }
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
+  console.log(createModalOpen);
 
   //new row addding
-  const handleCreateNewRow = (values) => {
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json"
-      },
-      body: JSON.stringify(values)
-    })
-    .then(response => response.json())
-    .then(data => {
-      setTableData([...tableData, data]);
-    })
-    .catch(error => {
-      console.error("Error:", error);
-    });
-  };
+  // const handleCreateNewRow = (values) => {
+  //   fetch(url, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-type": "application/json"
+  //     },
+  //     body: JSON.stringify(values)
+  //   })
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     setTableData([...tableData, data]);
+  //   })
+  //   .catch(error => {
+  //     console.error("Error:", error);
+  //   });
+  // };
   
   
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
