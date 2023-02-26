@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import MaterialReactTable from 'material-react-table';
-import Typography from '@material-ui/core/Typography'
+//import Typography from '@material-ui/core/Typography'
+
+import SideNavbar from "../Shared/SideNavbar.js";
 
 import {
   Box,
@@ -229,9 +231,14 @@ const ViewAllGymCoachesTable = () => {
   );
 
   return (
-    <>
-      <h1 className='v_AdminTable_heading'align="center">Welcome to Coaches Table</h1>
-
+    <div>
+      <div style={{ position: "fixed", zIndex: "1" }}>
+        <SideNavbar userRole="gym" />
+      </div>
+      <div
+        className="container py-5 h-100"
+        style={{ position: "relative", zIndex: "0" }}
+      >
       <MaterialReactTable
         displayColumnDefOptions={{
           'mrt-row-actions': {
@@ -266,7 +273,7 @@ const ViewAllGymCoachesTable = () => {
         )}
         renderTopToolbarCustomActions={() => (
           <div>
-          <Typography variant="h4" >FitFinder Coaches</Typography>
+          <h4>FitFinder Coaches</h4>
           <br></br>
           <Button
             color="secondary"
@@ -278,13 +285,16 @@ const ViewAllGymCoachesTable = () => {
           </div>
         )}
       />
-      <CreateNewAccountModal
-        columns={columns}
-        open={createModalOpen}
-        onClose={() => setCreateModalOpen(false)}
-        onSubmit={handleCreateNewRow}
-      />
-    </>
+      </div>
+      </div>
+
+      // <CreateNewAccountModal
+      //   columns={columns}
+      //   open={createModalOpen}
+      //   onClose={() => setCreateModalOpen(false)}
+      //   onSubmit={handleCreateNewRow}
+      // />
+    
   );
 };
 

@@ -25,14 +25,14 @@ export const MenuItems = [
                 path: "/member-view-update",
             },
             {
-                text: 'Manage Schedule',
+                text: 'View Schedule',
                 icon: <AiFillSchedule style={iconStyle} />,
-                path: "/member-manage-schedule",
+                path: "/schedule",
             },
             {
                 text: 'Manage Registered Gym',
                 icon: <MdManageAccounts style={iconStyle} />,
-                path: "/user-gym-home",
+                path: "/member-registered-gym",
             },
         ],
     },
@@ -53,7 +53,7 @@ export const MenuItems = [
             {
                 text: 'Manage Registered Gym',
                 icon: <MdManageAccounts style={iconStyle} />,
-                path: "/coach-gym-home",
+                path: "/coach-registered-gym",
             },
         ],
     },
@@ -69,22 +69,17 @@ export const MenuItems = [
             {
                 text: 'View All Gym Members',
                 icon: <FaUsers style={iconStyle} />,
-                path: "/gym-view-members",
-            },
-            {
-                text: 'View Single Gym Member',
-                icon: <FaUserTag style={iconStyle} />,
-                path: "/gym-view-member",
+                path: "/view-all-gym-members",
             },
             {
                 text: 'Add Gym Coach',
                 icon: <FaUserPlus style={iconStyle} />,
-                path: "/gym-add-coach",
+                path: "/uc-w",
             },
             {
                 text: 'View All Gym Coaches',
                 icon: <FaUsers style={iconStyle} />,
-                path: "/gym-view-coaches",
+                path: "/view-all-gym-coaches",
             },
         ],
     },
@@ -112,8 +107,6 @@ export const MenuItems = [
 ]
 
 const Container = styled.div`
-    display: flex;
-    z-index: 10999;
 `
 const Sidebar = styled.div`
     background: #333;
@@ -284,7 +277,7 @@ const SideNavbar = (props) => {
                         userType === "member" ?
                             MenuItems[0].NavsArray.map((item, index) => {
                                 return (
-                                    <StyledNavLink to={item.path} key={index} activeclassName="active" className="MenuLink">
+                                    <StyledNavLink to={item.path} key={index} activeclassname="active" className="MenuLink">
                                         <MenuIcon>
                                             {item.icon}
                                         </MenuIcon>
@@ -297,7 +290,7 @@ const SideNavbar = (props) => {
                             userType === "coach" ?
                                 MenuItems[1].NavsArray.map((item, index) => {
                                     return (
-                                        <StyledNavLink to={item.path} key={index} activeclassName="active" className="MenuLink">
+                                        <StyledNavLink to={item.path} key={index} activeclassname="active" className="MenuLink">
                                             <MenuIcon>
                                                 {item.icon}
                                             </MenuIcon>
@@ -310,7 +303,7 @@ const SideNavbar = (props) => {
                                 userType === "gym" ?
                                     MenuItems[2].NavsArray.map((item, index) => {
                                         return (
-                                            <StyledNavLink to={item.path} key={index} activeclassName="active" className="MenuLink">
+                                            <StyledNavLink to={item.path} key={index} activeclassname="active" className="MenuLink">
                                                 <MenuIcon>
                                                     {item.icon}
                                                 </MenuIcon>
@@ -323,7 +316,7 @@ const SideNavbar = (props) => {
                                     userType === "admin" ?
                                         MenuItems[3].NavsArray.map((item, index) => {
                                             return (
-                                                <StyledNavLink to={item.path} key={index} activeclassName="active" className="MenuLink">
+                                                <StyledNavLink to={item.path} key={index} activeclassname="active" className="MenuLink">
                                                     <MenuIcon>
                                                         {item.icon}
                                                     </MenuIcon>
@@ -339,7 +332,7 @@ const SideNavbar = (props) => {
                 <Footer>
                     <Signout>
                         <NavLink
-                            to=""
+                            to="/login"
                             className={({ isActive }) => (isActive ? "active" : null)}
                             style={{ textDecoration: "none", fontSize: "20px", color: "grey", }}
                         >

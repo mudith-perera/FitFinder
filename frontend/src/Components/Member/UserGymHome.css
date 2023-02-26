@@ -1,0 +1,38 @@
+/* 
+.containerUserGymHome {
+    display: flex; 
+    align-items: center;
+  }
+  
+  .card-headerUserGymHome {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .card-titleUserGymHome{
+    width: 100%;
+    color: #000;
+    font-weight: 600;
+    font-size: xx-large;
+    letter-spacing: 0.2rem;
+    text-align: center;
+  }
+
+  .card-defaultimageUserGymHome {
+    height: "50px";
+    margin-right: 63%;
+  }
+  
+
+  .thUserGymHome{
+    font-size: large;
+    width: 240px;
+  } 
+
+  .tdUserGymHome{
+    font-size: large;
+    width: fit-content;
+  } */

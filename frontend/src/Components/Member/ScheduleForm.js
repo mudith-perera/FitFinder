@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
+import SideNavbar from "../Shared/SideNavbar.js";
 const schedule = [
   {
     day: "Sunday",
@@ -115,7 +116,13 @@ export default function App() {
   const currentDaySchedule = schedule.find((day) => day.day === selectedDay);
 
   return (
+    <div>
+    <div style={{ position: "fixed" , zIndex: "1"}}>
+        <SideNavbar userRole="member" />
+      </div>
     <div className="app-container">
+      
+      
       <div className="header">
         <div className="day-selector-container">
           {schedule.map((day) => (
@@ -191,6 +198,7 @@ export default function App() {
             </div>
           ))}
       </div>
+    </div>
     </div>
   );
 }
