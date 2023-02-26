@@ -2,7 +2,7 @@
 ///////////////////////// Modified Date   : 19-02-2023     /////////////////////////
 /////////////////////////           (START)                /////////////////////////
 
-import React from "react";
+import React, {useState} from "react";
 import "./UserGymHome.css";
 import SideNavbar from "./SideNavbar.js";
 
@@ -19,7 +19,9 @@ import third from "../../Images/gym3.png";
 import fourth from "../../Images/gym4.jpg";
 import fifth from "../../Images/gym5.png";
 
-const UserGymHome = () => {
+const UserGymHome = (props) => {
+    
+    const [userType, setUserType] = useState(props.userRole);
     const cardInfo = [
         {
             GymName: "Max Fitness",
@@ -38,8 +40,8 @@ const UserGymHome = () => {
 
     return (
         <div>
-            <div style={{ position: "fixed" }}>
-                <SideNavbar userRole="member" />
+            <div style={{ position: "fixed", zIndex: "1" }}>
+            {userType === "member" ? <SideNavbar userRole="member" /> : userType === "coach" ?<SideNavbar userRole="member" />: <div>no user</div> }
             </div>
             <div className='container py-5 px-5'>
 

@@ -20,7 +20,7 @@ const MemberViewAndUpdateForm = () => {
   });
   return (
     <div>
-      <div style={{ position: "fixed" }}>
+      <div style={{ position: "fixed" , zIndex: "1"}}>
         <SideNavbar userRole="member" />
       </div>
       <section data-aos="zoom-in">

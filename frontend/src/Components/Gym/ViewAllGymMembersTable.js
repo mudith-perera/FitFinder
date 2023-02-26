@@ -1,6 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import MaterialReactTable from 'material-react-table';
-import Typography from '@material-ui/core/Typography'
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import MaterialReactTable from "material-react-table";
+
+import SideNavbar from "../Shared/SideNavbar.js";
+//import Typography from '@material-ui/core/Typography'
 
 import {
   Box,
@@ -14,7 +16,7 @@ import {
   Stack,
   TextField,
   Tooltip,
-} from '@mui/material';
+} from "@mui/material";
 //import { Delete, Edit } from '@mui/icons-material';
 //import { data, states } from './makeData';
 
@@ -27,35 +29,34 @@ import {
     { id: 6, firstName: "Vimukthi", email: 'Vimukthi@gmail.com', phone: 1234567890, city: "Malabe",status:"Active" }
   ]
 */
-  const states = [
-      { 
-        stat: "Active"
-      },{ 
-        stat: "Dativated" 
-      }
-    
-  ]
-  
+const states = [
+  {
+    stat: "Active",
+  },
+  {
+    stat: "Dativated",
+  },
+];
+
 const ViewAllGymMembersTable = () => {
-  const url = "http://localhost:4000/data"
+  const url = "http://localhost:4000/data";
   const [tableData, setTableData] = useState([]);
 
-
-  useEffect(()=>{
-    getData()
-  },[])
+  useEffect(() => {
+    getData();
+  }, []);
 
   //show all data
-  const getData =()=>{
-    fetch(url).then(response=>response.json())
-    .then(response=>setTableData(response))
-  }
+  const getData = () => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((response) => setTableData(response));
+  };
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
   //new row addding
-  
-  
+
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
     if (!Object.keys(validationErrors).length) {
       const { id, ...updatedRow } = values; // Extract the updated row data without the id field
@@ -85,14 +86,10 @@ const ViewAllGymMembersTable = () => {
       }
     }
   };
-  
-  
 
   const handleCancelRowEdits = () => {
     setValidationErrors({});
   };
-
-  
 
   const getCommonEditTextFieldProps = useCallback(
     (cell) => {
@@ -100,12 +97,11 @@ const ViewAllGymMembersTable = () => {
         error: !!validationErrors[cell.id],
         helperText: validationErrors[cell.id],
         onBlur: (event) => {
-          const isValid =
-            cell.column.id === 'email'
-              //? validateEmail(event.target.value)
-              //: cell.column.id === 'age'
-              //? validateAge(+event.target.value)
-              //: validateRequired(event.target.value);
+          const isValid = cell.column.id === "email";
+          //? validateEmail(event.target.value)
+          //: cell.column.id === 'age'
+          //? validateAge(+event.target.value)
+          //: validateRequired(event.target.value);
           /*if (!isValid) {
             //set validation error for cell if invalid
             setValidationErrors({
@@ -122,22 +118,22 @@ const ViewAllGymMembersTable = () => {
         },
       };
     },
-    [validationErrors],
+    [validationErrors]
   );
 
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'id',
-        header: 'ID',
+        accessorKey: "id",
+        header: "ID",
         enableColumnOrdering: false,
         enableEditing: false, //disable editing on this column
         enableSorting: false,
         size: 80,
       },
       {
-        accessorKey: 'firstName',
-        header: 'First Name',
+        accessorKey: "firstName",
+        header: "First Name",
         enableEditing: false, //disable editing on this column
         size: 140,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
@@ -145,8 +141,8 @@ const ViewAllGymMembersTable = () => {
         }),
       },
       {
-        accessorKey: 'city',
-        header: 'City',
+        accessorKey: "city",
+        header: "City",
         enableEditing: false, //disable editing on this column
         size: 140,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
@@ -154,27 +150,27 @@ const ViewAllGymMembersTable = () => {
         }),
       },
       {
-        accessorKey: 'email',
-        header: 'Email',
+        accessorKey: "email",
+        header: "Email",
         enableEditing: false, //disable editing on this column
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
-          type: 'email',
+          type: "email",
         }),
       },
       {
-        accessorKey: 'phone',
-        header: 'Phone',
+        accessorKey: "phone",
+        header: "Phone",
         enableEditing: false, //disable editing on this column
         size: 80,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
-          type: 'number',
+          type: "number",
         }),
       },
       {
-        accessorKey: 'status',
-        header: 'Status',
+        accessorKey: "status",
+        header: "Status",
         muiTableBodyCellEditTextFieldProps: {
           select: true, //change to select for a dropdown
           children: states.map((state) => (
@@ -185,37 +181,44 @@ const ViewAllGymMembersTable = () => {
         },
       },
     ],
-    [getCommonEditTextFieldProps],
+    [getCommonEditTextFieldProps]
   );
 
   return (
-    <>
-      <MaterialReactTable
-        displayColumnDefOptions={{
-          'mrt-row-actions': {
-            muiTableHeadCellProps: {
-              align: 'center',
+    <div>
+      <div style={{ position: "fixed", zIndex: "1" }}>
+        <SideNavbar userRole="gym" />
+      </div>
+      <div
+        className="container py-5 h-100"
+        style={{ position: "relative", zIndex: "0" }}
+      >
+        <MaterialReactTable
+          displayColumnDefOptions={{
+            "mrt-row-actions": {
+              muiTableHeadCellProps: {
+                align: "center",
+              },
+              size: 120,
             },
-            size: 120,
-          },
-        }}
-        columns={columns}
-        data={tableData}
-        editingMode="row"
-        positionActionsColumn="last"
-        enableEditing
-        onEditingRowSave={handleSaveRowEdits}
-        //onEditingRowSave={handleSaveRowEdits}
-        onEditingRowCancel={handleCancelRowEdits}
-        renderTopToolbarCustomActions={() => (
-          <div>
-          <Typography variant="h4" >FitFinder Member</Typography>
-          <br></br>
-
-          </div>
-        )}
-      />
-    </>
+          }}
+          columns={columns}
+          data={tableData}
+          editingMode="row"
+          positionActionsColumn="last"
+          enableEditing
+          onEditingRowSave={handleSaveRowEdits}
+          //onEditingRowSave={handleSaveRowEdits}
+          onEditingRowCancel={handleCancelRowEdits}
+          renderTopToolbarCustomActions={() => (
+            <div>
+              <h4>FitFinder Member</h4>
+              <br></br>
+            </div>
+          )}
+        />
+      </div>
+    </div>
   );
 };
 
@@ -223,9 +226,9 @@ const ViewAllGymMembersTable = () => {
 export const CreateNewAccountModal = ({ open, columns, onClose, onSubmit }) => {
   const [values, setValues] = useState(() =>
     columns.reduce((acc, column) => {
-      acc[column.accessorKey ?? ''] = '';
+      acc[column.accessorKey ?? ""] = "";
       return acc;
-    }, {}),
+    }, {})
   );
 
   const handleSubmit = () => {
@@ -241,9 +244,9 @@ export const CreateNewAccountModal = ({ open, columns, onClose, onSubmit }) => {
         <form onSubmit={(e) => e.preventDefault()}>
           <Stack
             sx={{
-              width: '100%',
-              minWidth: { xs: '300px', sm: '360px', md: '400px' },
-              gap: '1.5rem',
+              width: "100%",
+              minWidth: { xs: "300px", sm: "360px", md: "400px" },
+              gap: "1.5rem",
             }}
           >
             {columns.map((column) => (
@@ -259,7 +262,7 @@ export const CreateNewAccountModal = ({ open, columns, onClose, onSubmit }) => {
           </Stack>
         </form>
       </DialogContent>
-      <DialogActions sx={{ p: '1.25rem' }}>
+      <DialogActions sx={{ p: "1.25rem" }}>
         <Button onClick={onClose}>Cancel</Button>
         <Button color="secondary" onClick={handleSubmit} variant="contained">
           Create New Account
@@ -280,4 +283,4 @@ const validateEmail = (email) =>
 const validateAge = (age) => age >= 18 && age <= 50;
 */
 
-export default ViewAllGymMembersTable
+export default ViewAllGymMembersTable;
