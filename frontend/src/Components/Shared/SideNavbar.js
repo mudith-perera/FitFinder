@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 
 import { CDBSidebarMenuItem } from "cdbreact";
 
-import { MdManageAccounts, MdScheduleSend } from "react-icons/md";
+import { MdManageAccounts, MdScheduleSend, MdPayments } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
 import { FaUsers, FaUserEdit, FaUserPlus, FaBars } from "react-icons/fa";
 
@@ -34,6 +34,13 @@ export const MenuItems = [
                 icon: <MdManageAccounts style={iconStyle} />,
                 path: "/member-registered-gym",
             },
+            //////// (Mudith Perera) Payment added - (START) ///////
+            {
+                text: 'Payment',
+                icon: <MdPayments style={iconStyle} />,
+                path: "/member-payment",
+            },
+             //////// (Mudith Perera) Payment added - (END) ///////
         ],
     },
     {
@@ -196,6 +203,9 @@ const Footer = styled.div`
 const SideNavbar = (props) => {
     const [userType] = useState(props.userRole);
 
+    //////// (Mudith Perera) Logged User Data - (START) ///////
+    const [username] = useState(props.userName);
+    //////// (Mudith Perera) Logged User Data - (END) ///////
     const [isOpen, setIsOpen] = useState(true);
 
     const toggle = () => {
@@ -218,7 +228,7 @@ const SideNavbar = (props) => {
                                     </Toggle>
                                 </Row>
                                 <UserName style={{ display: isOpen ? "block" : "none" }}>
-                                    {MenuItems[0].Name}
+                                    {username}
                                 </UserName>
                             </React.Fragment>
                             :
