@@ -30,6 +30,7 @@ import ViewAllGymCoaches from "./Components/Gym/ViewAllGymCoachesTable.js";
 import MemberHome from "./Views/Member/MemberHome.js";
 import MemberViewUpdate from "./Components/Member/MemberViewAndUpdateForm.js";
 import MemberRegisteredGym from "./Components/Member/MemberRegisteredGym.js";
+import MemberPayment from "./Components/Payment/MemberPayment.js";
 
 import Schedule from "./Components/Member/ScheduleForm.js";
 import ScheduleManage from "./Components/Coach/ManageSchedule.js";
@@ -60,6 +61,7 @@ function App() {
           <Route exact path="/member-registered-gym"  element={<MemberRegisteredGym />}/>
           <Route exact path="/schedule" element={<Schedule />} />
           <Route exact path="/manage-schedule" element={<ScheduleManage />} />
+          <Route exact path="/member-payment" element={<MemberPayment/>}/>
 
 
           <Route exact path="/password-reset" element={<PasswordReset />} />

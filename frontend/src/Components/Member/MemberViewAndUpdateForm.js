@@ -2,7 +2,7 @@
 ///////////////////////// Modified Date   : 07-02-2023     /////////////////////////
 /////////////////////////           (START)                /////////////////////////
 
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import "./MemberViewAndUpdateForm.css";
 import { MDBInput, MDBTextArea, MDBBtn } from "mdb-react-ui-kit";
 
@@ -14,14 +14,20 @@ import img2 from "../../Images/SignUpGymInfo.png";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
+import { useCookies } from 'react-cookie';
+
 const MemberViewAndUpdateForm = () => {
   useEffect(() => {
     Aos.init({ duration: 500 });
   });
+
+  const [cookie] = useCookies(['']);
+  const [username] = useState((cookie.LoggedUser[2])+ " " + (cookie.LoggedUser[3]));
+  
   return (
     <div>
       <div style={{ position: "fixed" , zIndex: "1"}}>
-        <SideNavbar userRole="member" />
+        <SideNavbar userRole="member" userName = {username}  />
       </div>
       <section data-aos="zoom-in">
         <div className="container py-5 h-100">
