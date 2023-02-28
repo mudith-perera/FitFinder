@@ -7,6 +7,8 @@ const {
   getUsers,
   getUser,
   getUserEmailPwd,
+  updateUser,
+  deleteUser,
 } = require("../controllers/userController");
 
 const { googleSignInUp } = require("../controllers/authController");
@@ -55,6 +57,27 @@ router.post("/getUserEmailPwd/", getUserEmailPwd);
 /////////////////////////  (START)
 router.post("/googleSignInUp/", googleSignInUp);
 /////////////////////////  (END)
+
+
+/////////////////////////  Handler          : /:id
+/////////////////////////  Controller       : updateUser()
+/////////////////////////  Description      : Update user details
+/////////////////////////  Developer        : Dilini Kariyawasam
+/////////////////////////  (START)
+router.patch("/:id", updateUser);
+/////////////////////////  (END)
+
+
+/////////////////////////  Handler          : /:id
+/////////////////////////  Controller       : deleteUser()
+/////////////////////////  Description      : delete a user
+/////////////////////////  Developer        : Dilini Kariyawasam
+/////////////////////////  (START)
+router.delete("/:id", deleteUser);
+/////////////////////////  (END)
+
+
+
 
 ////////////////////////////////////////     Request Handlers (END)    ////////////////////////////////////////
 

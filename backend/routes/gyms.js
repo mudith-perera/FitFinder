@@ -11,6 +11,8 @@ const {
   getGyms,
   uploadImages,
   updateGym,
+  deleteGym,
+  getGym,
 } = require("../controllers/gymController.js");
 
 //get the Router instatnce from the express package
@@ -39,6 +41,22 @@ router.get("/", getGyms);
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
 router.patch("/:id", updateGym);
+/////////////////////////  (END)
+
+/////////////////////////  Handler          : /
+/////////////////////////  Controller       : getGym()
+/////////////////////////  Description      : get a gym
+/////////////////////////  Developer        : Dilini Kariyawasam
+/////////////////////////  (START)
+router.get("/:id", getGym);
+/////////////////////////  (END)
+
+/////////////////////////  Handler          : /:id
+/////////////////////////  Controller       : deleteGym()
+/////////////////////////  Description      : delete a gym
+/////////////////////////  Developer        : Dilini Kariyawasam
+/////////////////////////  (START)
+router.delete("/:id", deleteGym);
 /////////////////////////  (END)
 
 //export the created routes
