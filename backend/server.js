@@ -70,7 +70,7 @@ app.use((req, res, next) => {
 app.use("/api/users", userRoutes);
 app.use("/api/gyms", gymRoutes);
 //app.use("api/faq", faqRoutes);   madara
-//app.use("api/search", searchRoutes); gimhani
+app.use("/api/search", searchRoutes);
 // app.use("api/schedule" , scheduleRouters); sachinththa
 app.use("/api/stripe", stripeRouters);
 //MIDDLE-WARE (END)
