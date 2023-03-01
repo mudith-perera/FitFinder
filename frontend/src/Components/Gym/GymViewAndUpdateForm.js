@@ -1,21 +1,21 @@
 //////////Dilini Kariyawasam////
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import "./GymViewAndUpdateForm.css";
 import { MDBInput, MDBTextArea } from "mdb-react-ui-kit";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import SendIcon from "@mui/icons-material/Send";
-import Stack from "@mui/material/Stack";
+//import SendIcon from "@mui/icons-material/Send";
+//import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import img1 from "../../Images/gym.png";
 
-import { ToastContainer, toast } from "react-toastify";
+//import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Aos from "aos";
@@ -28,16 +28,6 @@ const GymViewAndUpdateForm = () => {
     Aos.init({ duration: 500 });
   });
 
-  const [pwsdMatch, setpwsdMatch] = useState("");
-
-  //Confirm Password Check
-  const notifError = () => {
-    toast.error("Passwords do not match 😥", {
-      theme: "colored",
-      position: toast.POSITION.TOP_LEFT,
-    });
-  };
-
   //Input field location
   const locations = ["Kelaniya", "Mathara", "Colombo"];
 
@@ -49,8 +39,6 @@ const GymViewAndUpdateForm = () => {
   const [gymContactNo1, setGymContactNo1] = useState("");
   const [gymContactNo2, setGymContactNo2] = useState("");
   const [location, setLocation] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPwd, setConfirmPwd] = useState("");
   const [gymMonthlyFee, setGymMonthlyFee] = useState("");
   const [gymAnnualFee, setGymAnnualFee] = useState("");
   const [gymAddress, setGymAddress] = useState("");
@@ -72,41 +60,12 @@ const GymViewAndUpdateForm = () => {
       gymContactNo1,
       gymContactNo2,
       location,
-      password,
-      confirmPwd,
       gymMonthlyFee,
       gymAnnualFee,
       gymAddress,
       gymOwnerComment,
     };
     console.log(formData);
-
-    if (password === confirmPwd) {
-      console.log("matched");
-      setpwsdMatch(true);
-    } else {
-      console.log("not matched");
-      setpwsdMatch(false);
-      notifError();
-    }
-
-    console.log(pwsdMatch);
-    // try {
-    //   const res = await axios.post('http://127.0.0.1:8000/api/add-users',formData);
-
-    //   if (res.data.status === 200)
-    //     {
-    //       console.log(res.data.message);
-    //       notifSuccess();//Load toastify Alert
-
-    //       setTimeout(() => {
-    //         navigate("/login");
-    //       }, 3000);
-
-    //     }
-    // } catch (err) {
-    //     notifError();
-    // }
   };
 
   return (
@@ -115,7 +74,7 @@ const GymViewAndUpdateForm = () => {
         <SideNavbar userRole="gym" />
       </div>
       <section data-aos="zoom-in">
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-12">

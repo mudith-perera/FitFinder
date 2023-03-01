@@ -30,6 +30,7 @@ import ViewAllGymCoaches from "./Components/Gym/ViewAllGymCoachesTable.js";
 import MemberHome from "./Views/Member/MemberHome.js";
 import MemberViewUpdate from "./Components/Member/MemberViewAndUpdateForm.js";
 import MemberRegisteredGym from "./Components/Member/MemberRegisteredGym.js";
+import MemberPayment from "./Components/Payment/MemberPayment.js";
 
 import Schedule from "./Components/Member/ScheduleForm.js";
 import ScheduleManage from "./Components/Coach/ManageSchedule.js";
@@ -47,19 +48,20 @@ function App() {
           <Route exact path="/admin-home" element={<AdminHome />} />
 
           <Route exact path="/coach-home" element={<CoachHome />} />
-          <Route exact path="/coach-view-update" element={<CoachViewUpdateForm />} />
-          <Route exact path="/coach-registered-gym" element={<CoachRegisteredGym />} />
+          <Route exact path="/coach-home/coach-view-update" element={<CoachViewUpdateForm />} />
+          <Route exact path="/coach-home/coach-registered-gym" element={<CoachRegisteredGym />} />
 
           <Route exact path="/gym-home" element={<GymHome />} />
-          <Route exact path="/gym-view-update" element={<GymViewUpdateForm />}/>
-          <Route exact path="/view-all-gym-members" element={<ViewAllGymMembers/>}/>
-          <Route exact path="/view-all-gym-coaches" element={<ViewAllGymCoaches/>}/>
+          <Route exact path="/gym-home/gym-view-update" element={<GymViewUpdateForm />}/>
+          <Route exact path="/gym-home/view-all-gym-members" element={<ViewAllGymMembers/>}/>
+          <Route exact path="/gym-home/view-all-gym-coaches" element={<ViewAllGymCoaches/>}/>
 
           <Route exact path="/member-home" element={<MemberHome />} />
-          <Route exact path="/member-view-update"  element={<MemberViewUpdate />}/>
-          <Route exact path="/member-registered-gym"  element={<MemberRegisteredGym />}/>
-          <Route exact path="/schedule" element={<Schedule />} />
-          <Route exact path="/manage-schedule" element={<ScheduleManage />} />
+          <Route exact path="/member-home/member-view-update"  element={<MemberViewUpdate />}/>
+          <Route exact path="/member-home/member-registered-gym"  element={<MemberRegisteredGym />}/>
+          <Route exact path="/member-home/schedule" element={<Schedule />} />
+          <Route exact path="/member-home/manage-schedule" element={<ScheduleManage />} />
+          <Route exact path="/member-home/member-payment" element={<MemberPayment/>}/>
 
 
           <Route exact path="/password-reset" element={<PasswordReset />} />

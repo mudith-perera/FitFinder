@@ -148,9 +148,51 @@ const updateGym = async (req, res) => {
 
   res.status(200).json(gym);
 };
+/////////////////////////  (END)
+
+
+
+/////////////////////////  Controller       : getGym()
+/////////////////////////  Description      : Get a single gym information
+/////////////////////////  Developer        : Dilini Kariyawasam
+/////////////////////////  (START)
+const getGym = async (req, res) => {
+  //grabbing the id from the route parameters
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such Gym" });
+  }
+  const gym = await Gym.findById(id);
+
+  if (!gym) {
+    return res.status(404).json({ error: "No such Gym" });
+  }
+  res.status(200).json(gym);
+};
+/////////////////////////  (END)
+
+/////////////////////////  Controller       : deleteGym()
+/////////////////////////  Description      :  Delete a Gym using gym id
+/////////////////////////  Developer        : Dilini Kariyawasam
+/////////////////////////  (START)
+const deleteGym = async (req, res) => {
+  const { id }= req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+  {
+    return res.status(404).json ({error : "No such Gym"})
+  }
+
+  const gym2 = await Gym.findByIdAndDelete (id)
+   .then( () => {res.status(200).send({status: "Gym deleted"});})
+};
+
+/////////////////////////  (END)
+
 module.exports = {
   createGym,
   getGyms,
   uploadImages,
   updateGym,
+  deleteGym,
+  getGym,
 };
