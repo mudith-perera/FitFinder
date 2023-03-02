@@ -5,20 +5,20 @@ const express = require("express");
 
 //importing the controller
 const {
-    getByGymName,
+    searchGyms
 } = require("../controllers/searchController.js");
 
 //get the Router instatnce from the express package
 const router = express.Router();
+
 ////////////////////////////////////////     Request Handlers (START)    ////////////////////////////////////////
 
-
-/////////////////////////  Handler          : /
-/////////////////////////  Controller       : getSearchGym()
-/////////////////////////  Description      : get search gym
+/////////////////////////  Handler          : /search-gyms
+/////////////////////////  Controller       : searchGyms()
+/////////////////////////  Description      : get the gyms searched by gymName, location, gymSexType
 /////////////////////////  Developer        : Gimhani Harshika
 /////////////////////////  (START)
-router.get("/getByGymName", getByGymName); 
+router.get("/search-gyms", searchGyms); 
 /////////////////////////  (END)
 
 //export the created routes
