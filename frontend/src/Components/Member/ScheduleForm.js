@@ -14,9 +14,7 @@ export default function App() {
 
   const [cookie] = useCookies(['']);
   const [userId] = useState((cookie.LoggedUser[5]));
-
-  console.log(userId);
-
+  
   const [schedule, setScheduleState] = useState([]);
 
   useEffect(() => {
