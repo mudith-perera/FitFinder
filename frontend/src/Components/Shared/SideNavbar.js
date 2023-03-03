@@ -55,7 +55,7 @@ export const MenuItems = [
             {
                 text: 'Schedule Request',
                 icon: <MdScheduleSend style={iconStyle} />,
-                path: "/coach-home/coach-schedule-request",
+                path: "/coach-home/choose-user",
             },
             {
                 text: 'Manage Registered Gym',

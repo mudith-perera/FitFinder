@@ -71,6 +71,6 @@ app.use("/api/users", userRoutes);
 app.use("/api/gyms", gymRoutes);
 //app.use("api/faq", faqRoutes);   madara
 app.use("/api/search", searchRoutes);
-// app.use("api/schedule" , scheduleRouters); sachinththa
+app.use("/api/schedule" , scheduleRouters);
 app.use("/api/stripe", stripeRouters);
 //MIDDLE-WARE (END)
