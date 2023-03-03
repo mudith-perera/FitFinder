@@ -15,8 +15,6 @@ export default function App() {
   const [cookie] = useCookies(['']);
   const [userId] = useState((cookie.LoggedUser[5]));
 
-  console.log(userId);
-
   const [schedule, setScheduleState] = useState([]);
 
   useEffect(() => {
@@ -95,7 +93,7 @@ export default function App() {
             currentDaySchedule.exercises.map((exercise, index) => (
               <div className="schedule-card">
                 <div className="exercise-title">{exercise}</div>
-                {currentDaySchedule.reps.length !== 0 && (
+                {currentDaySchedule.reps[index].length !== 0 && (
                   <div className="reps-container">
                     <div className="reps-label">Reps</div>
                     <div className="reps-value">
@@ -103,7 +101,7 @@ export default function App() {
                     </div>
                   </div>
                 )}
-                {currentDaySchedule.time.length !== 0 && (
+                {currentDaySchedule.time[index].length !== 0 && (
                   <div className="time-container">
                     <div className="time-label">Time</div>
                     <div className="time-value">
@@ -111,7 +109,7 @@ export default function App() {
                     </div>
                   </div>
                 )}
-                {currentDaySchedule.instructions.length !== 0 && (
+                {currentDaySchedule.instructions[index].length !== 0 && (
                   <div className="instructions-container">
                     <div className="instructions-label">Instructions</div>
                     <div

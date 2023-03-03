@@ -39,6 +39,7 @@
 
 .schedule-container {
 	display: flex;
+	width: 80%;
 	flex-wrap: wrap;
 	justify-content: center;
 	max-height: calc(100vh - 80px);
