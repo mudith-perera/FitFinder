@@ -130,6 +130,60 @@ const getUserEmailPwd = async (req, res) => {
 
 /////////////////////////  (END)
 
+
+/////////////////////////  Controller       : updateUser()
+/////////////////////////  Description      : Update a User using user id
+/////////////////////////  Developer        : Dilini Kariyawasam
+/////////////////////////  (START)
+
+const updateUser = async (req, res) => {
+  const { id } =req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+  {
+    return res.status(404).json({error: "No such User"});
+  }
+
+  const user1 =await User.findOneAndUpdate({_id: id},{ ...req.body,});
+
+  if(!user1)
+  {
+    return res.status(400).json({ error: " No such User"});
+  }
+
+  res.status(200).json(user1);
+};
+
+
+
+/////////////////////////  (END)
+
+
+
+
+/////////////////////////  Controller       : deleteUser()
+/////////////////////////  Description      :  Delete a User using user id
+/////////////////////////  Developer        : Dilini Kariyawasam
+/////////////////////////  (START)
+
+const deleteUser = async (req, res) => {
+  const { id }= req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+  {
+    return res.status(404).json ({error : "No such User"})
+  }
+
+  const user2 = await User.findByIdAndDelete (id)
+   .then( () => {res.status(200).send({status: "User deleted"});})
+};
+
+
+
+
+
+/////////////////////////  (END)
+
+
+
 ////////////////////////////////////////     Controllers (END)    ////////////////////////////////////////
 
 module.exports = {
@@ -137,4 +191,6 @@ module.exports = {
   getUsers,
   getUser,
   getUserEmailPwd,
+  updateUser,
+  deleteUser,
 };
