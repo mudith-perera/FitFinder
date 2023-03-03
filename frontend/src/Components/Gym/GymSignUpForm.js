@@ -18,12 +18,17 @@ import Button from "@mui/material/Button";
 import img1 from "../../Images/gym.png";
 import SendIcon from "@mui/icons-material/Send";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
+
+import { locations } from "./../Shared/locations.js";
 
 const GymSignUpForm = () => {
   useEffect(() => {
@@ -39,9 +44,6 @@ const GymSignUpForm = () => {
       position: toast.POSITION.TOP_LEFT,
     });
   };
-
-  //Input field location
-  const locations = ["Kelaniya", "Mathara", "Colombo"];
 
   //All Input Fields
   const [gymName, setGymName] = useState("");
@@ -66,10 +68,9 @@ const GymSignUpForm = () => {
   //Showing images in frontend (START)
   const [imagesFrontend, setImagesFrontend] = useState([]);
   const imageHandleChange = (e) => {
-    
-      const files = e.target.files;
-      setImages(files);
-      
+    const files = e.target.files;
+    setImages(files);
+
     if (e.target.files) {
       //converting the image url to blob
       const fileArray = Array.from(e.target.files).map((file) =>
@@ -301,25 +302,15 @@ const GymSignUpForm = () => {
                         <div className="row">
                           <div className="col-md-6 mb-4 pb-2">
                             <FormControl>
-                              <InputLabel id="labelLocation">
-                                Location
-                              </InputLabel>
-                              <Select
-                                name="Location"
+                              <Autocomplete
+                                options={locations}
                                 sx={{ m: 1, minWidth: 150 }}
                                 size="small"
-                                labelId="labelLocation"
-                                id="demo-select-small"
-                                value={location}
-                                label="Gym Sex Type"
+                                renderInput={(params) => (
+                                  <TextField {...params} label="Location" />
+                                )}
                                 onChange={(e) => setLocation(e.target.value)}
-                              >
-                                {locations.map((element, index) => (
-                                  <MenuItem key={index} value={element}>
-                                    {element}
-                                  </MenuItem>
-                                ))}
-                              </Select>
+                              />
                             </FormControl>
                           </div>
                           <div className="col-md-6 mb-4 pb-2">

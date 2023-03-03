@@ -77,7 +77,7 @@ const createGym = async (req, res) => {
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
 const getGyms = async (req, res) => {
-  const gyms = await Gym.find({}).sort({ createdAt: -1 });
+  const gyms = await Gym.find({activeStatus:true}).sort({ createdAt: -1 });
   if (!gyms) {
     res.status(400).json({ error: "No Gyms in the system" });
   } else {
