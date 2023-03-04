@@ -52,7 +52,6 @@ const GymSignUpForm = () => {
   const [gymSexType, setGymSexType] = useState("unisex");
   const [gymContactNo1, setGymContactNo1] = useState("");
   const [gymContactNo2, setGymContactNo2] = useState("");
-  const [location, setLocation] = useState("");
   const [images, setImages] = useState([]);
   const [openingTime, setOpeningTime] = useState("");
   const [closingTime, setClosingTime] = useState("");
@@ -64,6 +63,22 @@ const GymSignUpForm = () => {
   const [confirmPwd, setConfirmPwd] = useState("");
 
   const userType = "gym";
+
+  //Location Drop Down Handlers (START)
+  const [location, setLocation] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  const getLocationOptionLabel = (locations) => {
+    if (!locations) {
+      return "";
+    }
+    return locations.label || "";
+  };
+  const handleOptionChangeLocation = (event, newValue) => {
+    setSelectedLocation(newValue);
+    setLocation(getLocationOptionLabel(newValue));
+  };
+  //Location Drop Down Handlers (END)
 
   //Showing images in frontend (START)
   const [imagesFrontend, setImagesFrontend] = useState([]);
@@ -304,12 +319,14 @@ const GymSignUpForm = () => {
                             <FormControl>
                               <Autocomplete
                                 options={locations}
-                                sx={{ m: 1, minWidth: 150 }}
-                                size="small"
-                                renderInput={(params) => (
-                                  <TextField {...params} label="Location" />
-                                )}
-                                onChange={(e) => setLocation(e.target.value)}
+                                    getOptionLabel={getLocationOptionLabel}
+                                    value={selectedLocation}
+                                    size="small"
+                                    renderInput={(params) => (
+                                      <TextField {...params} label="Location" />
+                                    )}
+                                    onChange={handleOptionChangeLocation}
+                                    
                               />
                             </FormControl>
                           </div>

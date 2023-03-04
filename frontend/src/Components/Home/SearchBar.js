@@ -19,7 +19,7 @@ import "aos/dist/aos.css";
 
 import { locations } from "../Shared/locations.js";
 
-const SearchBar = ({onDataFromSearchBar}) => {
+const SearchBar = ({ onDataFromSearchBar }) => {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
@@ -34,7 +34,6 @@ const SearchBar = ({onDataFromSearchBar}) => {
     fetchData();
   }, []);
 
-
   //Gym Drop Down Handlers (START)
   const [gymName, setGymName] = useState("");
   const [selectedGymName, setSelectedGymName] = useState(null);
@@ -48,7 +47,11 @@ const SearchBar = ({onDataFromSearchBar}) => {
   const handleOptionChangeGym = (event, newValue) => {
     setSelectedGymName(newValue);
     setGymName(getGymOptionLabel(newValue));
-    setIsDisabled(true);
+    if (!newValue) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   };
   //Gym Drop Down Handlers (END)
 
@@ -77,7 +80,6 @@ const SearchBar = ({onDataFromSearchBar}) => {
     setGender(event.target.value);
   };
   //gymSexType Drop Down Handlers (END)
-
 
   //Get the search Result
   const searchForGyms = async (e) => {
