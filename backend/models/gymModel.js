@@ -78,6 +78,10 @@ const gymSchema = new Schema(
       type: [String],
       required: false,
     },
+    gymRating :{
+      type: Number,
+      required: false,
+    },
     gymOwnerId: {
       type: mongoose.Schema.ObjectId,
       required: false,

@@ -20,6 +20,11 @@ export const MenuItems = [
         Name: "Mr.Member",
         NavsArray: [
             {
+                text: 'Search For Gyms',
+                icon: <FaUserEdit style={iconStyle} />,
+                path: "/",
+            },
+            {
                 text: 'View and Update Personal Info',
                 icon: <FaUserEdit style={iconStyle} />,
                 path: "/member-home/member-view-update",

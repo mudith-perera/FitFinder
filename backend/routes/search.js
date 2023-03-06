@@ -18,7 +18,7 @@ const router = express.Router();
 /////////////////////////  Description      : get the gyms searched by gymName, location, gymSexType
 /////////////////////////  Developer        : Gimhani Harshika
 /////////////////////////  (START)
-router.get("/search-gyms", searchGyms); 
+router.post("/search-gyms", searchGyms); 
 /////////////////////////  (END)
 
 //export the created routes
