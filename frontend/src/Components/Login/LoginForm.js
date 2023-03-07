@@ -62,7 +62,7 @@ const LoginForm = () => {
       },
     });
     const googleJson = await responseGoogle.json();
-
+    console.log(googleJson);
     if (!responseGoogle.ok) {
       userError(googleJson.message);
     } else {
@@ -73,6 +73,8 @@ const LoginForm = () => {
         googleJson["lastname"],
         googleJson["email"],
         googleJson["_id"],
+        googleJson["registeredGym"],
+
       ];
 
       setCookieAndNavigate(loggedUserDetails);
@@ -98,7 +100,6 @@ const LoginForm = () => {
       console.log(json.error);
     }
     if (response.ok) {
-      console.log("User Logged in");
       const loggedUserDetails = [
         json["userType"],
         json["activeStatus"],
@@ -106,6 +107,7 @@ const LoginForm = () => {
         json["lastname"],
         json["email"],
         json["_id"],
+        json["registeredGym"],
       ];
 
       setCookieAndNavigate(loggedUserDetails);

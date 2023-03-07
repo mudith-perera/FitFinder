@@ -20,7 +20,6 @@ function NavBar() {
   function removeCookie(){
     removeCookie("LoggedUser");
   }
-  console.log(email);
   return (
     <Navbar bg="myNavColor" variant="dark" expand="lg">
       <Container>
