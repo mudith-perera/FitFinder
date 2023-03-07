@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Rating from "@mui/material/Rating";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -10,14 +10,44 @@ import CardActions from "@mui/material/CardActions";
 
 import Carousel from "react-material-ui-carousel";
 
+import { useCookies } from "react-cookie";
+
 const SearchCard = (props) => {
+  const [cookie] = useCookies([""]);
+  const [loggedState, setLoggedState] = useState(false);
+  const [userId, setUserId] = useState('');
   useEffect(() => {
     Aos.init({ duration: 1000 });
+    if (cookie.LoggedUser) {
+      setLoggedState(true);
+      setUserId(cookie.LoggedUser[5]);
+    }
   });
 
   const results = props.result;
+  
+  
 
-  console.log(results);
+  const gymRegister = async (registeredGym) => {
+    //e.preventDefault();
+    const formData = { registeredGym };
+    console.log(userId);
+    //user validation backend
+    const response = await fetch("/api/users/"+userId, {
+      method: "PATCH",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+
+    if (!response.ok) {
+      console.log(json.error);
+    }
+    if (response.ok) {
+    }
+  };
 
   return (
     <div data-aos="fade-right">
@@ -53,7 +83,15 @@ const SearchCard = (props) => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">Register</Button>
+              {loggedState ? (
+                <Button size="small" onClick={() => gymRegister(result._id)}>
+                  Register
+                </Button>
+              ) : (
+                <Button size="small" href="/login">
+                  Login to register
+                </Button>
+              )}
             </CardActions>
           </Card>
         ))}

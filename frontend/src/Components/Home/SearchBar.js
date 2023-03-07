@@ -83,10 +83,8 @@ const SearchBar = ({ onDataFromSearchBar }) => {
 
   //Get the search Result
   const searchForGyms = async (e) => {
-    console.log("deded");
     e.preventDefault();
     const formData = { gymName, location, gymSexType };
-    console.log(formData);
     const response = await fetch("/api/search/search-gyms/", {
       method: "POST",
       body: JSON.stringify(formData),
