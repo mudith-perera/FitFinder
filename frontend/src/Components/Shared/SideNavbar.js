@@ -53,6 +53,11 @@ export const MenuItems = [
         Name: "Mr.Coach",
         NavsArray: [
             {
+                text: 'Search For Gyms',
+                icon: <FaUserEdit style={iconStyle} />,
+                path: "/",
+            },
+            {
                 text: 'View and Update Personal Info',
                 icon: <FaUserEdit style={iconStyle} />,
                 path: "/coach-home/coach-view-update",
