@@ -22,6 +22,8 @@ const faqRoutes = require("./routes/faq.js");
 const searchRoutes = require("./routes/search.js");
 //get schedule router
 const scheduleRouters = require("./routes/schedule.js");
+//get stripe router
+const stripeRouters = require("./routes/stripe");
 //get Routers(END)
 
 //connect to db(START)
@@ -68,7 +70,7 @@ app.use((req, res, next) => {
 app.use("/api/users", userRoutes);
 app.use("/api/gyms", gymRoutes);
 //app.use("api/faq", faqRoutes);   madara
-//app.use("api/search", searchRoutes); gimhani
-// app.use("api/schedule" , scheduleRouters); sachinththa
-
+app.use("/api/search", searchRoutes);
+app.use("/api/schedule" , scheduleRouters);
+app.use("/api/stripe", stripeRouters);
 //MIDDLE-WARE (END)

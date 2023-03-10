@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 
 import { CDBSidebarMenuItem } from "cdbreact";
 
-import { MdManageAccounts, MdScheduleSend } from "react-icons/md";
+import { MdManageAccounts, MdScheduleSend, MdPayments } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
 import { FaUsers, FaUserEdit, FaUserPlus, FaBars } from "react-icons/fa";
 
@@ -20,20 +20,32 @@ export const MenuItems = [
         Name: "Mr.Member",
         NavsArray: [
             {
+                text: 'Search For Gyms',
+                icon: <FaUserEdit style={iconStyle} />,
+                path: "/",
+            },
+            {
                 text: 'View and Update Personal Info',
                 icon: <FaUserEdit style={iconStyle} />,
-                path: "/member-view-update",
+                path: "/member-home/member-view-update",
             },
             {
                 text: 'View Schedule',
                 icon: <AiFillSchedule style={iconStyle} />,
-                path: "/schedule",
+                path: "/member-home/schedule",
             },
             {
                 text: 'Manage Registered Gym',
                 icon: <MdManageAccounts style={iconStyle} />,
-                path: "/member-registered-gym",
+                path: "/member-home/member-registered-gym",
             },
+            //////// (Mudith Perera) Payment added - (START) ///////
+            {
+                text: 'Payment',
+                icon: <MdPayments style={iconStyle} />,
+                path: "/member-home/member-payment",
+            },
+             //////// (Mudith Perera) Payment added - (END) ///////
         ],
     },
     {
@@ -41,19 +53,24 @@ export const MenuItems = [
         Name: "Mr.Coach",
         NavsArray: [
             {
+                text: 'Search For Gyms',
+                icon: <FaUserEdit style={iconStyle} />,
+                path: "/",
+            },
+            {
                 text: 'View and Update Personal Info',
                 icon: <FaUserEdit style={iconStyle} />,
-                path: "/coach-view-update",
+                path: "/coach-home/coach-view-update",
             },
             {
                 text: 'Schedule Request',
                 icon: <MdScheduleSend style={iconStyle} />,
-                path: "/coach-schedule-request",
+                path: "/coach-home/choose-user",
             },
             {
                 text: 'Manage Registered Gym',
                 icon: <MdManageAccounts style={iconStyle} />,
-                path: "/coach-registered-gym",
+                path: "/coach-home/coach-registered-gym",
             },
         ],
     },
@@ -64,12 +81,12 @@ export const MenuItems = [
             {
                 text: 'View and Update Personal Info',
                 icon: <FaUserEdit style={iconStyle} />,
-                path: "/gym-view-update",
+                path: "/gym-home/gym-view-update",
             },
             {
                 text: 'View All Gym Members',
                 icon: <FaUsers style={iconStyle} />,
-                path: "/view-all-gym-members",
+                path: "/gym-home/view-all-gym-members",
             },
             {
                 text: 'Add Gym Coach',
@@ -79,7 +96,7 @@ export const MenuItems = [
             {
                 text: 'View All Gym Coaches',
                 icon: <FaUsers style={iconStyle} />,
-                path: "/view-all-gym-coaches",
+                path: "/gym-home/view-all-gym-coaches",
             },
         ],
     },
@@ -196,6 +213,9 @@ const Footer = styled.div`
 const SideNavbar = (props) => {
     const [userType] = useState(props.userRole);
 
+    //////// (Mudith Perera) Logged User Data - (START) ///////
+    const [username] = useState(props.userName);
+    //////// (Mudith Perera) Logged User Data - (END) ///////
     const [isOpen, setIsOpen] = useState(true);
 
     const toggle = () => {
@@ -218,7 +238,7 @@ const SideNavbar = (props) => {
                                     </Toggle>
                                 </Row>
                                 <UserName style={{ display: isOpen ? "block" : "none" }}>
-                                    {MenuItems[0].Name}
+                                    {username}
                                 </UserName>
                             </React.Fragment>
                             :

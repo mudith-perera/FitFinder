@@ -1,108 +1,127 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Rating from "@mui/material/Rating";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-import { Link } from "react-router-dom";
+import { Card, CardContent, Typography } from "@mui/material";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import CardActions from "@mui/material/CardActions";
 
-import img01 from "../../Images/gym1.png";
+import Carousel from "react-material-ui-carousel";
 
-const SearchCard = () => {
+import { useCookies } from "react-cookie";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const SearchCard = (props) => {
+  const [cookie] = useCookies([""]);
+  const [loggedState, setLoggedState] = useState(false);
+  const [userId, setUserId] = useState("");
+
   useEffect(() => {
     Aos.init({ duration: 1000 });
-  });
-  const value = 2;
+    if (cookie.LoggedUser) {
+      setLoggedState(true);
+      setUserId(cookie.LoggedUser[5]);
+    }
+  }, [cookie.LoggedUser]);
 
-  const cardInfo = [
-    {
-      id: "1",
-      bdCity: "Homagama",
-      bdTown: "Habarakada",
-      bdCode: "WP10204",
-      bdDescription: "Gym Type: Both",
-    },
-    {
-      id: "2",
-      bdCity: "Colombo",
-      bdTown: "Borella",
-      bdCode: "WP00800",
-      bdDescription: "Gym Type: Both",
-    },
-    {
-      id: "3",
-      bdCity: "Dehiwalla",
-      bdTown: "Mount Lavinia",
-      bdCode: "WP10350",
-      bdDescription: "Gym Type: Only Male",
-    },
-    {
-      id: "4",
-      bdCity: "Nugegoda",
-      bdTown: "Gangodavila",
-      bdCode: "WP10250",
-      bdDescription: "Gym Type: Both",
-    },
-    {
-      id: "5",
-      bdCity: "Matara",
-      bdTown: "Nupe Junction",
-      bdCode: "SP81071",
-      bdDescription: "Gym Type: Both",
-    },
-    {
-      id: "6",
-      bdCity: "Kelaniya",
-      bdTown: "Dippitigoda",
-      bdCode: "WP11600",
-      bdDescription: "Gym Type: Only Male",
-    },
-  ];
-
-  const imagUrl = img01;
-
-  const cardRender = (card, index) => {
-    return (
-      < >
-        <div
-          className="col-lg-4 col-md-2 py-3 col d-flex justify-content-center"
-          key={index}
-        >
-          <section data-aos="flip-left">
-          <div className="card " style={{ width: "20rem" }}>
-            <img src={imagUrl} alt="card" />
-            <div className="card-body">
-              <div className="container">
-                <div className="row">
-                  <div className=" col-12">
-                    <h5 className="card-title">
-                      {card.bdCity}-{card.bdTown}
-                    </h5>
-                    <p>
-                      <Rating name="read-only" value={value} readOnly />
-                    </p>
-                    {/* <p className="card-subtitle">{card.bdCode}</p> */}
-                  </div>
-                </div>
-
-                {/* <img src={imagUrl} alt="card" /> */}
-
-                <p className="card-text">{card.bdDescription}</p>
-              </div>
-            </div>
-
-            <div className="card-body">
-              <Link to={`/element/${card.id}`} className="btn btn-dark">
-                View
-              </Link>
-              <button className="btn btn-secondary float-end">Save</button>
-            </div>
-          </div>
-          </section>
-        </div>
-      </>
-    );
+  //user account create success alert
+  const userSuccess = (gymName) => {
+    toast.success("You have Registered to " + gymName + " 😊", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
   };
 
-  return <div className="row">{cardInfo.map(cardRender)}</div>;
+  //user account create error alert
+  const userError = (error) => {
+    toast.error("😢 " + error, {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
+  const results = props.result;
+
+  const gymRegister = async (registeredGym, gymName) => {
+    //e.preventDefault();
+    const formData = { registeredGym };
+
+    //user validation backend
+    const response = await fetch("/api/users/" + userId, {
+      method: "PATCH",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+
+    if (!response.ok) {
+      userError(json.error);
+    }
+    if (response.ok) {
+      userSuccess(gymName);
+    }
+  };
+
+  return (
+    <>
+      <ToastContainer />
+
+      <div data-aos="fade-right">
+        {Array.isArray(results) &&
+          results.map((result) => (
+            <Card key={result._id} sx={{ marginBottom: 2 }}>
+              <Carousel>
+                {result.images.map((image, index) => (
+                  <CardMedia
+                    key={index}
+                    component="img"
+                    height="150px"
+                    image={image}
+                    alt={result.gymName}
+                  />
+                ))}
+              </Carousel>
+              <CardContent>
+                <Typography variant="h5" component="h2">
+                  {result.gymName}
+                </Typography>
+                <Typography color="text.secondary" gutterBottom>
+                  Email : {result.email}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  Gender : {result.gymSexType}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  Tele : {result.gymContactNo1} / {result.gymContactNo2}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  <Rating name="read-only" value={result.gymRating} readOnly />
+                </Typography>
+              </CardContent>
+              <CardActions>
+                {loggedState ? (
+                  <Button
+                    size="small"
+                    onClick={() => gymRegister(result._id, result.gymName)}
+                  >
+                    Register
+                  </Button>
+                ) : (
+                  <Button size="small" href="/login">
+                    Login to register
+                  </Button>
+                )}
+              </CardActions>
+            </Card>
+          ))}
+      </div>
+    </>
+  );
 };
 export default SearchCard;

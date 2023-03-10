@@ -18,12 +18,17 @@ import Button from "@mui/material/Button";
 import img1 from "../../Images/gym.png";
 import SendIcon from "@mui/icons-material/Send";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
+
+import { locations } from "./../Shared/locations.js";
 
 const GymSignUpForm = () => {
   useEffect(() => {
@@ -40,9 +45,6 @@ const GymSignUpForm = () => {
     });
   };
 
-  //Input field location
-  const locations = ["Kelaniya", "Mathara", "Colombo"];
-
   //All Input Fields
   const [gymName, setGymName] = useState("");
   const [gymOwnerName, setGymOwnerName] = useState("");
@@ -50,7 +52,6 @@ const GymSignUpForm = () => {
   const [gymSexType, setGymSexType] = useState("unisex");
   const [gymContactNo1, setGymContactNo1] = useState("");
   const [gymContactNo2, setGymContactNo2] = useState("");
-  const [location, setLocation] = useState("");
   const [images, setImages] = useState([]);
   const [openingTime, setOpeningTime] = useState("");
   const [closingTime, setClosingTime] = useState("");
@@ -63,13 +64,28 @@ const GymSignUpForm = () => {
 
   const userType = "gym";
 
+  //Location Drop Down Handlers (START)
+  const [location, setLocation] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  const getLocationOptionLabel = (locations) => {
+    if (!locations) {
+      return "";
+    }
+    return locations.label || "";
+  };
+  const handleOptionChangeLocation = (event, newValue) => {
+    setSelectedLocation(newValue);
+    setLocation(getLocationOptionLabel(newValue));
+  };
+  //Location Drop Down Handlers (END)
+
   //Showing images in frontend (START)
   const [imagesFrontend, setImagesFrontend] = useState([]);
   const imageHandleChange = (e) => {
-    
-      const files = e.target.files;
-      setImages(files);
-      
+    const files = e.target.files;
+    setImages(files);
+
     if (e.target.files) {
       //converting the image url to blob
       const fileArray = Array.from(e.target.files).map((file) =>
@@ -301,25 +317,17 @@ const GymSignUpForm = () => {
                         <div className="row">
                           <div className="col-md-6 mb-4 pb-2">
                             <FormControl>
-                              <InputLabel id="labelLocation">
-                                Location
-                              </InputLabel>
-                              <Select
-                                name="Location"
-                                sx={{ m: 1, minWidth: 150 }}
-                                size="small"
-                                labelId="labelLocation"
-                                id="demo-select-small"
-                                value={location}
-                                label="Gym Sex Type"
-                                onChange={(e) => setLocation(e.target.value)}
-                              >
-                                {locations.map((element, index) => (
-                                  <MenuItem key={index} value={element}>
-                                    {element}
-                                  </MenuItem>
-                                ))}
-                              </Select>
+                              <Autocomplete
+                                options={locations}
+                                    getOptionLabel={getLocationOptionLabel}
+                                    value={selectedLocation}
+                                    size="small"
+                                    renderInput={(params) => (
+                                      <TextField {...params} label="Location" />
+                                    )}
+                                    onChange={handleOptionChangeLocation}
+                                    
+                              />
                             </FormControl>
                           </div>
                           <div className="col-md-6 mb-4 pb-2">

@@ -101,13 +101,18 @@ const userSchema = new Schema(
 
     //Below Fields are use to make relationships with other Schemas
 
-    registeredGymId: {
+    registeredGym: {
       type: mongoose.Schema.ObjectId,
+      ref: "Gyms",
+    },
+    registeredGymActivateStatus: {
+      type: Boolean,
+      default: false,
       required: false,
     },
     scheduleId: {
       type: mongoose.Schema.ObjectId,
-      required: false,
+      ref: "UserSchedule",
     },
     activeStatus: {
       type: Boolean,
@@ -118,6 +123,28 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 //end of the Schema
+
+// populate the gym  details whenever use find() method
+userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "registeredGym",
+    select:
+      "gymName gymOwnerName email gymSexType gymContactNo1 gymContactNo2 location openingTime closingTime gymMonthlyFee gymAnnualFee gymAddress gymOwnerComment activeStatus images gymRating",
+  });
+
+  next();
+});
+
+// populate the gym  details whenever use find() method
+userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "scheduleId",
+    select:
+      "schedule exercises reps time instructions",
+  });
+
+  next();
+});
 
 // Hash the password before saving the user object
 userSchema.pre("save", function (next) {

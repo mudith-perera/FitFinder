@@ -2,7 +2,7 @@
 ///////////////////////// Modified Date   : 07-02-2023     /////////////////////////
 /////////////////////////           (START)                /////////////////////////
 
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -12,7 +12,14 @@ import { Link } from "react-router-dom";
 
 import { Link1, Span } from "./StyleElements/NavBarElements.js";
 
+import { useCookies } from "react-cookie";
+
 function NavBar() {
+  const [cookie] = useCookies([""]);
+  const [email] = useState(cookie.LoggedUser?cookie.LoggedUser[4]:"");
+  function removeCookie(){
+    removeCookie("LoggedUser");
+  }
   return (
     <Navbar bg="myNavColor" variant="dark" expand="lg">
       <Container>
@@ -20,10 +27,8 @@ function NavBar() {
           FitFinder
         </Navbar.Brand>
 
-        <Navbar.Toggle
-          aria-controls="basic-navbar-nav"
-        />
-        <Navbar.Collapse id="navbarScroll" >
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-4 my-lg-2" style={{ maxHeight: "250px" }}>
             <Nav.Link href="/" style={{ color: "white" }}>
               <Link1>
@@ -42,15 +47,27 @@ function NavBar() {
             </Nav.Link>
           </Nav>
           <Navbar.Brand>
+            {email ? (
+              <Link to={"/member-home"} className="button-6 ">
+                Profile
+              </Link>
+            ) : (
               <Link to={"sign-up"} className="button-6 ">
                 SignUp
               </Link>
-            </Navbar.Brand>
-            <Navbar.Brand>
+            )}
+          </Navbar.Brand>
+          <Navbar.Brand>
+            {email ? (
+              <Link to={"/login"} className="button-6 " onClick={removeCookie}>
+                Logout
+              </Link>
+            ) : (
               <Link to={"/login"} className="button-6 ">
                 Login
               </Link>
-            </Navbar.Brand>
+            )}
+          </Navbar.Brand>
         </Navbar.Collapse>
       </Container>
     </Navbar>
