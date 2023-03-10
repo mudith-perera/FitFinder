@@ -1,5 +1,5 @@
-import React from "react";
-import "./FNQ.css";
+import React, { useState } from "react";
+import "./FAQ.css";
 
 
 import {
@@ -16,9 +16,39 @@ import { MDBAccordion, MDBAccordionItem, MDBContainer } from 'mdb-react-ui-kit';
 import "react-toastify/dist/ReactToastify.css";
 
 
-const FNQ = () => {
+const FAQ = () => {
 
-    
+    const[email,setEmail] = useState('')
+    const[userQuection, setMessage] = useState('')
+    //const [error, setError] = useState(null)
+
+    const handleFNQ = async (e) => {
+      e.preventDefault()
+
+      const formData = {email,userQuection}
+      //console.log(formData);
+      const response = await fetch('/api/faq/', {
+        method : 'POST',
+        body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      }, 
+      })
+
+      const json = await response.json();
+
+    if (!response.ok) {
+      //setError(json.message);
+      console.log(json.error);
+    }
+    if (response.ok) {
+      console.log("added");
+      
+
+      //setCookieAndNavigate(loggedUserDetails);
+    }
+
+    }
 
     return (
       <React.Fragment>
@@ -91,14 +121,18 @@ const FNQ = () => {
             <div>
           {/* <MDBCol lg="6" md="12" className="text-center"> */}
             <p>
-              <span class="fw-bold">
+              <span className="fw-bold">
                 Still have any questions? Contact us to get your answer!
               </span>
             </p>
   
-            <form>
-              <MDBInput label="Email address" required className="mb-4" />
-              <MDBTextArea rows={4} label="Message" className="mb-4" />
+            <form onSubmit={handleFNQ}>
+              <MDBInput label="Email address" required className="mb-4" 
+              onChange={(e) => setEmail(e.target.value)}
+              />
+              <MDBTextArea rows={4} label="Message" className="mb-4" 
+              onChange={(e) => setMessage(e.target.value)}
+              />
               <MDBBtn block>Send</MDBBtn>
             </form>
           </div>
@@ -112,4 +146,4 @@ const FNQ = () => {
     </React.Fragment>
     );
 }
-export default FNQ;
+export default FAQ;

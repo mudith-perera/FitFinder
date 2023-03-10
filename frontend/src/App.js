@@ -11,7 +11,7 @@ import SignUp from "./Views/SignUp.js";
 import Home from "./Views/Home.js";
 import AboutUs from "./Components/About/AboutUs.js";
 import ForgotPassword from "./Components/Password/ForgotPasswordForm.js";
-import FAQ from "./Components/Home/FNQ";
+import FAQ from "./Components/Home/FAQ";
 import SearchResultElement from "./Components/Home/SearchResultElement.js";
 
 import AdminHome from "./Views/Admin/AdminHome.js";
