@@ -2,15 +2,14 @@
 
 const User = require('../models/userModel');
 const Schedule = require('../models/scheduleModel');
+const Gym = require("../models/gymModel.js");
 
 const getSchedule = async (req, res) => {
     const { userId } = req.params;
 
     try {
         // Try to find the schedule for the given user
-        console.log(userId);
         const schedule = await Schedule.findOne({ user: userId });
-        console.log(schedule);
 
         if (!schedule) {
             console.log("not found");
@@ -166,6 +165,22 @@ const deleteExercise = async (req, res) => {
     }
 };
 
+const getCoachUsers = async (req, res) => {
+    const { userId } = req.params;
+    const user = await User.findOne({ _id: userId });
+    const type = user.userType;
+    const gym = user.registeredGym._id.valueOf();
+    if(type == "coach"){
+        const Coachusers = await User.find({registeredGym: gym}).sort({ createdAt: -1 });
+        if (!user) {
+            res.status(400).json({ error: "You don't have any users registered under you" });
+        } else {
+            res.status(200).json(Coachusers);
+        }
+    } else {
+        res.status(400).json({ error: "You are not a coach" });
+    }
+};
 
 
 module.exports = {
@@ -173,4 +188,5 @@ module.exports = {
     updateSchedule,
     addExercise,
     deleteExercise,
+    getCoachUsers,
 };

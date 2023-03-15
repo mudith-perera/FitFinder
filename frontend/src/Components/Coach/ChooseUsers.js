@@ -8,14 +8,18 @@ import {
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import SideNavbar from "../Shared/SideNavbar.js";
+import { useCookies } from 'react-cookie';
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
+  const [cookie] = useCookies(['']);
+  const [userId] = useState((cookie.LoggedUser[5]));
+
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetch("/api/users");
+      const response = await fetch(`/api/schedule/getcoachusers/${userId}`, { method: 'GET' });
       const data = await response.json();
       setUsers(data);
     };
