@@ -253,7 +253,7 @@ const SideNavbar = (props) => {
                                         </Toggle>
                                     </Row>
                                     <UserName style={{ display: isOpen ? "block" : "none" }}>
-                                        {MenuItems[1].Name}
+                                        {username}
                                     </UserName>
                                 </React.Fragment>
                                 :
@@ -268,7 +268,7 @@ const SideNavbar = (props) => {
                                             </Toggle>
                                         </Row>
                                         <UserName style={{ display: isOpen ? "block" : "none" }}>
-                                            {MenuItems[2].Name}
+                                            {username}
                                         </UserName>
                                     </React.Fragment>
                                     :
