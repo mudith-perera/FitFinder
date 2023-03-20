@@ -12,7 +12,6 @@ import Home from "./Views/Home.js";
 import AboutUs from "./Components/About/AboutUs.js";
 import ForgotPassword from "./Components/Password/ForgotPasswordForm.js";
 import FAQ from "./Components/Home/FAQ";
-import SearchResultElement from "./Components/Home/SearchResultElement.js";
 
 import AdminHome from "./Views/Admin/AdminHome.js";
 
@@ -31,6 +30,7 @@ import MemberHome from "./Views/Member/MemberHome.js";
 import MemberViewUpdate from "./Components/Member/MemberViewAndUpdateForm.js";
 import MemberRegisteredGym from "./Components/Member/MemberRegisteredGym.js";
 import MemberPayment from "./Components/Payment/MemberPayment.js";
+import PaymentSuccess from "./Components/Payment/PaymentSuccess.js";
 
 import Schedule from "./Components/Member/ScheduleForm.js";
 import ScheduleManage from "./Components/Coach/ManageSchedule.js";
@@ -63,6 +63,7 @@ function App() {
           <Route exact path="/member-home/member-registered-gym"  element={<MemberRegisteredGym />}/>
           <Route exact path="/member-home/schedule" element={<Schedule />} />
           <Route exact path="/member-home/member-payment" element={<MemberPayment/>}/>
+          <Route exact path="/checkout-success" element={<PaymentSuccess/>}/>
 
           <Route exact path="/manage-schedule/:id" element={<ScheduleManage />} />
           <Route exact path="/password-reset" element={<PasswordReset />} />
@@ -79,7 +80,6 @@ function App() {
           <Route exact path="/gym-sign-up" element={<GymSignUpForm />} />
           <Route exact path="/Coach-sign-up" element={<CoachSignUpForm />} />
 
-          <Route exact path="/element/:id" element={<SearchResultElement />} />
           <Route exact path="/faq" element={<FAQ />} />
         </Route>
       </Routes>

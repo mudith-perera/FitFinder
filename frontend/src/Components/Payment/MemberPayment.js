@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SideNavbar from "../Shared/SideNavbar.js";
 import PayButton from "./PayButton.jsx";
 
-import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 const MemberPayment = () => {
   useEffect(() => {
@@ -24,13 +24,14 @@ const MemberPayment = () => {
     Aos.init({ duration: 1000 });
   });
 
-  const monthlyFee = useState(2000);
-  const annualFee = useState(40000);
+  const [cookie] = useCookies([""]);
+  const [username] = useState(
+    cookie.LoggedUser[2] + " " + cookie.LoggedUser[3]
+  );
+  const [useremail] = useState(cookie.LoggedUser[4]);
+  const monthlyFee = useState(cookie.LoggedUser[6].gymMonthlyFee);
+  const annualFee = useState(cookie.LoggedUser[6].gymAnnualFee);
   
-  const [cookie] = useCookies(['']);
-  const [username] = useState((cookie.LoggedUser[2])+ " " + (cookie.LoggedUser[3]));
-  const [useremail] = useState((cookie.LoggedUser[4]));
-
   return (
     <div>
       <div style={{ position: "fixed", zIndex: "1" }}>
@@ -54,8 +55,22 @@ const MemberPayment = () => {
                       Please Select a Payment Option below
                     </p>
                   </div>
-                  <div><p>Pay Monthly Rs : {monthlyFee}</p><PayButton username={username} useremail={useremail} fee={monthlyFee}/></div>
-                  <div><p>Pay Annualy Rs : {annualFee}</p><PayButton username={username} useremail={useremail} fee={annualFee}/></div>
+                  <div>
+                    <p>Pay Monthly Rs : {monthlyFee}</p>
+                    <PayButton
+                      username={username}
+                      useremail={useremail}
+                      fee={monthlyFee}
+                    />
+                  </div>
+                  <div>
+                    <p>Pay Annualy Rs : {annualFee}</p>
+                    <PayButton
+                      username={username}
+                      useremail={useremail}
+                      fee={annualFee}
+                    />
+                  </div>
 
                   <div
                     id="signInDiv"

@@ -19,7 +19,7 @@ import "aos/dist/aos.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 import SideNavbar from "../Shared/SideNavbar.js";
 
@@ -36,24 +36,29 @@ const MemberRegisteredGym = () => {
     });
   };
 
-  const [cookie] = useCookies(['']);
-  const [GymName, setGymName] = useState(cookie.LoggedUser[6].gymName);
-  const [GymOwnerName, setGymOwnerName] = useState(cookie.LoggedUser[6].gymOwnerName);
-  const [GymOwnerEmail, setGymOwnerEmail] = useState(cookie.LoggedUser[6].email);
-  const [ContactNo1, setContactNo1] = useState(cookie.LoggedUser[6].gymContactNo1);
-  const [ContactNo2, setContactNo2] = useState(cookie.LoggedUser[6].gymContactNo2);
-  const [Location, setLocation] = useState(cookie.LoggedUser[6].location);
-  const [Address, setAddress] = useState(cookie.LoggedUser[6].gymAddress);
-  const [MonthFee, setMonthFee] = useState(cookie.LoggedUser[6].gymMonthlyFee);
-  const [AnnualFee, setAnnualFee] = useState(cookie.LoggedUser[6].gymAnnualFee);
-  const [GymImages, setGymImages] = useState(cookie.LoggedUser[6].images);
+  const [cookie, setCookie] = useCookies(["LoggedUser"]);
+  const [gymDetails, setGymDetails] = useState(cookie.LoggedUser[6]);
+
+  const [GymName] = useState(gymDetails?.gymName);
+  const [GymOwnerName] = useState(gymDetails?.gymOwnerName);
+  const [GymOwnerEmail] = useState(gymDetails?.email);
+  const [ContactNo1] = useState(gymDetails?.gymContactNo1);
+  const [ContactNo2] = useState(gymDetails?.gymContactNo2);
+  const [Location] = useState(gymDetails?.location);
+  const [Address] = useState(gymDetails?.gymAddress);
+  const [MonthFee] = useState(gymDetails?.gymMonthlyFee);
+  const [AnnualFee] = useState(gymDetails?.gymAnnualFee);
+  const [GymImages] = useState(gymDetails?.images);
 
   // console.log(cookie);
 
   const registeredGymActivateStatus = false;
+  const registeredGym = null;
+
   const userId = cookie.LoggedUser[5];
+
   const gymRegistered = async () => {
-    const formData = { registeredGymActivateStatus };
+    const formData = { registeredGymActivateStatus, registeredGym };
 
     //user remove backend
     const response = await fetch("/api/users/" + userId, {
@@ -64,11 +69,13 @@ const MemberRegisteredGym = () => {
       },
     });
 
-    const json = await response.json();
-
     if (response.ok) {
       userSuccess();
-      console.log("new user added", json);
+      setGymDetails(null);
+      const cookieValue = cookie.LoggedUser;
+      console.log(cookieValue);
+      cookieValue[6] = null; // setting 6th index to null
+      setCookie("LoggedUser", cookieValue, { path: "/" });
     }
   };
 
@@ -78,13 +85,14 @@ const MemberRegisteredGym = () => {
       <div style={{ position: "fixed", zIndex: "1" }}>
         <SideNavbar userRole={cookie.LoggedUser[0]} />
       </div>
-      {cookie.LoggedUser[6].activeStatus ?
-
+      {gymDetails ? (
         <div className="container py-5 px-5">
           <div>
             <div className="card ">
               <div className="card-header">
-                <h4 className="card-title">{cookie.LoggedUser[0]} Currently Registered Gym</h4>
+                <h4 className="card-title">
+                  {cookie.LoggedUser[0]} Currently Registered Gym
+                </h4>
                 <img
                   src={gym}
                   alt="default pic"
@@ -150,22 +158,22 @@ const MemberRegisteredGym = () => {
                         width: 650,
                       }}
                     >
-
                       <Carousel className="py-2">
-                        {GymImages ?
+                        {GymImages ? (
                           GymImages.map((url, index) => (
                             <Carousel.Item key={index}>
                               <img
                                 key={index}
                                 src={url}
-                                alt={`Image ${index}`}
-                                style={{ width: "650px", height: "430px" }}
+                                alt={`pic ${index}`}
+                                style={{ width: "100%"}}
                               />
                               <Carousel.Caption></Carousel.Caption>
                             </Carousel.Item>
                           ))
-                          : <></>
-                        }
+                        ) : (
+                          <></>
+                        )}
                       </Carousel>
                     </td>
                   </tr>
@@ -183,8 +191,32 @@ const MemberRegisteredGym = () => {
             </div>
           </div>
         </div>
-        : <p>No Gym still you registered</p>}
+      ) : (
+        <section data-aos="fade-right" className="vh-800 gradient-custom">
+          <div className="container py-5 h-80">
+            <div className="row d-flex justify-content-center align-items-center h-600">
+              <div className="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div className="card bg-white" style={{ borderRadius: "1rem" }}>
+                  <div className="card-body p-3 text-center">
+                    <div className="mb-md-2 mt-md-4 pb-2">
+                      <br />
+                      <br />
+                      <h2 className="fw-bold mb-2 text-uppercase">
+                        You haven't Registered for a gym 😁
+                      </h2>
+                      <p>You can registered for a gym by searching...</p>
+                      <br />
+                    </div>
 
+                    <p className="large text-white-50">Or</p>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 };

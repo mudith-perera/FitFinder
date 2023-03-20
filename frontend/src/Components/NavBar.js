@@ -14,33 +14,54 @@ import { Link1, Span } from "./StyleElements/NavBarElements.js";
 
 import { useCookies } from "react-cookie";
 
+import FitfindertextLogo from "./../Images/fitfindertext.png";
+
 function NavBar() {
   const [cookie] = useCookies([""]);
-  const [email] = useState(cookie.LoggedUser?cookie.LoggedUser[4]:"");
-  function removeCookie(){
+  const [email] = useState(cookie.LoggedUser ? cookie.LoggedUser[4] : "");
+  function removeCookie() {
     removeCookie("LoggedUser");
   }
   return (
     <Navbar bg="myNavColor" variant="dark" expand="lg">
       <Container>
         <Navbar.Brand style={{ color: "white" }} href="/">
-          FitFinder
+          <img src={FitfindertextLogo} style={{ width: "200px" }} alt="fitfinder"/>
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="navbarScroll">
-          <Nav className="me-auto my-4 my-lg-2" style={{ maxHeight: "250px" }}>
-            <Nav.Link href="/" style={{ color: "white" }}>
+          <Nav
+            className="me-auto my-4 my-lg-2 mx-auto"
+            style={{ maxHeight: "250px" }}
+          >
+            <Nav.Link className="mx-auto" href="/" style={{ color: "white" }}>
               <Link1>
                 Home<Span className="Ho me-5"></Span>
               </Link1>
             </Nav.Link>
-            <Nav.Link style={{ color: "white" }} href="/faq">
+            <Nav.Link></Nav.Link>
+            <Nav.Link></Nav.Link>
+            <Nav.Link></Nav.Link>
+            <Nav.Link></Nav.Link>
+            <Nav.Link
+              className="mx-auto"
+              style={{ color: "white" }}
+              href="/faq"
+            >
               <Link1>
-                fnq<Span className="Ho"></Span>
+                faq<Span className="Ho"></Span>
               </Link1>
             </Nav.Link>
-            <Nav.Link style={{ color: "white" }} href="/about-us">
+            <Nav.Link></Nav.Link>
+            <Nav.Link></Nav.Link>
+            <Nav.Link></Nav.Link>
+            <Nav.Link></Nav.Link>
+            <Nav.Link
+              className="mx-auto"
+              style={{ color: "white" }}
+              href="/about-us"
+            >
               <Link1>
                 About Us<Span className="Ho"></Span>
               </Link1>

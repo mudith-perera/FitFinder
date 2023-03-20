@@ -7,6 +7,8 @@ import { Card, CardContent, Typography } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 
 import Carousel from "react-material-ui-carousel";
 
@@ -14,6 +16,23 @@ import { useCookies } from "react-cookie";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 500,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 4,
+  textAlign: "center",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "16px",
+};
 
 const SearchCard = (props) => {
   const [cookie] = useCookies([""]);
@@ -28,7 +47,7 @@ const SearchCard = (props) => {
     }
   }, [cookie.LoggedUser]);
 
-  //user account create success alert
+  //gym registra success alert
   const userSuccess = (gymName) => {
     toast.success("You have Registered to " + gymName + " 😊", {
       theme: "colored",
@@ -68,6 +87,16 @@ const SearchCard = (props) => {
     }
   };
 
+  const [openModalId, setOpenModalId] = useState(null);
+
+  const handleOpenModal = (id) => {
+    setOpenModalId(id);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModalId(null);
+  };
+
   return (
     <>
       <ToastContainer />
@@ -76,6 +105,52 @@ const SearchCard = (props) => {
         {Array.isArray(results) &&
           results.map((result) => (
             <Card key={result._id} sx={{ marginBottom: 2 }}>
+              <Modal
+                open={openModalId === result._id}
+                onClose={handleCloseModal}
+                aria-labelledby={`modal-title-${result._id}`}
+                aria-describedby={`modal-description-${result._id}`}
+              >
+                <Box sx={style}>
+                  <Typography
+                    id={`modal-title-${result._id}`}
+                    variant="h6"
+                    component="h2"
+                  >
+                    {result.gymName}
+                  </Typography>
+                  <Typography
+                    id={`modal-description-${result._id}`}
+                    sx={{ mt: 2 }}
+                  >
+                    Gym Owner's Name : {result.gymOwnerName}
+                  </Typography>
+                  <Typography
+                    id={`modal-description-${result._id}`}
+                    sx={{ mt: 2 }}
+                  >
+                    Gym Opening/Closing Time : {result.openingTime} - {result.closingTime}
+                  </Typography>
+                  <Typography
+                    id={`modal-description-${result._id}`}
+                    sx={{ mt: 2 }}
+                  >
+                    Gym Monthly Fee : {result.gymMonthlyFee}
+                  </Typography>
+                  <Typography
+                    id={`modal-description-${result._id}`}
+                    sx={{ mt: 2 }}
+                  >
+                    Gym Annual Fee : {result.gymAnnualFee}
+                  </Typography>
+                  <Typography
+                    id={`modal-description-${result._id}`}
+                    sx={{ mt: 2 }}
+                  >
+                    Gym Address : {result.gymAddress}
+                  </Typography>
+                </Box>
+              </Modal>
               <Carousel>
                 {result.images.map((image, index) => (
                   <CardMedia
@@ -117,6 +192,12 @@ const SearchCard = (props) => {
                     Login to register
                   </Button>
                 )}
+                <Button
+                  size="small"
+                  onClick={() => handleOpenModal(result._id)}
+                >
+                  More Details
+                </Button>
               </CardActions>
             </Card>
           ))}
