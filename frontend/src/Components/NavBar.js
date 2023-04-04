@@ -19,6 +19,7 @@ import FitfindertextLogo from "./../Images/fitfindertext.png";
 function NavBar() {
   const [cookie] = useCookies([""]);
   const [email] = useState(cookie.LoggedUser ? cookie.LoggedUser[4] : "");
+  const [userType] = useState(cookie.LoggedUser ? cookie.LoggedUser[0] : "");
   function removeCookie() {
     removeCookie("LoggedUser");
   }
@@ -26,7 +27,11 @@ function NavBar() {
     <Navbar bg="myNavColor" variant="dark" expand="lg">
       <Container>
         <Navbar.Brand style={{ color: "white" }} href="/">
-          <img src={FitfindertextLogo} style={{ width: "200px" }} alt="fitfinder"/>
+          <img
+            src={FitfindertextLogo}
+            style={{ width: "200px" }}
+            alt="fitfinder"
+          />
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -68,8 +73,12 @@ function NavBar() {
             </Nav.Link>
           </Nav>
           <Navbar.Brand>
-            {email ? (
+            {email && userType === "member" ? (
               <Link to={"/member-home"} className="button-6 ">
+                Profile
+              </Link>
+            ) : email && userType === "coach" ? (
+              <Link to={"/coach-home"} className="button-6 ">
                 Profile
               </Link>
             ) : (

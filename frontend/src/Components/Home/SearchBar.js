@@ -74,7 +74,7 @@ const SearchBar = ({ onDataFromSearchBar }) => {
   //Location Drop Down Handlers (END)
 
   //gymSexType Drop Down Handlers (START)
-  const [gymSexType, setGender] = useState("unisex");
+  const [gymSexType, setGender] = useState();
 
   const handleChange = (event) => {
     setGender(event.target.value);
@@ -161,6 +161,7 @@ const SearchBar = ({ onDataFromSearchBar }) => {
                             </div>
 
                             <div className="col-md-2 pb-2">
+                              
                               <FormControl>
                                 <InputLabel id="labelLocation">Sex</InputLabel>
                                 <Select
@@ -174,7 +175,7 @@ const SearchBar = ({ onDataFromSearchBar }) => {
                                   onChange={handleChange}
                                   disabled={isDisabled}
                                 >
-                                  <MenuItem value={"unisex"}>Unisex</MenuItem>
+                                  <MenuItem value={""}></MenuItem>
                                   <MenuItem value={"male"}>Male</MenuItem>
                                   <MenuItem value={"female"}>Female</MenuItem>
                                 </Select>

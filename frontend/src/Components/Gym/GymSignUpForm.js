@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import Box from "@mui/material/Box";
 
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -20,7 +21,6 @@ import SendIcon from "@mui/icons-material/Send";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -123,7 +123,9 @@ const GymSignUpForm = () => {
 
   //set images to null
   const removeImages = (e) => {
+    console.log("removed");
     setImages([]);
+    setImagesFrontend([]);
   };
 
   //Form Submit function
@@ -316,19 +318,27 @@ const GymSignUpForm = () => {
 
                         <div className="row">
                           <div className="col-md-6 mb-4 pb-2">
-                            <FormControl>
-                              <Autocomplete
-                                options={locations}
-                                    getOptionLabel={getLocationOptionLabel}
-                                    value={selectedLocation}
-                                    size="small"
-                                    renderInput={(params) => (
-                                      <TextField {...params} label="Location" />
-                                    )}
-                                    onChange={handleOptionChangeLocation}
-                                    
-                              />
-                            </FormControl>
+                            <Box
+                              sx={{
+                                "& .MuiTextField-root": { m: 1, width: "80%" },
+                                "& .MuiAutocomplete-root": { width: "200%" },
+                              }}
+                              noValidate
+                              autoComplete="off"
+                            >
+                              <FormControl>
+                                <Autocomplete
+                                  options={locations}
+                                  getOptionLabel={getLocationOptionLabel}
+                                  value={selectedLocation}
+                                  size="small"
+                                  renderInput={(params) => (
+                                    <TextField {...params} label="Location" />
+                                  )}
+                                  onChange={handleOptionChangeLocation}
+                                />
+                              </FormControl>
+                            </Box>
                           </div>
                           <div className="col-md-6 mb-4 pb-2">
                             <div className="drop-container">

@@ -25,13 +25,13 @@ const style = {
   width: 500,
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 4,
+  p: 2,
   borderRadius: 4,
   textAlign: "center",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "16px",
+  gap: "4px",
 };
 
 const SearchCard = (props) => {
@@ -100,7 +100,6 @@ const SearchCard = (props) => {
   return (
     <>
       <ToastContainer />
-
       <div data-aos="fade-right">
         {Array.isArray(results) &&
           results.map((result) => (
@@ -112,13 +111,16 @@ const SearchCard = (props) => {
                 aria-describedby={`modal-description-${result._id}`}
               >
                 <Box sx={style}>
-                  <Typography
-                    id={`modal-title-${result._id}`}
-                    variant="h6"
-                    component="h2"
-                  >
-                    {result.gymName}
-                  </Typography>
+                  <Box sx={{ display: "flex", flexDirection: "row" }}>
+                    <Typography
+                      id={`modal-title-${result._id}`}
+                      variant="h6"
+                      component="h2"
+                    >
+                      {result.gymName}
+                    </Typography>
+                    
+                  </Box>
                   <Typography
                     id={`modal-description-${result._id}`}
                     sx={{ mt: 2 }}
@@ -129,7 +131,8 @@ const SearchCard = (props) => {
                     id={`modal-description-${result._id}`}
                     sx={{ mt: 2 }}
                   >
-                    Gym Opening/Closing Time : {result.openingTime} - {result.closingTime}
+                    Gym Opening/Closing Time : {result.openingTime} -{" "}
+                    {result.closingTime}
                   </Typography>
                   <Typography
                     id={`modal-description-${result._id}`}
@@ -149,8 +152,20 @@ const SearchCard = (props) => {
                   >
                     Gym Address : {result.gymAddress}
                   </Typography>
+                  <Carousel sx={{ width: '400px' }} >
+                      {result.images.map((image, index) => (
+                        <CardMedia
+                          key={index}
+                          component="img"
+                          height="150px"
+                          image={image}
+                          alt={result.gymName}
+                        />
+                      ))}
+                    </Carousel>
                 </Box>
               </Modal>
+
               <Carousel>
                 {result.images.map((image, index) => (
                   <CardMedia
