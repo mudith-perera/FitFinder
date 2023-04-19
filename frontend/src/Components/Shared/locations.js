@@ -17,10 +17,12 @@ export const locations = [
   {id: 16, label: "Mathale"},
   {id: 17, label: "Mathara"},
   {id: 18, label: "Mullativu"},
-  {id: 19, label: "Polonnaruwa"},
-  {id: 19, label: "Puttalam"},
-  {id: 19, label: "Rathnapura"},
-  {id: 19, label: "Thrincomalee"},
-  {id: 19, label: "Vavuniya"},
+  {id: 19, label: "Moneragala"},
+  {id: 20, label: "Nuwara Eliya"},
+  {id: 21, label: "Polonnaruwa"},
+  {id: 22, label: "Puttalam"},
+  {id: 23, label: "Rathnapura"},
+  {id: 24, label: "Thrincomalee"},
+  {id: 25, label: "Vavuniya"},
 
 ];
