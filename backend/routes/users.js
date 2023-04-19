@@ -9,6 +9,8 @@ const {
   getUserEmailPwd,
   updateUser,
   deleteUser,
+  updateUserStatus,
+  updateregisteredGymActivateStatus,
 } = require("../controllers/userController");
 
 const { googleSignInUp } = require("../controllers/authController");
@@ -76,7 +78,23 @@ router.patch("/:id", updateUser);
 router.delete("/:id", deleteUser);
 /////////////////////////  (END)
 
+/////////////////////////  Handler          : /updateUserStatus/:id
+/////////////////////////  Controller       : updateUserStatus()
+/////////////////////////  Description      : update User Status
+/////////////////////////  Developer        : vimukthi
+/////////////////////////  (START)
+router.put('/updateUserStatus/:id', updateUserStatus);
 
+/////////////////////////  (END)
+
+/////////////////////////  Handler          : /updateregisteredGymActivateStatus/:id
+/////////////////////////  Controller       : updateregisteredGymActivateStatus()
+/////////////////////////  Description      : update User registered Gym Activate Status 
+/////////////////////////  Developer        : vimukthi
+/////////////////////////  (START)
+router.put('/updateregisteredGymActivateStatus/:id', updateregisteredGymActivateStatus);
+
+/////////////////////////  (END)
 
 
 ////////////////////////////////////////     Request Handlers (END)    ////////////////////////////////////////

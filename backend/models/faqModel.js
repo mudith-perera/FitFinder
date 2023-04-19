@@ -20,6 +20,10 @@ const faqSchema = new Schema(
       lowercase: true,
       required: [true, "Member must have an email"],
     },
+    answer: {
+      type: String,
+      default: "",
+    },
     
   },{timestamps:true}
   

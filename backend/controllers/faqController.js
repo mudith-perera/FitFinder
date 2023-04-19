@@ -45,7 +45,33 @@ const getFAQ = async (req, res) => {
 };
 /////////////////////////  (END)
 
+/////////////////////////  Controller       : updateData()
+/////////////////////////  Description      : update user's answer
+/////////////////////////  Developer        : vimukthi
+/////////////////////////  (START)
+const updateData = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { answer } = req.body;
+
+    const data = await FAQ.findByIdAndUpdate(
+      id,
+      { answer },
+      { new: true }
+    );
+
+    if (!data) {
+      return res.status(404).json({ message: "Data not found" });
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+/////////////////////////  (END)
 module.exports = {
   createFAQ,
   getFAQ,
+  updateData
 };

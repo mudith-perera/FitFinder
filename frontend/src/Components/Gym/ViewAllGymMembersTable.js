@@ -1,283 +1,189 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import MaterialReactTable from "material-react-table";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { DataGrid } from '@mui/x-data-grid';
+import { TextField } from '@mui/material';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import SearchIcon from '@mui/icons-material/Search';
+import Box from '@mui/material/Box';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 
-import SideNavbar from "../Shared/SideNavbar.js";
-//import Typography from '@material-ui/core/Typography'
+import './gymUserTable.css';
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  MenuItem,
-  Stack,
-  TextField,
-} from "@mui/material";
-//import { Delete, Edit } from '@mui/icons-material';
-//import { data, states } from './makeData';
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#004d80',
+    },
+    secondary: {
+      main: '#b0bec5',
+    },
+  },
+});
 
-/*const data = [
-    { id: 1, firstName: "Mudith", email: 'Mudith@gmail.com', phone: 1234567890, city: "Kalaniya",status:"Deactivated"},
-    { id: 2, firstName: "Madara", email: 'Madara@gmail.com', phone: 1234567890, city: "Panadura",status:"Deactivated" },
-    { id: 3, firstName: "Sachintha", email: 'Sachintha@gmail.com', phone: 1234567890, city: "Walasmulla",status:"Deactivated" },
-    { id: 4, firstName: "Gimhani", email: 'Gimhani@gmail.com', phone: 1234567890, city: "Padukka",status:"Activae" },
-    { id: 5, firstName: "Dilini", email: 'Dilini@gmail.com', phone: 1234567890, city: "Galle",status:"Deactivated" },
-    { id: 6, firstName: "Vimukthi", email: 'Vimukthi@gmail.com', phone: 1234567890, city: "Malabe",status:"Active" }
-  ]
-*/
-const states = [
+const columns = [
+  { field: 'id', headerName: 'ID', hide: true },
   {
-    stat: "Active",
+    field: 'firstname',
+    headerName: 'First Name',
+    flex: 1.5,
+    headerClassName: 'table-header',
   },
   {
-    stat: "Dativated",
+    field: 'lastname',
+    headerName: 'Last Name',
+    flex: 1.5,
+    headerClassName: 'table-header',
+  },
+  { field: 'age', headerName: 'Age', flex: 0.25, headerClassName: 'table-header' },
+  {
+    field: 'address',
+    headerName: 'Address',
+    flex: 2,
+    headerClassName: 'table-header',
+  },
+  {
+    field: 'email',
+    headerName: 'Email',
+    flex: 1.5,
+    headerClassName: 'table-header',
+  },
+  {
+    field: 'gender',
+    headerName: 'Gender',
+    flex: 0.75,
+    headerClassName: 'table-header',
+  },
+  {
+    field: 'contact',
+    headerName: 'Phone Number',
+    flex: 1,
+    headerClassName: 'table-header',
+  },
+  {
+    field: 'userType',
+    headerName: 'User',
+    flex: 1,
+    headerClassName: 'table-header',
+  },
+  {
+    field: 'userComments',
+    headerName: 'Comments',
+    flex: 2,
+    headerClassName: 'table-header',
+  },
+  {
+    field: 'coachType',
+    headerName: 'Coach Type',
+    flex: 1,
+    headerClassName: 'table-header',
+  },
+  {
+    field: 'registeredGymActivateStatus',
+    headerName: 'Gym Status',
+    flex: 2,
+    headerClassName: 'table-header',
+    renderCell: (params) => {
+      const handleStatusChange = async (event) => {
+        try {
+          const response = await axios.put(
+            `/api/users/updateregisteredGymActivateStatus/${params.row._id}`, // Use the MongoDB ID of the user
+            {
+              registeredGymActivateStatus: event.target.value === 'true' ? false : true,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+          alert('Status updated');
+          window.location.reload();
+          params.setValue(response.data.registeredGymActivateStatus);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      return (
+        
+        <ToggleButtonGroup
+          value={params.value}
+          exclusive
+          onChange={handleStatusChange}
+        >
+          <ToggleButton value={false} className="active-button">
+            Active
+          </ToggleButton>
+          <ToggleButton value={true} className="inactive-button">
+            Inactive
+          </ToggleButton>
+        </ToggleButtonGroup>
+      );
+    },
   },
 ];
 
 const ViewAllGymMembersTable = () => {
-  const url = "http://localhost:4000/data";
-  const [tableData, setTableData] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    getData();
+    const getUsers = async () => {
+      try {
+        const response = await axios.get('/api/users');
+        const filteredUsers = response.data.filter(user => user.userType === 'coach' || user.userType === 'member');
+        const updatedUsers = filteredUsers.map((user, index) => {
+          return { ...user, id: index + 1 };
+        });
+        setUsers(updatedUsers);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    
+
+    getUsers();
   }, []);
 
-  //show all data
-  const getData = () => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((response) => setTableData(response));
-  };
-  //const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [validationErrors, setValidationErrors] = useState({});
-  
-  //new row addding
-
-  const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
-    if (!Object.keys(validationErrors).length) {
-      const { id, ...updatedRow } = values; // Extract the updated row data without the id field
-      try {
-        const response = await fetch(`${url}/${id}`, {
-          method: "PUT",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(updatedRow),
-        });
-        if (response.ok) {
-          const updatedTableData = tableData.map((item) => {
-            if (item.id === id) {
-              return { ...item, ...updatedRow }; // Merge the updated row data with the original row data
-            }
-            return item;
-          });
-          setTableData(updatedTableData);
-          setTableData([...tableData]); // trigger a re-render of the table with the updated row
-          exitEditingMode();
-        } else {
-          throw new Error("Failed to update row");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
   };
 
-  const handleCancelRowEdits = () => {
-    setValidationErrors({});
-  };
-
-  const getCommonEditTextFieldProps = useCallback(
-    (cell) => {
-      return {
-        error: !!validationErrors[cell.id],
-        helperText: validationErrors[cell.id],
-        onBlur: (event) => {
-          //const isValid = cell.column.id === "email";
-          //? validateEmail(event.target.value)
-          //: cell.column.id === 'age'
-          //? validateAge(+event.target.value)
-          //: validateRequired(event.target.value);
-          /*if (!isValid) {
-            //set validation error for cell if invalid
-            setValidationErrors({
-              ...validationErrors,
-              [cell.id]: `${cell.column.columnDef.header} is required`,
-            });
-          } else {
-            //remove validation error for cell if valid
-            delete validationErrors[cell.id];
-            setValidationErrors({
-              ...validationErrors,
-            });
-          }*/
-        },
-      };
-    },
-    [validationErrors]
-  );
-
-  const columns = useMemo(
-    () => [
-      {
-        accessorKey: "id",
-        header: "ID",
-        enableColumnOrdering: false,
-        enableEditing: false, //disable editing on this column
-        enableSorting: false,
-        size: 80,
-      },
-      {
-        accessorKey: "firstName",
-        header: "First Name",
-        enableEditing: false, //disable editing on this column
-        size: 140,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
-      },
-      {
-        accessorKey: "city",
-        header: "City",
-        enableEditing: false, //disable editing on this column
-        size: 140,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
-      },
-      {
-        accessorKey: "email",
-        header: "Email",
-        enableEditing: false, //disable editing on this column
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          type: "email",
-        }),
-      },
-      {
-        accessorKey: "phone",
-        header: "Phone",
-        enableEditing: false, //disable editing on this column
-        size: 80,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          type: "number",
-        }),
-      },
-      {
-        accessorKey: "status",
-        header: "Status",
-        muiTableBodyCellEditTextFieldProps: {
-          select: true, //change to select for a dropdown
-          children: states.map((state) => (
-            <MenuItem key={state.stat} value={state.stat}>
-              {state.stat}
-            </MenuItem>
-          )),
-        },
-      },
-    ],
-    [getCommonEditTextFieldProps]
+  const filteredUsers = users.filter((user) =>
+    `${user.firstname} ${user.lastname}`
+      .toLowerCase()
+      .includes(searchText.toLowerCase())
   );
 
   return (
+    //<div className='tablev&u' style={{background:"#e2e7e9"}}>
     <div>
-      <div style={{ position: "fixed", zIndex: "1" }}>
-        <SideNavbar userRole="gym" />
-      </div>
-      <div
-        className="container py-5 h-100"
-        style={{ position: "relative", zIndex: "0" }}
-      >
-        <MaterialReactTable
-          displayColumnDefOptions={{
-            "mrt-row-actions": {
-              muiTableHeadCellProps: {
-                align: "center",
-              },
-              size: 120,
-            },
-          }}
-          columns={columns}
-          data={tableData}
-          editingMode="row"
-          positionActionsColumn="last"
-          enableEditing
-          onEditingRowSave={handleSaveRowEdits}
-          //onEditingRowSave={handleSaveRowEdits}
-          onEditingRowCancel={handleCancelRowEdits}
-          renderTopToolbarCustomActions={() => (
-            <div>
-              <h4>FitFinder Member</h4>
-              <br></br>
-            </div>
-          )}
-        />
-      </div>
+      <h2 style={{textAlign:"center"}}>View & Update All GymMembers Table</h2>
+      <ThemeProvider theme={theme}>
+        <Box className='' sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
+          <SearchIcon sx={{ color: 'text.secondary', mr: 1 }} />
+          <TextField
+            label="Search"
+            variant="standard"
+            size="small"
+            fullWidth
+            value={searchText}
+            onChange={handleSearchChange}
+          />
+        </Box>
+        <div className='table-row'style={{ height: 600, width: '100%' }}>
+          <DataGrid
+            rows={filteredUsers}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10, 25, 50]}
+            disableSelectionOnClick
+          />
+        </div>
+      </ThemeProvider>
     </div>
   );
 };
-
-//example of creating a mui dialog modal for creating new rows
-export const CreateNewAccountModal = ({ open, columns, onClose, onSubmit }) => {
-  const [values, setValues] = useState(() =>
-    columns.reduce((acc, column) => {
-      acc[column.accessorKey ?? ""] = "";
-      return acc;
-    }, {})
-  );
-
-  const handleSubmit = () => {
-    //put your validation logic here
-    onSubmit(values);
-    onClose();
-  };
-
-  return (
-    <Dialog open={open}>
-      <DialogTitle textAlign="center">Add New Account</DialogTitle>
-      <DialogContent>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <Stack
-            sx={{
-              width: "100%",
-              minWidth: { xs: "300px", sm: "360px", md: "400px" },
-              gap: "1.5rem",
-            }}
-          >
-            {columns.map((column) => (
-              <TextField
-                key={column.accessorKey}
-                label={column.header}
-                name={column.accessorKey}
-                onChange={(e) =>
-                  setValues({ ...values, [e.target.name]: e.target.value })
-                }
-              />
-            ))}
-          </Stack>
-        </form>
-      </DialogContent>
-      <DialogActions sx={{ p: "1.25rem" }}>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button color="secondary" onClick={handleSubmit} variant="contained">
-          Create New Account
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
-
-/*const validateRequired = (value) => !!value.length;
-const validateEmail = (email) =>
-  !!email.length &&
-  email
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    );
-const validateAge = (age) => age >= 18 && age <= 50;
-*/
-
 export default ViewAllGymMembersTable;

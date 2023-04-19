@@ -182,7 +182,45 @@ const deleteUser = async (req, res) => {
 
 /////////////////////////  (END)
 
+/////////////////////////  Controller       : updateUserStatus()
+/////////////////////////  Description      :  update User Status
+/////////////////////////  Developer        : vimukthi
+/////////////////////////  (START)
 
+const updateUserStatus = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { activeStatus: req.body.activeStatus },
+      { new: true }
+    );
+    res.json(user);
+  } catch (err) { 
+    console.log(err);
+    res.status(500).send('Server error');
+  }
+};
+
+
+/////////////////////////  (END)
+/////////////////////////  Controller       : updateUserStatus()-registeredGymActivateStatus
+/////////////////////////  Description      :  update User Status
+/////////////////////////  Developer        : vimukthi
+/////////////////////////  (START)
+
+const updateregisteredGymActivateStatus = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { registeredGymActivateStatus: req.body.registeredGymActivateStatus },
+      { new: true }
+    );
+    res.json(user);
+  } catch (err) { 
+    console.log(err);
+    res.status(500).send('Server error');
+  }
+};
 
 ////////////////////////////////////////     Controllers (END)    ////////////////////////////////////////
 
@@ -193,4 +231,6 @@ module.exports = {
   getUserEmailPwd,
   updateUser,
   deleteUser,
+  updateUserStatus,
+  updateregisteredGymActivateStatus,
 };
