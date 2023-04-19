@@ -9,6 +9,7 @@ const path = require("path");
 const {
     createFAQ,
     getFAQ,
+    updateData
   } = require("../controllers/faqController.js");
 
 const router = express.Router();
@@ -17,7 +18,7 @@ router.get("/", getFAQ);
 
 router.post("/",createFAQ);
 
-
+router.put("/:id", updateData);
 
 //export the created routes
 module.exports = router;

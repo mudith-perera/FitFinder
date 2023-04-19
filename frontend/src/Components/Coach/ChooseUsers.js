@@ -24,7 +24,7 @@ const UserTable = () => {
       setUsers(data);
     };
     getUsers();
-  }, []);
+  }, [userId]);
 
   const handleManageSchedule = (userId) => {
     navigate(`/manage-schedule/${userId}`);

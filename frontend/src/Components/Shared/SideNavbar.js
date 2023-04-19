@@ -107,12 +107,12 @@ export const MenuItems = [
             {
                 text: 'View All Users',
                 icon: <FaUsers style={iconStyle} />,
-                path: "/admin-view-users",
+                path: "/admin-home/view-and-update-all-users-table",
             },
             {
-                text: 'View All Gyms',
+                text: 'View FAQs',
                 icon: <MdScheduleSend style={iconStyle} />,
-                path: "/admin-view-gyms",
+                path: "/admin-home/faq-table",
             },
             {
                 text: 'Add Gym',
