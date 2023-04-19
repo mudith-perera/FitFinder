@@ -36,6 +36,8 @@ import Schedule from "./Components/Member/ScheduleForm.js";
 import ScheduleManage from "./Components/Coach/ManageSchedule.js";
 import ChooseUsers from "./Components/Coach/ChooseUsers.js";
 
+import FaQTable from "./Components/Admin/FaQTable.js";
+import ViewAndUpdateAllUsersTable from "./Components/Admin/ViewAndUpdateAllUseresTable.js";
 
 import PasswordReset from "./Components/Password/ResetPasswordForm.js";
 
@@ -47,6 +49,8 @@ function App() {
 
           <Route exact path="/uc-w" element={<UC />} />
           <Route exact path="/admin-home" element={<AdminHome />} />
+          <Route exact path="/admin-home/faq-table" element={<FaQTable />} />
+          <Route exact path="/admin-home/view-and-update-all-users-table" element={<ViewAndUpdateAllUsersTable />} />
 
           <Route exact path="/coach-home" element={<CoachHome />} />
           <Route exact path="/coach-home/coach-view-update" element={<CoachViewUpdateForm />} />

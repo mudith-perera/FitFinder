@@ -2,7 +2,7 @@
 ///////////////////////// Modified Date   : 19-02-2023     /////////////////////////
 /////////////////////////           (START)                /////////////////////////
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./UserGymHome.css";
 
 import Carousel from "react-bootstrap/Carousel";
@@ -19,7 +19,7 @@ import "aos/dist/aos.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 import SideNavbar from "../Shared/SideNavbar.js";
 
@@ -36,7 +36,7 @@ const CoachRegisteredGym = () => {
     });
   };
 
-  const [cookie] = useCookies(['']);
+  const [cookie] = useCookies([""]);
 
   // console.log(cookie);
 
@@ -68,13 +68,14 @@ const CoachRegisteredGym = () => {
       <div style={{ position: "fixed", zIndex: "1" }}>
         <SideNavbar userRole={cookie.LoggedUser[0]} />
       </div>
-      {cookie.LoggedUser[6].activeStatus ?
-
+      {cookie.LoggedUser[6].activeStatus ? (
         <div className="container py-5 px-5">
           <div>
             <div className="card ">
               <div className="card-header">
-                <h4 className="card-title">{cookie.LoggedUser[0]} Currently Registered Gym</h4>
+                <h4 className="card-title">
+                  {cookie.LoggedUser[0]} Currently Registered Gym
+                </h4>
                 <img
                   src={gym}
                   alt="default pic"
@@ -140,22 +141,21 @@ const CoachRegisteredGym = () => {
                         width: 650,
                       }}
                     >
-
                       <Carousel className="py-2">
-                        {cookie.LoggedUser[6].images ?
+                        {cookie.LoggedUser[6].images ? (
                           cookie.LoggedUser[6].images.map((url, index) => (
-                            <Carousel.Item key={index}>
-                              <img
-                                key={index}
-                                src={url}
-                                alt={`Image ${index}`}
-                                style={{ width: "650px", height: "430px" }}
-                              />
+                            <Carousel.Item
+                              key={index}
+                              src={url}
+                              alt={`Image ${index}`}
+                              style={{ width: "650px", height: "430px" }}
+                            >
                               <Carousel.Caption></Carousel.Caption>
                             </Carousel.Item>
                           ))
-                          : <></>
-                        }
+                        ) : (
+                          <></>
+                        )}
                       </Carousel>
                     </td>
                   </tr>
@@ -173,8 +173,9 @@ const CoachRegisteredGym = () => {
             </div>
           </div>
         </div>
-        : <p>No Gym still you registered</p>}
-
+      ) : (
+        <p>No Gym still you registered</p>
+      )}
     </div>
   );
 };
