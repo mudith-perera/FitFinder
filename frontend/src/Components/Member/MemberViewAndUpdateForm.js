@@ -2,7 +2,7 @@
 ///////////////////////// Modified Date   : 07-02-2023     /////////////////////////
 /////////////////////////           (START)                /////////////////////////
 
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MemberViewAndUpdateForm.css";
 import { MDBInput, MDBTextArea, MDBBtn } from "mdb-react-ui-kit";
 
@@ -14,20 +14,137 @@ import img2 from "../../Images/SignUpGymInfo.png";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-import { useCookies } from 'react-cookie';
+import { locations } from "./../Shared/locations.js";
+import FormControl from "@mui/material/FormControl";
+import Box from "@mui/material/Box";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+
+import { useCookies } from "react-cookie";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MemberViewAndUpdateForm = () => {
+  const [cookie] = useCookies([""]);
+  const [userData, setUserData] = useState(null);
+  const [userId] = useState(cookie.LoggedUser[5]);
+
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [nic, setNic] = useState("");
+  const [age, setAge] = useState("");
+  const [contact, setContact] = useState("");
+  const [gender, setGender] = useState("");
+  const [address, setAddress] = useState("");
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
+  const [fat, setFat] = useState("");
+  const [medicalConditions, setMedicalConditions] = useState("");
+
+  //Location Drop Down Handlers (START)
+  const [location, setLocation] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  console.log(location);
+  const getLocationOptionLabel = (locations) => {
+    if (!locations) {
+      return "";
+    }
+    return locations.label || "";
+  };
+  const handleOptionChangeLocation = (event, newValue) => {
+    setSelectedLocation(newValue);
+    setLocation(getLocationOptionLabel(newValue));
+  };
+  //Location Drop Down Handlers (END)
+
   useEffect(() => {
     Aos.init({ duration: 500 });
-  });
+    fetch(`/api/users/${userId}`)
+      .then((response) => response.json())
+      .then((data) => setUserData(data));
+  }, [userId]);
 
-  const [cookie] = useCookies(['']);
-  const [username] = useState((cookie.LoggedUser[2])+ " " + (cookie.LoggedUser[3]));
-  
+  const [username] = useState(
+    cookie.LoggedUser[2] + " " + cookie.LoggedUser[3]
+  );
+
+  useEffect(() => {
+    setFirstname(userData?.firstname);
+    setLastname(userData?.lastname);
+    setEmail(userData?.email);
+    setNic(userData?.nic);
+    setAge(userData?.age);
+    setContact(userData?.contact);
+    setGender(userData?.gender);
+    setAddress(userData?.address);
+    setWeight(userData?.weight);
+    setHeight(userData?.height);
+    setFat(userData?.fat);
+    setMedicalConditions(userData?.medicalConditions);
+    //setLocation(userData?.location);
+    //setSelectedLocation(userData?.location);
+  }, [userData]);
+
+  ///////////////////////////////////////////////////// Gym Update Function (START) /////////////////////////////////////////////////////
+  //gym registra success alert
+  const userSuccess = (gymName) => {
+    toast.success("You have Registered to " + gymName + " 😊", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
+  //user account create error alert
+  const userError = (error) => {
+    toast.error("😢 " + error, {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+  const updateUser = async (registeredGym, gymName) => {
+    //e.preventDefault();
+    const formData = {
+      firstname,
+      lastname,
+      email,
+      nic,
+      age,
+      contact,
+      gender,
+      address,
+      weight,
+      height,
+      fat,
+      medicalConditions,
+    };
+
+    //user validation backend
+    const response = await fetch("/api/users/" + userId, {
+      method: "PATCH",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+
+    if (!response.ok) {
+      userError(json.error);
+    }
+    if (response.ok) {
+      userSuccess(gymName);
+    }
+  };
+  ///////////////////////////////////////////////////// Gym Update Function (END) /////////////////////////////////////////////////////
+
   return (
+    <>
+     <ToastContainer />
     <div>
-      <div style={{ position: "fixed" , zIndex: "1"}}>
-        <SideNavbar userRole="member" userName = {username}  />
+      <div style={{ position: "fixed", zIndex: "1" }}>
+        <SideNavbar userRole="member" userName={username} />
       </div>
       <section data-aos="zoom-in">
         <div className="container py-5 h-100">
@@ -53,6 +170,8 @@ const MemberViewAndUpdateForm = () => {
                                 type="text"
                                 className="form-control form-control-lg"
                                 label="First name"
+                                value={firstname}
+                                onChange={(e) => setFirstname(e.target.value)}
                               />
                             </div>
                           </div>
@@ -62,6 +181,8 @@ const MemberViewAndUpdateForm = () => {
                                 type="text"
                                 className="form-control form-control-lg"
                                 label="Last name"
+                                value={lastname}
+                                onChange={(e) => setLastname(e.target.value)}
                               />
                             </div>
                           </div>
@@ -74,6 +195,8 @@ const MemberViewAndUpdateForm = () => {
                                 type="text"
                                 className="form-control form-control-lg"
                                 label="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                               />
                             </div>
                           </div>
@@ -83,6 +206,8 @@ const MemberViewAndUpdateForm = () => {
                                 type="text"
                                 className="form-control form-control-lg"
                                 label="NIC"
+                                value={nic}
+                                onChange={(e) => setNic(e.target.value)}
                               />
                             </div>
                           </div>
@@ -97,6 +222,8 @@ const MemberViewAndUpdateForm = () => {
                                 label="Age"
                                 min="12"
                                 max="100"
+                                value={age}
+                                onChange={(e) => setAge(e.target.value)}
                               />
                             </div>
                           </div>
@@ -106,6 +233,8 @@ const MemberViewAndUpdateForm = () => {
                                 type="text"
                                 className="form-control form-control-lg"
                                 label="Contact No"
+                                value={contact}
+                                onChange={(e) => setContact(e.target.value)}
                               />
                             </div>
                           </div>
@@ -116,12 +245,13 @@ const MemberViewAndUpdateForm = () => {
                             <label className="form-label">Gender</label>
                             <select
                               className="form-control"
-                              required
                               name="userType"
+                              value={gender}
+                              onChange={(e) => setGender(e.target.value)}
                             >
-                              <option value="student">Male</option>
-                              <option value="teacher">Female</option>
-                              <option value="regular">Rather not say</option>
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
+                              <option value="other">Other</option>
                             </select>
                           </div>
                         </div>
@@ -133,6 +263,8 @@ const MemberViewAndUpdateForm = () => {
                                 type="text"
                                 className="form-control form-control-lg"
                                 label="Address"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
                               />
                             </div>
                           </div>
@@ -140,11 +272,30 @@ const MemberViewAndUpdateForm = () => {
                         <div className="row">
                           <div className="col-md-6 mb-4 pb-2">
                             <div className="form-outline">
-                              <MDBInput
-                                type="text"
-                                className="form-control form-control-lg"
-                                label="Town"
-                              />
+                              <Box
+                                sx={{
+                                  "& .MuiTextField-root": {
+                                    m: 1,
+                                    width: "80%",
+                                  },
+                                  "& .MuiAutocomplete-root": { width: "200%" },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                              >
+                                <FormControl>
+                                  <Autocomplete
+                                    options={locations}
+                                    getOptionLabel={getLocationOptionLabel}
+                                    value={selectedLocation}
+                                    size="small"
+                                    renderInput={(params) => (
+                                      <TextField {...params} label="Location" />
+                                    )}
+                                    onChange={handleOptionChangeLocation}
+                                  />
+                                </FormControl>
+                              </Box>
                             </div>
                           </div>
                         </div>
@@ -165,6 +316,8 @@ const MemberViewAndUpdateForm = () => {
                                 className="form-control form-control-lg"
                                 label="weight (kg)"
                                 min="20"
+                                value={weight}
+                                onChange={(e) => setWeight(e.target.value)}
                                 style={{ backgroundColor: "transparent" }}
                               />
                             </div>
@@ -175,6 +328,8 @@ const MemberViewAndUpdateForm = () => {
                                 type="number"
                                 className="form-control form-control-lg"
                                 label="Height (cm)"
+                                value={height}
+                                onChange={(e) => setHeight(e.target.value)}
                                 style={{ backgroundColor: "transparent" }}
                               />
                             </div>
@@ -190,6 +345,8 @@ const MemberViewAndUpdateForm = () => {
                                 label="Fat (%)"
                                 min="1"
                                 max="100"
+                                value={fat}
+                                onChange={(e) => setFat(e.target.value)}
                                 style={{ backgroundColor: "transparent" }}
                               />
                             </div>
@@ -203,12 +360,16 @@ const MemberViewAndUpdateForm = () => {
                             className="form-control form-control-lg"
                             label="Medical Conditions (Seperated by ',' )"
                             style={{ backgroundColor: "transparent" }}
+                            value={medicalConditions}
+                            onChange={(e) =>
+                              setMedicalConditions(e.target.value)
+                            }
                           />
                         </div>
                         <br />
 
-                        <MDBBtn type="submit" outline color="light">
-                          Register
+                        <MDBBtn type="submit" outline color="light" onClick={updateUser}>
+                          Update
                         </MDBBtn>
                       </div>
                     </div>
@@ -220,6 +381,7 @@ const MemberViewAndUpdateForm = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 export default MemberViewAndUpdateForm;
