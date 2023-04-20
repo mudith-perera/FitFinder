@@ -46,7 +46,7 @@ const MemberViewAndUpdateForm = () => {
   //Location Drop Down Handlers (START)
   const [location, setLocation] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
-
+  console.log(location);
   const getLocationOptionLabel = (locations) => {
     if (!locations) {
       return "";
