@@ -13,6 +13,7 @@ const {
   updateGym,
   deleteGym,
   getGym,
+  getGymByOwnerEmail,
 } = require("../controllers/gymController.js");
 
 //get the Router instatnce from the express package
@@ -57,6 +58,14 @@ router.get("/:id", getGym);
 /////////////////////////  Developer        : Dilini Kariyawasam
 /////////////////////////  (START)
 router.delete("/:id", deleteGym);
+/////////////////////////  (END)
+
+/////////////////////////  Handler          : /getGymByOwnerEmail
+/////////////////////////  Controller       : getGymByOwnerEmail()
+/////////////////////////  Description      : Get gym details using owner's email
+/////////////////////////  Developer        : mudith Perera
+/////////////////////////  (START)
+router.post("/getGymByOwnerEmail", getGymByOwnerEmail);
 /////////////////////////  (END)
 
 //export the created routes
