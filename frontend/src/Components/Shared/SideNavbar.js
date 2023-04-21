@@ -93,11 +93,6 @@ export const MenuItems = [
                 icon: <FaUserPlus style={iconStyle} />,
                 path: "/uc-w",
             },
-            {
-                text: 'View All Gym Coaches',
-                icon: <FaUsers style={iconStyle} />,
-                path: "/gym-home/view-all-gym-coaches",
-            },
         ],
     },
     {

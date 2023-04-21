@@ -87,16 +87,16 @@ const MemberViewAndUpdateForm = () => {
     //setSelectedLocation(userData?.location);
   }, [userData]);
 
-  ///////////////////////////////////////////////////// Gym Update Function (START) /////////////////////////////////////////////////////
-  //gym registra success alert
+  ///////////////////////////////////////////////////// Member Update Function (START) /////////////////////////////////////////////////////
+  //success alert
   const userSuccess = (gymName) => {
-    toast.success("You have Registered to " + gymName + " 😊", {
+    toast.success("Update Success 😊", {
       theme: "colored",
       position: toast.POSITION.TOP_LEFT,
     });
   };
 
-  //user account create error alert
+  //error alert
   const userError = (error) => {
     toast.error("😢 " + error, {
       theme: "colored",
@@ -137,7 +137,7 @@ const MemberViewAndUpdateForm = () => {
       userSuccess(gymName);
     }
   };
-  ///////////////////////////////////////////////////// Gym Update Function (END) /////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////// Member Update Function (END) /////////////////////////////////////////////////////
 
   return (
     <>

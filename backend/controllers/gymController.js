@@ -77,7 +77,7 @@ const createGym = async (req, res) => {
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
 const getGyms = async (req, res) => {
-  const gyms = await Gym.find({activeStatus:true}).sort({ createdAt: -1 });
+  const gyms = await Gym.find({ activeStatus: true }).sort({ createdAt: -1 });
   if (!gyms) {
     res.status(400).json({ error: "No Gyms in the system" });
   } else {
@@ -150,8 +150,6 @@ const updateGym = async (req, res) => {
 };
 /////////////////////////  (END)
 
-
-
 /////////////////////////  Controller       : getGym()
 /////////////////////////  Description      : Get a single gym information
 /////////////////////////  Developer        : Dilini Kariyawasam
@@ -176,16 +174,34 @@ const getGym = async (req, res) => {
 /////////////////////////  Developer        : Dilini Kariyawasam
 /////////////////////////  (START)
 const deleteGym = async (req, res) => {
-  const { id }= req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
-  {
-    return res.status(404).json ({error : "No such Gym"})
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such Gym" });
   }
 
-  const gym2 = await Gym.findByIdAndDelete (id)
-   .then( () => {res.status(200).send({status: "Gym deleted"});})
+  const gym2 = await Gym.findByIdAndDelete(id).then(() => {
+    res.status(200).send({ status: "Gym deleted" });
+  });
 };
 
+/////////////////////////  (END)
+
+/////////////////////////  Controller       : getGymByOwnerEmail()
+/////////////////////////  Description      : Get a single gym information using owner email
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+const getGymByOwnerEmail = async (req, res) => {
+  console.log("swsws");
+  //grabbing the id from the route parameters
+  const { email } = req.body;
+  
+  gym = await Gym.find({ email }).sort({ createdAt: -1 });
+
+  if (!gym) {
+    return res.status(404).json({ error: "No such Gym found to given user" });
+  }
+  res.status(200).json(gym);
+};
 /////////////////////////  (END)
 
 module.exports = {
@@ -195,4 +211,5 @@ module.exports = {
   updateGym,
   deleteGym,
   getGym,
+  getGymByOwnerEmail,
 };
