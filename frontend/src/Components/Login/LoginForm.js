@@ -53,7 +53,6 @@ const LoginForm = () => {
     });
   };
   async function handleCallbackResponse(response) {
-    //console.log("Encoded JWT ID token : " + response.credential);
     var token = response.credential;
     const responseGoogle = await fetch("api/users/googleSignInUp/", {
       method: "POST",
@@ -62,7 +61,6 @@ const LoginForm = () => {
       },
     });
     const googleJson = await responseGoogle.json();
-    console.log(googleJson);
     if (!responseGoogle.ok) {
       userError(googleJson.message);
     } else {
@@ -97,7 +95,6 @@ const LoginForm = () => {
 
     if (!response.ok) {
       userError(json.message);
-      console.log(json.error);
     }
     if (response.ok) {
       const loggedUserDetails = [
@@ -116,9 +113,7 @@ const LoginForm = () => {
   };
 
   function setCookieAndNavigate(loggedUserDetails) {
-    console.log(loggedUserDetails);
     setCookie("LoggedUser", loggedUserDetails, { path: "/" });
-    console.log(cookie);
 
     if (loggedUserDetails[0] === "member") {
       navigate("/member-home");
@@ -130,7 +125,7 @@ const LoginForm = () => {
       navigate("/admin-home");
     }
   };
-
+console.log(cookie);
   return (
     <section data-aos="flip-right" className="vh-800 gradient-custom">
       <ToastContainer />

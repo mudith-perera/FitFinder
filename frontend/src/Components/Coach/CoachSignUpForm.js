@@ -96,7 +96,6 @@ const GymSignUpForm = () => {
       userType,
       activeStatus,
     };
-    console.log(formData);
 
     if (password === confirmPwd) {
       setpwsdMatch(true);
@@ -119,12 +118,6 @@ const GymSignUpForm = () => {
         setEmail("");
         setPassword("");
         setConfirmPwd("");
-        //console.log("new user added", json);
-
-        // setTimeout(() => {
-        //   navigate("/");
-        // }, 3000);
-        //window.location.reload(false);
       }
     } else {
       setpwsdMatch(false);

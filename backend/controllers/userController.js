@@ -195,7 +195,6 @@ const updateUserStatus = async (req, res) => {
     );
     res.json(user);
   } catch (err) {
-    console.log(err);
     res.status(500).send('Server error');
   }
 };
@@ -216,7 +215,6 @@ const updateRegisteredGymActivateStatus = async (req, res) => {
     );
     res.json(user);
   } catch (err) {
-    console.log(err);
     res.status(500).send('Server error');
   }
 };

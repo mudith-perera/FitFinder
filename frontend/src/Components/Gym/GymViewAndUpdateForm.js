@@ -22,10 +22,15 @@ import SideNavbar from "../Shared/SideNavbar.js";
 
 import { useCookies } from "react-cookie";
 
+import Dialog from '@mui/material/Dialog';
+
+import ResetPasswordForm from "../Password/ResetPasswordForm";
+
 const GymViewAndUpdateForm = () => {
   const [cookie] = useCookies([""]);
   const [email] = useState(cookie.LoggedUser[4]);
   const [gymData, setGymData] = useState("");
+  const [userId] = useState(cookie.LoggedUser[5]);
 
   //Input field location
   const locations = ["Kelaniya", "Mathara", "Colombo"];
@@ -59,7 +64,7 @@ const GymViewAndUpdateForm = () => {
         if (data) {
           setGymData(data[0]);
         }
-        
+
       } catch (error) {
         console.error(error);
       }
@@ -73,7 +78,6 @@ const GymViewAndUpdateForm = () => {
     setGymSexType(gymData?.gymSexType);
     setGymContactNo1(gymData?.gymContactNo1);
     setGymContactNo2(gymData?.gymContactNo2);
-    //location(userData?.contact);
     setGymMonthlyFee(gymData?.gymMonthlyFee);
     setGymAnnualFee(gymData?.gymAnnualFee);
     setGymAddress(gymData?.gymAddress);
@@ -141,10 +145,30 @@ const GymViewAndUpdateForm = () => {
   };
 
   ///////////////////////////////////////////////////// Gym Update Function (END) /////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////// Gym Password Reset (Start) /////////////////////////////////////////////////////
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  ///////////////////////////////////////////////////// Gym Password Reset (END) /////////////////////////////////////////////////////
 
   return (
     <>
       <ToastContainer />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <ResetPasswordForm userId={userId} />
+      </Dialog>
       <div>
         <div style={{ position: "fixed", zIndex: "1" }}>
           <SideNavbar userRole="gym" />
@@ -185,7 +209,7 @@ const GymViewAndUpdateForm = () => {
                                     label="Gym Name"
                                     value={gymName}
                                     onChange={(e) => setGymName(e.target.value)}
-                                    
+
                                   />
                                 </div>
                               </div>
@@ -233,7 +257,7 @@ const GymViewAndUpdateForm = () => {
                                     value={gymSexType}
                                     label="Gym Sex Type"
                                     onChange={handleChange}
-                                    
+
                                   >
                                     <MenuItem value={"unisex"}>Unisex</MenuItem>
                                     <MenuItem value={"male"}>Male</MenuItem>
@@ -255,7 +279,7 @@ const GymViewAndUpdateForm = () => {
                                     onChange={(e) =>
                                       setGymContactNo1(e.target.value)
                                     }
-                                    
+
                                   />
                                 </div>
                               </div>
@@ -292,7 +316,7 @@ const GymViewAndUpdateForm = () => {
                                     onChange={(e) =>
                                       setLocation(e.target.value)
                                     }
-                                    
+
                                   >
                                     {locations.map((element, index) => (
                                       <MenuItem key={index} value={element}>
@@ -359,7 +383,7 @@ const GymViewAndUpdateForm = () => {
                                       setGymAddress(e.target.value)
                                     }
                                     style={{ backgroundColor: "transparent" }}
-                                    
+
                                   />
                                 </div>
                               </div>
@@ -384,7 +408,7 @@ const GymViewAndUpdateForm = () => {
 
                             <div className="row">
                               <div className="col-md-6 mb-4 pb-2">
-                                <Button color="warning" variant="contained">
+                                <Button color="warning" variant="contained" onClick={handleClickOpen}>
                                   Reset Password
                                 </Button>
                               </div>

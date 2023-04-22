@@ -21,7 +21,6 @@ const router = express.Router();
 
 router.post("/create-checkout-session", async (req, res) => {
   const { username, fee, email } = req.body;
-  console.log(fee);
   //const intFee = parseInt(fee)/345;
   //creating a checkout session
   const session = await stripe.checkout.sessions.create({

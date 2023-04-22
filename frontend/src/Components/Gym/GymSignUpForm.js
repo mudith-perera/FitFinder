@@ -123,7 +123,6 @@ const GymSignUpForm = () => {
 
   //set images to null
   const removeImages = (e) => {
-    console.log("removed");
     setImages([]);
     setImagesFrontend([]);
   };
@@ -151,8 +150,6 @@ const GymSignUpForm = () => {
       formDataGym.append("images", images[i]);
     }
 
-    console.log(formDataGym);
-
     const formDataUser = {
       email,
       password,
@@ -160,8 +157,8 @@ const GymSignUpForm = () => {
     };
 
     if (password === confirmPwd) {
-      console.log("matched");
       setpwsdMatch(true);
+      console.log(pwsdMatch);
 
       //sending data to the backend
       const responseGym = await fetch("/api/gyms", {
@@ -189,18 +186,14 @@ const GymSignUpForm = () => {
 
       if (!responseGym.ok) {
         userError(jsonGym.error);
-        console.log(jsonGym.error);
       }
       if (responseGym.ok) {
         userSuccess("Gym Registration Request Send");
       }
     } else {
-      console.log("passwords not matched");
       setpwsdMatch(false);
       notifError();
     }
-
-    console.log(pwsdMatch);
   };
 
   return (

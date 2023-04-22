@@ -14,6 +14,9 @@ import ForgotPassword from "./Components/Password/ForgotPasswordForm.js";
 import FAQ from "./Components/Home/FAQ";
 
 import AdminHome from "./Views/Admin/AdminHome.js";
+import FaQTable from "./Components/Admin/FaQTable.js";
+import ViewAndUpdateAllUsersTable from "./Components/Admin/ViewAndUpdateAllUseresTable.js";
+import ManageGyms from "./Components/Admin/ManageGyms.js";
 
 import CoachHome from "./Views/Coach/CoachHome.js";
 import CoachSignUpForm from "./Components/Coach/CoachSignUpForm.js";
@@ -36,9 +39,6 @@ import Schedule from "./Components/Member/ScheduleForm.js";
 import ScheduleManage from "./Components/Coach/ManageSchedule.js";
 import ChooseUsers from "./Components/Coach/ChooseUsers.js";
 
-import FaQTable from "./Components/Admin/FaQTable.js";
-import ViewAndUpdateAllUsersTable from "./Components/Admin/ViewAndUpdateAllUseresTable.js";
-
 import PasswordReset from "./Components/Password/ResetPasswordForm.js";
 
 function App() {
@@ -50,7 +50,8 @@ function App() {
           <Route exact path="/uc-w" element={<UC />} />
           <Route exact path="/admin-home" element={<AdminHome />} />
           <Route exact path="/admin-home/faq-table" element={<FaQTable />} />
-          <Route exact path="/admin-home/view-and-update-all-users-table" element={<ViewAndUpdateAllUsersTable />} />
+          <Route exact path="/admin-home/manage-members" element={<ViewAndUpdateAllUsersTable />} />
+          <Route exact path="/admin-home/manage-gyms" element={<ManageGyms/>} />
 
           <Route exact path="/coach-home" element={<CoachHome />} />
           <Route exact path="/coach-home/coach-view-update" element={<CoachViewUpdateForm />} />
