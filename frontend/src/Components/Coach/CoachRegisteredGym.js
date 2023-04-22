@@ -88,7 +88,7 @@ const CoachRegisteredGym = () => {
         <SideNavbar userRole={cookie.LoggedUser[0]} />
       </div>
       {registeredGymStatus ? (
-        <div className="container py-5 px-5">
+        <div className="container py-5 px-5" data-aos="fade-down">
           <div>
             <div className="card ">
               <div className="card-header">

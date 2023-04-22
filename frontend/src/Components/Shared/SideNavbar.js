@@ -8,9 +8,9 @@ import { NavLink } from 'react-router-dom';
 
 import { CDBSidebarMenuItem } from "cdbreact";
 
-import { MdManageAccounts, MdScheduleSend, MdPayments } from "react-icons/md";
+import {  MdScheduleSend, MdPayments } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
-import { FaUsers, FaUserEdit, FaUserPlus, FaBars,FaSearch,FaPeopleCarry } from "react-icons/fa";
+import { FaUsers, FaUserEdit, FaUserPlus, FaBars,FaSearch,FaPeopleCarry,FaDumbbell } from "react-icons/fa";
 
 let iconStyle = { fontWeight: "600", color: "#fff", fontSize: "2rem" };
 
@@ -25,18 +25,13 @@ export const MenuItems = [
                 path: "/",
             },
             {
-                text: 'View and Update Personal Info',
-                icon: <FaUserEdit style={iconStyle} />,
-                path: "/member-home/member-view-update",
-            },
-            {
                 text: 'View Schedule',
                 icon: <AiFillSchedule style={iconStyle} />,
                 path: "/member-home/schedule",
             },
             {
                 text: 'Manage Registered Gym',
-                icon: <MdManageAccounts style={iconStyle} />,
+                icon: <FaDumbbell style={iconStyle} />,
                 path: "/member-home/member-registered-gym",
             },
             //////// (Mudith Perera) Payment added - (START) ///////
@@ -44,6 +39,11 @@ export const MenuItems = [
                 text: 'Payment',
                 icon: <MdPayments style={iconStyle} />,
                 path: "/member-home/member-payment",
+            },
+            {
+                text: 'Profile',
+                icon: <FaUserEdit style={iconStyle} />,
+                path: "/member-home/member-view-update",
             },
              //////// (Mudith Perera) Payment added - (END) ///////
         ],
@@ -58,19 +58,19 @@ export const MenuItems = [
                 path: "/",
             },
             {
-                text: 'View and Update Personal Info',
-                icon: <FaUserEdit style={iconStyle} />,
-                path: "/coach-home/coach-view-update",
-            },
-            {
                 text: 'Schedule Request',
                 icon: <MdScheduleSend style={iconStyle} />,
                 path: "/coach-home/choose-user",
             },
             {
                 text: 'Manage Registered Gym',
-                icon: <MdManageAccounts style={iconStyle} />,
+                icon: <FaDumbbell style={iconStyle} />,
                 path: "/coach-home/coach-registered-gym",
+            },
+            {
+                text: 'Profile',
+                icon: <FaUserEdit style={iconStyle} />,
+                path: "/coach-home/coach-view-update",
             },
         ],
     },
@@ -78,11 +78,6 @@ export const MenuItems = [
         Role: 'gym',
         Name: "Mr.Gym",
         NavsArray: [
-            {
-                text: 'View and Update Personal Info',
-                icon: <FaUserEdit style={iconStyle} />,
-                path: "/gym-home/gym-view-update",
-            },
             {
                 text: 'Manage Gym Members',
                 icon: <FaUsers style={iconStyle} />,
@@ -97,6 +92,11 @@ export const MenuItems = [
                 text: 'Add Gym Coach',
                 icon: <FaUserPlus style={iconStyle} />,
                 path: "/uc-w",
+            },
+            {
+                text: 'Gym Profile',
+                icon: <FaUserEdit style={iconStyle} />,
+                path: "/gym-home/gym-view-update",
             },
         ],
     },
@@ -204,7 +204,7 @@ const Signout = styled.div`
 const Footer = styled.div`
     display: flex;
     flex-direction: column;
-    padding-top: 50%;
+    padding-top: 20%;
     height: 15%;
 
     &:hover{
@@ -291,7 +291,6 @@ const SideNavbar = (props) => {
                     }
 
                 </TopSection>
-
                 <BottomSection>
 
                     {

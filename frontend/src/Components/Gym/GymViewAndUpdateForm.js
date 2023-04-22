@@ -173,7 +173,7 @@ const GymViewAndUpdateForm = () => {
         <div style={{ position: "fixed", zIndex: "1" }}>
           <SideNavbar userRole="gym" />
         </div>
-        <section data-aos="zoom-in">
+        <section data-aos="fade-down">
           {/* <ToastContainer /> */}
           <div className="container py-5 h-100">
             <div className="row d-flex justify-content-center align-items-center h-100">

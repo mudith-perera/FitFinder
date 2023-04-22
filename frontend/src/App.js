@@ -40,10 +40,12 @@ import ScheduleManage from "./Components/Coach/ManageSchedule.js";
 import ChooseUsers from "./Components/Coach/ChooseUsers.js";
 
 import PasswordReset from "./Components/Password/ResetPasswordForm.js";
+import ToTopBtn from "./Components/BackToTop/ToTopBtn.jsx"
 
 function App() {
   return (
     <Router>
+      <ToTopBtn/>
       <Routes>
         <Route element={<WithoutNavBar />}>
 
