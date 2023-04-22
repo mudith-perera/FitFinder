@@ -43,7 +43,6 @@ const createGym = async (req, res) => {
       const url = "http://" + req.headers.host + "/" + file.filename; // Get the URL of the uploaded file
       images.push(url); // Push the URL to the array
     });
-    console.log(images); // Log the array of URLs to the console
 
     //res.send("Files uploaded!");
     const gym = await Gym.create({

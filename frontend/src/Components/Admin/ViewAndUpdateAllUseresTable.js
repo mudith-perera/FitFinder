@@ -126,7 +126,10 @@ const ViewAndUpdateAllUsersTable = () => {
     const getUsers = async () => {
       try {
         const response = await axios.get("/api/users");
-        const updatedUsers = response.data.map((user, index) => {
+        const filteredUsers = response.data.filter(
+          (user) =>  user.userType === "member" || user.userType === "coach"
+        );
+        const updatedUsers = filteredUsers.map((user, index) => {
           return { ...user, id: index + 1 };
         });
         setUsers(updatedUsers);
@@ -162,7 +165,7 @@ const ViewAndUpdateAllUsersTable = () => {
                 <div className="card-body p-3">
                   <div>
                     <h2 style={{ textAlign: "center" }}>
-                      View & Update All Users Table
+                      Manage Members And Coaches
                     </h2>
                     <ThemeProvider theme={theme}>
                       <Box

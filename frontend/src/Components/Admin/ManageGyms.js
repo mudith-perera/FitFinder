@@ -9,11 +9,12 @@ import Box from "@mui/material/Box";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 
-import "./gymUserTable.css";
+import "./userTable.css";
 
 import SideNavbar from "../Shared/SideNavbar.js";
 
-import { useCookies } from "react-cookie";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const theme = createTheme({
   palette: {
@@ -27,74 +28,31 @@ const theme = createTheme({
 });
 
 const columns = [
-  { field: "id", headerName: "ID", flex: 0.5, hide: true },
+  { field: "id", headerName: "ID", hide: true,headerClassName: "table-header" },
   {
     field: "firstname",
-    headerName: "First Name",
-    flex: 1,
-    headerClassName: "table-header",
-  },
-  {
-    field: "lastname",
-    headerName: "Last Name",
-    flex: 1,
-    headerClassName: "table-header",
-  },
-  {
-    field: "age",
-    headerName: "Age",
-    flex: 0.25,
-    headerClassName: "table-header",
-  },
-  {
-    field: "address",
-    headerName: "Address",
-    flex: 2,
+    headerName: "Owner Name",
+    flex: 1.5,
     headerClassName: "table-header",
   },
   {
     field: "email",
     headerName: "Email",
-    flex: 1.5,
+    flex: 8.5,
     headerClassName: "table-header",
   },
   {
-    field: "gender",
-    headerName: "Gender",
-    flex: 0.75,
-    headerClassName: "table-header",
-  },
-  {
-    field: "contact",
-    headerName: "Phone Number",
-    flex: 1,
-    headerClassName: "table-header",
-  },
-  {
-    field: "userComments",
-    headerName: "Comments",
-    flex: 2,
-    headerClassName: "table-header",
-  },
-  {
-    field: "coachType",
-    headerName: "Coach Type",
-    flex: 1,
-    headerClassName: "table-header",
-  },
-  {
-    field: "registeredGymActivateStatus",
-    headerName: "Gym Status",
+    field: "activeStatus",
+    headerName: "Status",
     flex: 2,
     headerClassName: "table-header",
     renderCell: (params) => {
       const handleStatusChange = async (event) => {
         try {
           const response = await axios.put(
-            `/api/users/updateregisteredGymActivateStatus/${params.row._id}`, // Use the MongoDB ID of the user
+            `/api/users/updateUserStatus/${params.row._id}`, // Use the MongoDB ID of the user
             {
-              registeredGymActivateStatus:
-                event.target.value === "true" ? false : true,
+              activeStatus: event.target.value === "true" ? false : true,
             },
             {
               headers: {
@@ -104,7 +62,7 @@ const columns = [
           );
           alert("Status updated");
           window.location.reload();
-          params.setValue(response.data.registeredGymActivateStatus);
+          params.setValue(response.data.activeStatus);
         } catch (error) {
           console.log(error);
         }
@@ -124,48 +82,34 @@ const columns = [
           </ToggleButton>
         </ToggleButtonGroup>
       );
-    },
-  },
+    }
+  }
 ];
 
-const ViewAllGymCoachesTable = () => {
-  const [cookie] = useCookies([""]);
+const ManageGyms = () => {
   const [users, setUsers] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [email] = useState(cookie.LoggedUser[4]);
 
   useEffect(() => {
+    Aos.init({ duration: 1000 });
     const getUsers = async () => {
       try {
-        const formData = { email };
-        const response = await fetch("/api/users/getUsersByGymId", {
-          method: "POST",
-          body: JSON.stringify(formData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-  
-        if (response.ok) {
-          const data = await response.json(); // Parse response body as JSON
-          const filteredUsers = data.filter(
-            (user) => user.userType === "coach"
+        const response = await axios.get("/api/users");
+        
+        const filteredUsers = response.data.filter(
+            (user) =>  user.userType === "gym"
           );
           const updatedUsers = filteredUsers.map((user, index) => {
             return { ...user, id: index + 1 };
           });
-          setUsers(updatedUsers);
-        } else {
-          console.log("Server responded with error", response.status);
-        }
+        setUsers(updatedUsers);
       } catch (error) {
         console.log(error);
       }
     };
-  
+
     getUsers();
-  }, [email]);
-  
+  }, []);
 
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
@@ -180,21 +124,18 @@ const ViewAllGymCoachesTable = () => {
   return (
     <>
       <div style={{ position: "fixed", zIndex: "1" }}>
-        <SideNavbar userRole="gym" />
+        <SideNavbar userRole="admin" />
       </div>
 
       <section data-aos="fade-right" className=" gradient-custom">
         <div className="container py-5">
           <div className="row d-flex justify-content-center align-items-center">
             <div className="col-12 col-md-8 col-lg-2 col-xl-11">
-              <div
-                className="card bg-white"
-                style={{ borderRadius: "1rem", width: "1250px" }}
-              >
+              <div className="card bg-white" style={{ borderRadius: "1rem",width: "1250px" }}>
                 <div className="card-body p-3">
                   <div>
                     <h2 style={{ textAlign: "center" }}>
-                      Manage Gym Coaches
+                      Manage Gyms
                     </h2>
                     <ThemeProvider theme={theme}>
                       <Box
@@ -234,4 +175,4 @@ const ViewAllGymCoachesTable = () => {
     </>
   );
 };
-export default ViewAllGymCoachesTable ;
+export default ManageGyms;

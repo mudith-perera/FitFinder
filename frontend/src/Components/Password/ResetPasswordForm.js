@@ -55,7 +55,6 @@ const ResetPasswordForm = (props) => {
       },
     });
     const json = await response.json();
-    console.log(json);
     if (!response.ok) {
       userError(json.error);
     }

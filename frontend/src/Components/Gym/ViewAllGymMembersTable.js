@@ -142,7 +142,6 @@ const ViewAllGymMembersTable = () => {
   
         if (response.ok) {
           const data = await response.json(); // Parse response body as JSON
-          console.log(data);
           const filteredUsers = data.filter(
             (user) =>  user.userType === "member"
           );

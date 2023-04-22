@@ -105,20 +105,21 @@ export const MenuItems = [
         Name: "Mr.Admin",
         NavsArray: [
             {
-                text: 'View All Users',
+                text: 'Manage Gyms',
+                icon: <FaUserPlus style={iconStyle} />,
+                path: "/admin-home/manage-gyms",
+            },
+            {
+                text: 'Manage Members',
                 icon: <FaUsers style={iconStyle} />,
-                path: "/admin-home/view-and-update-all-users-table",
+                path: "/admin-home/manage-members",
             },
             {
                 text: 'View FAQs',
                 icon: <MdScheduleSend style={iconStyle} />,
                 path: "/admin-home/faq-table",
             },
-            {
-                text: 'Add Gym',
-                icon: <FaUserPlus style={iconStyle} />,
-                path: "/admin-add-gym",
-            },
+            
         ],
     },
 ]

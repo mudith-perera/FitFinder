@@ -70,7 +70,6 @@ const MemberRegisteredGym = () => {
     if (response.ok) {
       userSuccess();
       const cookieValue = cookie.LoggedUser;
-      console.log(cookieValue);
       cookieValue[6] = null; // setting 6th index to null
       setCookie("LoggedUser", cookieValue, { path: "/" });
       setGymDetails(null);

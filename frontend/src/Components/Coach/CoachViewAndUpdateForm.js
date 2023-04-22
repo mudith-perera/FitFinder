@@ -27,6 +27,10 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import Dialog from '@mui/material/Dialog';
+
+import ResetPasswordForm from "../Password/ResetPasswordForm";
+
 const CoachViewAndUpdateForm = () => {
   const [cookie] = useCookies([""]);
   const [userData, setUserData] = useState(null);
@@ -59,7 +63,6 @@ const CoachViewAndUpdateForm = () => {
     setUserComments(userData?.userComments);
     //setLocation(userData?.location);
     //setSelectedLocation(userData?.location);
-    console.log(userData);
   }, [userData]);
 
   //Input field gender handler
@@ -72,7 +75,7 @@ const CoachViewAndUpdateForm = () => {
     setCoachType(event.target.value);
   };
 
-  ///////////////////////////////////////////////////// Member Update Function (START) /////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////// Coach Update Function (START) /////////////////////////////////////////////////////
   //success alert
   const userSuccess = () => {
     toast.success("Update Success 😊", {
@@ -118,21 +121,21 @@ const CoachViewAndUpdateForm = () => {
       userSuccess();
     }
   };
-  ///////////////////////////////////////////////////// Member Update Function (END) /////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////// Coach Update Function (END) /////////////////////////////////////////////////////
 
-  ///////////////////////////////////////////////////// Member Delete Function (START) /////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////// Coach Delete Function (START) /////////////////////////////////////////////////////
   //success alert
-  
-  const userDelete = () => {
-    toast.success("Delete Success 😊", {
-      theme: "colored",
-      position: toast.POSITION.TOP_LEFT,
-    });
-  };
+
+  // const userDelete = () => {
+  //   toast.success("Delete Success 😊", {
+  //     theme: "colored",
+  //     position: toast.POSITION.TOP_LEFT,
+  //   });
+  // };
 
   const navigate = useNavigate();
 
-  
+
   const deleteCoach = async () => {
     //e.preventDefault();
     const formData = {
@@ -144,7 +147,7 @@ const CoachViewAndUpdateForm = () => {
       contact,
       address,
       userComments,
-     $set: { activeStatus: false } 
+      $set: { activeStatus: false }
     };
 
     //user validation backend
@@ -165,18 +168,33 @@ const CoachViewAndUpdateForm = () => {
     }
     navigate("/login");
   };
-  ///////////////////////////////////////////////////// Member Delete Function (END) /////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////// Coach Delete Function (END) /////////////////////////////////////////////////////
 
 
+  ///////////////////////////////////////////////////// Coach Password Reset (Start) /////////////////////////////////////////////////////
+  const [open, setOpen] = React.useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-
-  
+  ///////////////////////////////////////////////////// Member Password Reset (END) /////////////////////////////////////////////////////
 
   return (
     <>
       <ToastContainer />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <ResetPasswordForm userId={userId}/>
+      </Dialog>
       <div>
         <div style={{ position: "fixed", zIndex: "1" }}>
           <SideNavbar userRole="coach" />
@@ -372,7 +390,7 @@ const CoachViewAndUpdateForm = () => {
 
                             <div className="row">
                               <div className="col-md-6 mb-4 pb-2">
-                                <Button color="warning" variant="contained">
+                                <Button color="warning" variant="contained" onClick={handleClickOpen}>
                                   Reset Password
                                 </Button>
                               </div>

@@ -22,8 +22,6 @@ const PayButton = (props) => {
     const json = await response.json();
     if (response.ok) {
       window.location.href = json.message;
-      //navigate(json.message);
-      console.log(json.message);
     } else {
       console.log("error");
     }

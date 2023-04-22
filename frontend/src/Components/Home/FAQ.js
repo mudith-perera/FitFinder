@@ -26,7 +26,6 @@ const FAQ = () => {
       e.preventDefault()
 
       const formData = {email,userQuection}
-      //console.log(formData);
       const response = await fetch('/api/faq/', {
         method : 'POST',
         body: JSON.stringify(formData),
