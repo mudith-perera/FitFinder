@@ -99,10 +99,10 @@ const SearchBar = ({ onDataFromSearchBar }) => {
   };
 
   return (
-    <section data-aos="fade-right">
+    <section data-aos="fade-down">
       <div className="container py-5">
         <div className="row d-flex justify-content-center align-items-center">
-          <div className="col-12">
+          <div className="col-11">
             <div
               className="card card-registration card-registration-2"
               style={{ borderRadius: "15px", backgroundColor: "transparent" }}
@@ -125,8 +125,9 @@ const SearchBar = ({ onDataFromSearchBar }) => {
                           </h3>
 
                           <div className="row">
-                            <div className="col-md-1 mb-3 pb-2"></div>
-                            <div className="col-md-3 mb-3 pb-2">
+                            <div className="col-md-3 mb-3 pb-2"></div>
+                            
+                            <div className="col-md-2 mb-3 pb-2">
                               <div className="form-outline">
                                 <FormControl>
                                   <Autocomplete
@@ -142,7 +143,7 @@ const SearchBar = ({ onDataFromSearchBar }) => {
                                 </FormControl>
                               </div>
                             </div>
-                            <div className="col-md-3 mb-3 pb-2">
+                            <div className="col-md-2 mb-3 pb-2">
                               <div className="form-outline">
                                 <FormControl>
                                   <Autocomplete

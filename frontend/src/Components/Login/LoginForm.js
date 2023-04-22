@@ -124,8 +124,8 @@ const LoginForm = () => {
     } else if (loggedUserDetails[0] === "admin") {
       navigate("/admin-home");
     }
+    console.log(cookie);
   };
-console.log(cookie);
   return (
     <section data-aos="flip-right" className="vh-800 gradient-custom">
       <ToastContainer />

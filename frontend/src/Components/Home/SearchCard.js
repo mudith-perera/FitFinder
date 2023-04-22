@@ -100,9 +100,12 @@ const SearchCard = (props) => {
   return (
     <>
       <ToastContainer />
-      <div data-aos="fade-right">
-        {Array.isArray(results) &&
-          results.map((result) => (
+      {Array.isArray(results) &&
+        results.map((result) => (
+          <div data-aos="fade-right" style={{ width: "90%", margin: "0 auto" }}>
+
+
+
             <Card key={result._id} sx={{ marginBottom: 2 }}>
               <Modal
                 open={openModalId === result._id}
@@ -119,7 +122,7 @@ const SearchCard = (props) => {
                     >
                       {result.gymName}
                     </Typography>
-                    
+
                   </Box>
                   <Typography
                     id={`modal-description-${result._id}`}
@@ -153,70 +156,75 @@ const SearchCard = (props) => {
                     Gym Address : {result.gymAddress}
                   </Typography>
                   <Carousel sx={{ width: '400px' }} >
-                      {result.images.map((image, index) => (
-                        <CardMedia
-                          key={index}
-                          component="img"
-                          height="150px"
-                          image={image}
-                          alt={result.gymName}
-                        />
-                      ))}
-                    </Carousel>
+                    {result.images.map((image, index) => (
+                      <CardMedia
+                        key={index}
+                        component="img"
+                        height="150px"
+                        image={image}
+                        alt={result.gymName}
+                      />
+                    ))}
+                  </Carousel>
                 </Box>
               </Modal>
 
-              <Carousel>
-                {result.images.map((image, index) => (
-                  <CardMedia
-                    key={index}
-                    component="img"
-                    height="150px"
-                    image={image}
-                    alt={result.gymName}
-                  />
-                ))}
-              </Carousel>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  {result.gymName}
-                </Typography>
-                <Typography color="text.secondary" gutterBottom>
-                  Email : {result.email}
-                </Typography>
-                <Typography variant="body2" component="p">
-                  Gender : {result.gymSexType}
-                </Typography>
-                <Typography variant="body2" component="p">
-                  Tele : {result.gymContactNo1} / {result.gymContactNo2}
-                </Typography>
-                <Typography variant="body2" component="p">
-                  <Rating name="read-only" value={result.gymRating} readOnly />
-                </Typography>
-              </CardContent>
-              <CardActions>
-                {loggedState ? (
-                  <Button
-                    size="small"
-                    onClick={() => gymRegister(result._id, result.gymName)}
-                  >
-                    Register
-                  </Button>
-                ) : (
-                  <Button size="small" href="/login">
-                    Login to register
-                  </Button>
-                )}
-                <Button
-                  size="small"
-                  onClick={() => handleOpenModal(result._id)}
-                >
-                  More Details
-                </Button>
-              </CardActions>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "row-reverse" }}>
+                <Carousel sx={{ marginRight: "2rem", width: "60%", borderRadius: "1rem" }}>
+                  {result.images.map((image, index) => (
+                    <CardMedia
+                      key={index}
+                      component="img"
+                      height="150px"
+                      image={image}
+                      alt={result.gymName}
+                    />
+                  ))}
+                </Carousel>
+                <div style={{ flexGrow: 1 }}>
+                  <CardContent>
+                    <Typography variant="h5" component="h2">
+                      {result.gymName}
+                    </Typography>
+                    <Typography color="text.secondary" gutterBottom>
+                      Email : {result.email}
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                      Gender : {result.gymSexType}
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                      Tele : {result.gymContactNo1} / {result.gymContactNo2}
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                      <Rating name="read-only" value={result.gymRating} readOnly />
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    {loggedState ? (
+                      <Button
+                        size="small"
+                        onClick={() => gymRegister(result._id, result.gymName)}
+                      >
+                        Register
+                      </Button>
+                    ) : (
+                      <Button size="small" href="/login">
+                        Login to register
+                      </Button>
+                    )}
+                    <Button
+                      size="small"
+                      onClick={() => handleOpenModal(result._id)}
+                    >
+                      More Details
+                    </Button>
+                  </CardActions>
+                </div>
+              </div>
             </Card>
-          ))}
-      </div>
+          </div>
+        ))}
+
     </>
   );
 };
