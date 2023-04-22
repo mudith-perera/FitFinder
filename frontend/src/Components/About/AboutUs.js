@@ -6,6 +6,10 @@ import { MDBRow, MDBCol, MDBInput, MDBCheckbox, MDBBtn, MDBValidation, MDBValida
 
 import mudith1 from "../../Images/mudith.png";
 import dilini from "../../Images/dilini.png";
+import madara from "../../Images/madara.png";
+import gimhani from "../../Images/gimhani.png";
+import vimukthi from "../../Images/vimukthi.png";
+import sachintha from "../../Images/sachintha.png";
 
 
 import Aos from "aos";
@@ -54,10 +58,10 @@ const AboutUs = () => {
                       </h3>
                       <img className="img2" src={mudith1} alt="General Info" />
                       <img className="img2" src={dilini} alt="General Info" />
-                      <img className="img2" src={dilini} alt="General Info" />
-                      <img className="img2" src={dilini} alt="General Info" />
-                      <img className="img2" src={dilini} alt="General Info" />
-                      <img className="img2" src={dilini} alt="General Info" />
+                      <img className="img2" src={vimukthi} alt="General Info" />
+                      <img className="img2" src={gimhani} alt="General Info" />
+                      <img className="img2" src={sachintha} alt="General Info" />
+                      <img className="img2" src={madara} alt="General Info" />
 
                     </div>
                   </div>
