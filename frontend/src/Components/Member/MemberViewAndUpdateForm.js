@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./MemberViewAndUpdateForm.css";
-import { MDBInput, MDBTextArea, MDBBtn } from "mdb-react-ui-kit";
+import { MDBInput, MDBTextArea } from "mdb-react-ui-kit";
 
 import SideNavbar from "../Shared/SideNavbar.js";
 
@@ -25,6 +25,13 @@ import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import Dialog from '@mui/material/Dialog';
+
+import ResetPasswordForm from "../Password/ResetPasswordForm";
+
 const MemberViewAndUpdateForm = () => {
   const [cookie] = useCookies([""]);
   const [userData, setUserData] = useState(null);
@@ -42,6 +49,7 @@ const MemberViewAndUpdateForm = () => {
   const [height, setHeight] = useState("");
   const [fat, setFat] = useState("");
   const [medicalConditions, setMedicalConditions] = useState("");
+  const [password, setPassword] = useState("");
 
   //Location Drop Down Handlers (START)
   const [location, setLocation] = useState("");
@@ -83,6 +91,7 @@ const MemberViewAndUpdateForm = () => {
     setHeight(userData?.height);
     setFat(userData?.fat);
     setMedicalConditions(userData?.medicalConditions);
+    setPassword(userData?.password);
     //setLocation(userData?.location);
     //setSelectedLocation(userData?.location);
   }, [userData]);
@@ -139,9 +148,31 @@ const MemberViewAndUpdateForm = () => {
   };
   ///////////////////////////////////////////////////// Member Update Function (END) /////////////////////////////////////////////////////
 
+  ///////////////////////////////////////////////////// Member Password Reset (Start) /////////////////////////////////////////////////////
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  ///////////////////////////////////////////////////// Member Password Reset (END) /////////////////////////////////////////////////////
+
+
   return (
     <>
       <ToastContainer />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <ResetPasswordForm userId={userId}/>
+      </Dialog>
       <div>
         <div style={{ position: "fixed", zIndex: "1" }}>
           <SideNavbar userRole="member" userName={username} />
@@ -383,15 +414,29 @@ const MemberViewAndUpdateForm = () => {
                             />
                           </div>
                           <br />
-
-                          <MDBBtn
-                            type="submit"
-                            outline
-                            color="light"
-                            onClick={updateUser}
-                          >
+                          <Button variant="contained" onClick={updateUser}>
                             Update
-                          </MDBBtn>
+                          </Button>
+                          <br />
+                          <br />
+                          <div className="row">
+                            {password ? (<div className="col-md-6 mb-4 pb-2">
+                              <Button color="warning" variant="contained" onClick={handleClickOpen}>
+                                Reset Password
+                              </Button>
+                            </div>) : <></>}
+
+
+                            <div className="col-md-6 mb-4 pb-2">
+                              <Button
+                                color="error"
+                                variant="contained"
+                                startIcon={<DeleteIcon />}
+                              >
+                                Delete My Account
+                              </Button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>

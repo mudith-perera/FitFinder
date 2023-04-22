@@ -22,6 +22,7 @@ import "aos/dist/aos.css";
 import SideNavbar from "../Shared/SideNavbar.js";
 
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -119,6 +120,59 @@ const CoachViewAndUpdateForm = () => {
   };
   ///////////////////////////////////////////////////// Member Update Function (END) /////////////////////////////////////////////////////
 
+  ///////////////////////////////////////////////////// Member Delete Function (START) /////////////////////////////////////////////////////
+  //success alert
+  
+  const userDelete = () => {
+    toast.success("Delete Success 😊", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
+  const navigate = useNavigate();
+
+  
+  const deleteCoach = async () => {
+    //e.preventDefault();
+    const formData = {
+      firstname,
+      email,
+      gender,
+      age,
+      coachType,
+      contact,
+      address,
+      userComments,
+     $set: { activeStatus: false } 
+    };
+
+    //user validation backend
+    const response = await fetch("/api/users/" + userId, {
+      method: "PATCH",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+
+    if (!response.ok) {
+      userError(json.error);
+    }
+    if (response.ok) {
+      userSuccess();
+    }
+    navigate("/login");
+  };
+  ///////////////////////////////////////////////////// Member Delete Function (END) /////////////////////////////////////////////////////
+
+
+
+
+
+
+  
 
   return (
     <>
@@ -326,7 +380,7 @@ const CoachViewAndUpdateForm = () => {
                               <div className="col-md-6 mb-4 pb-2">
                                 <Button
                                   color="error"
-                                  variant="contained"
+                                  variant="contained" onClick={deleteCoach}
                                   startIcon={<DeleteIcon />}
                                 >
                                   Delete My Account
