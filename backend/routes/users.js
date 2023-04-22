@@ -12,6 +12,7 @@ const {
   updateUserStatus,
   updateRegisteredGymActivateStatus,
   getUsersByGymId,
+  updatePassword,
 } = require("../controllers/userController");
 
 const { googleSignInUp } = require("../controllers/authController");
@@ -104,6 +105,14 @@ router.put('/updateRegisteredGymActivateStatus/:id', updateRegisteredGymActivate
 /////////////////////////  (START)
 router.post('/getUsersByGymId/', getUsersByGymId);
 
+/////////////////////////  (END)
+
+/////////////////////////  Handler          : /updatePassword/
+/////////////////////////  Controller       : updatePassword()
+/////////////////////////  Description      : Update user password
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+router.patch('/updatePassword/:id', updatePassword);
 /////////////////////////  (END)
 
 ////////////////////////////////////////     Request Handlers (END)    ////////////////////////////////////////

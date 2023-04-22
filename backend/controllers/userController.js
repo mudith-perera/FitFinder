@@ -144,14 +144,23 @@ const updateUser = async (req, res) => {
     return res.status(404).json({ error: "No such User" });
   }
 
-  const user1 = await User.findOneAndUpdate({ _id: id }, { ...req.body, });
+  // Find the user object by ID and update it
+  const user = await User.findOneAndUpdate({ _id: id }, { ...req.body }, { new: true });
 
-  if (!user1) {
-    return res.status(400).json({ error: " No such User" });
+  if (!user) {
+    return res.status(400).json({ error: "No such User" });
   }
 
-  res.status(200).json(user1);
+  if (user.password && user.isModified("password")) {
+    const hash = await bcrypt.hash(user.password, 10);
+    user.password = hash;
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(id, user, { new: true });
+
+  res.status(200).json(updatedUser);
 };
+
 
 /////////////////////////  (END)
 
@@ -234,6 +243,43 @@ const getUsersByGymId = async (req, res) => {
 }
 /////////////////////////  (END)
 
+/////////////////////////  Controller       : updatePassword()
+/////////////////////////  Description      : Update Password of the users
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+const updatePassword = async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such User" });
+  }
+
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) {
+      return next(err);
+    }
+
+    // Hash the new password with the generated salt
+    bcrypt.hash(password, salt, (err, hash) => {
+      if (err) {
+        return next(err);
+      }
+
+      // Update the user's password with the new hash
+      User.findByIdAndUpdate(id, { password: hash }, (err, user) => {
+        if (err) {
+          return next(err);
+        }
+
+        res.status(200).json({ message: "Password updated successfully" });
+      });
+    });
+  });
+};
+
+/////////////////////////  (END)
+
 ////////////////////////////////////////     Controllers (END)    ////////////////////////////////////////
 
 module.exports = {
@@ -246,4 +292,5 @@ module.exports = {
   updateUserStatus,
   updateRegisteredGymActivateStatus,
   getUsersByGymId,
+  updatePassword,
 };
