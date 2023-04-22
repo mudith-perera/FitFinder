@@ -38,6 +38,7 @@ const CoachRegisteredGym = () => {
 
   const [cookie, setCookie] = useCookies(["LoggedUser"]);
   const [gymDetails, setGymDetails] = useState(cookie.LoggedUser[6]);
+  const [registeredGymStatus, setRegisteredGymStatus] = useState(cookie.LoggedUser[7]);
 
   const [GymName] = useState(gymDetails?.gymName);
   const [GymOwnerName] = useState(gymDetails?.gymOwnerName);
@@ -71,11 +72,12 @@ const CoachRegisteredGym = () => {
 
     if (response.ok) {
       userSuccess();
-      setGymDetails(null);
       const cookieValue = cookie.LoggedUser;
       console.log(cookieValue);
       cookieValue[6] = null; // setting 6th index to null
       setCookie("LoggedUser", cookieValue, { path: "/" });
+      setGymDetails(null);
+      setRegisteredGymStatus(false);
     }
   };
 
@@ -85,7 +87,7 @@ const CoachRegisteredGym = () => {
       <div style={{ position: "fixed", zIndex: "1" }}>
         <SideNavbar userRole={cookie.LoggedUser[0]} />
       </div>
-      {gymDetails ? (
+      {registeredGymStatus ? (
         <div className="container py-5 px-5">
           <div>
             <div className="card ">
@@ -166,7 +168,7 @@ const CoachRegisteredGym = () => {
                                 key={index}
                                 src={url}
                                 alt={`pic ${index}`}
-                                style={{ width: "100%"}}
+                                style={{ width: "100%" }}
                               />
                               <Carousel.Caption></Carousel.Caption>
                             </Carousel.Item>
@@ -201,10 +203,20 @@ const CoachRegisteredGym = () => {
                     <div className="mb-md-2 mt-md-4 pb-2">
                       <br />
                       <br />
-                      <h2 className="fw-bold mb-2 text-uppercase">
-                        You haven't Registered for a gym 😁
-                      </h2>
-                      <p>You can registered for a gym by searching...</p>
+                      {gymDetails ? (<h2 className="fw-bold mb-2 text-uppercase">
+                        Request Pending 🤞
+                      </h2>) :
+                        (<h2 className="fw-bold mb-2 text-uppercase">
+                          You haven't Registered for a gym 😁
+                        </h2>)}
+                      {gymDetails ? (
+                        <>
+                          <p>Please Wait Until the <b>{gymDetails?.gymName}</b> Accepts You.</p>
+                          <p>Contact the Gym <b>{gymDetails?.gymContactNo1}/{gymDetails?.gymContactNo2}</b></p>
+                        </>
+                      ) : (
+                        <p>You can registered for a gym by searching...</p>
+                      )}
                       <br />
                     </div>
 

@@ -13,6 +13,8 @@ import "./gymUserTable.css";
 
 import SideNavbar from "../Shared/SideNavbar.js";
 
+import { useCookies } from "react-cookie";
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -25,17 +27,17 @@ const theme = createTheme({
 });
 
 const columns = [
-  { field: "id", headerName: "ID", hide: true },
+  { field: "id", headerName: "ID", flex: 0.5, hide: true,headerClassName: "table-header" },
   {
     field: "firstname",
     headerName: "First Name",
-    flex: 1.5,
+    flex: 1,
     headerClassName: "table-header",
   },
   {
     field: "lastname",
     headerName: "Last Name",
-    flex: 1.5,
+    flex: 1,
     headerClassName: "table-header",
   },
   {
@@ -66,18 +68,6 @@ const columns = [
     field: "contact",
     headerName: "Phone Number",
     flex: 1,
-    headerClassName: "table-header",
-  },
-  {
-    field: "userType",
-    headerName: "User",
-    flex: 1,
-    headerClassName: "table-header",
-  },
-  {
-    field: "userComments",
-    headerName: "Comments",
-    flex: 2,
     headerClassName: "table-header",
   },
   {
@@ -133,27 +123,44 @@ const columns = [
 ];
 
 const ViewAllGymMembersTable = () => {
+  const [cookie] = useCookies([""]);
   const [users, setUsers] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [email] = useState(cookie.LoggedUser[4]);
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await axios.get("/api/users");
-        const filteredUsers = response.data.filter(
-          (user) => user.userType === "coach" || user.userType === "member"
-        );
-        const updatedUsers = filteredUsers.map((user, index) => {
-          return { ...user, id: index + 1 };
+        const formData = { email };
+        const response = await fetch("/api/users/getUsersByGymId", {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
-        setUsers(updatedUsers);
+  
+        if (response.ok) {
+          const data = await response.json(); // Parse response body as JSON
+          console.log(data);
+          const filteredUsers = data.filter(
+            (user) =>  user.userType === "member"
+          );
+          const updatedUsers = filteredUsers.map((user, index) => {
+            return { ...user, id: index + 1 };
+          });
+          setUsers(updatedUsers);
+        } else {
+          console.log("Server responded with error", response.status);
+        }
       } catch (error) {
         console.log(error);
       }
     };
-
+  
     getUsers();
-  }, []);
+  }, [email]);
+  
 
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
@@ -182,7 +189,7 @@ const ViewAllGymMembersTable = () => {
                 <div className="card-body p-3">
                   <div>
                     <h2 style={{ textAlign: "center" }}>
-                      View & Update All GymMembers Table
+                      Manage Gym Members
                     </h2>
                     <ThemeProvider theme={theme}>
                       <Box
