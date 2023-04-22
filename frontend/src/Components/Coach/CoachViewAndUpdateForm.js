@@ -21,24 +21,49 @@ import "aos/dist/aos.css";
 
 import SideNavbar from "../Shared/SideNavbar.js";
 
+import { useCookies } from "react-cookie";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const CoachViewAndUpdateForm = () => {
+  const [cookie] = useCookies([""]);
+  const [userData, setUserData] = useState(null);
+  const [userId] = useState(cookie.LoggedUser[5]);
+  //All Input Fields
+  const [firstname, setFirstname] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [coachType, setCoachType] = useState("");
+  const [contact, setContact] = useState("");
+  const [address, setAddress] = useState("");
+  const [userComments, setUserComments] = useState("");
   useEffect(() => {
     Aos.init({ duration: 500 });
-  });
 
-  //All Input Fields
-  const [coachName, setCoachName] = useState("");
-  const [coachEmail, setCoachEmail] = useState("");
-  const [coachGender, setCoachGender] = useState("unisex");
-  const [coachAge, setCoachAge] = useState("");
-  const [coachType, setCoachType] = useState("");
-  const [coachContactNo, setCoachContactNo] = useState("");
-  const [address, setAddress] = useState("");
-  const [coachComment, setCoachComment] = useState("");
+    fetch(`/api/users/${userId}`)
+      .then((response) => response.json())
+      .then((data) => setUserData(data));
+  }, [userId]);
+
+  useEffect(() => {
+    setFirstname(userData?.firstname);
+    setEmail(userData?.email);
+    setGender(userData?.gender);
+    setAge(userData?.age);
+    setCoachType(userData?.coachType);
+    setContact(userData?.contact);
+    setAddress(userData?.address);
+    setUserComments(userData?.userComments);
+    //setLocation(userData?.location);
+    //setSelectedLocation(userData?.location);
+    console.log(userData);
+  }, [userData]);
 
   //Input field gender handler
   const genderHandleChange = (event) => {
-    setCoachGender(event.target.value);
+    setGender(event.target.value);
   };
 
   //Input field Coach techniques handler
@@ -46,263 +71,280 @@ const CoachViewAndUpdateForm = () => {
     setCoachType(event.target.value);
   };
 
-  //Form Submit function
-  const signUpGym = async (e) => {
-    e.preventDefault();
-    const formData = {
-      coachName,
-      coachEmail,
-      coachGender,
-      coachAge,
-      coachType,
-      coachContactNo,
-      address,
-      coachComment,
-    };
-    console.log(formData);
+  ///////////////////////////////////////////////////// Member Update Function (START) /////////////////////////////////////////////////////
+  //success alert
+  const userSuccess = () => {
+    toast.success("Update Success 😊", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
   };
 
+  //error alert
+  const userError = (error) => {
+    toast.error("😢 " + error, {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  }
+  const updateCoach = async () => {
+    //e.preventDefault();
+    const formData = {
+      firstname,
+      email,
+      gender,
+      age,
+      coachType,
+      contact,
+      address,
+      userComments,
+    };
+
+    //user validation backend
+    const response = await fetch("/api/users/" + userId, {
+      method: "PATCH",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+
+    if (!response.ok) {
+      userError(json.error);
+    }
+    if (response.ok) {
+      userSuccess();
+    }
+  };
+  ///////////////////////////////////////////////////// Member Update Function (END) /////////////////////////////////////////////////////
+
+
   return (
-    <div>
-      <div style={{ position: "fixed", zIndex: "1" }}>
-        <SideNavbar userRole="coach" />
-      </div>
-      <section data-aos="zoom-in">
-        {/* <ToastContainer /> */}
-        <div className="container py-5 h-100">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-12">
-              <div
-                className="card card-registration card-registration-2"
-                style={{ borderRadius: "15px", backgroundColor: "transparent" }}
-              >
-                <div className="card-body p-0">
-                  <form onSubmit={signUpGym}>
-                    <div className="row g-0 ">
-                      <div className="col-lg-6 bg-partone">
-                        <div className="p-5">
-                          <h3 className="fw-normal mb-5">
-                            Coach Personal Info&emsp;
-                            <img
-                              className="img1"
-                              src={img1}
-                              alt="General Info"
-                            />
-                          </h3>
+    <>
+      <ToastContainer />
+      <div>
+        <div style={{ position: "fixed", zIndex: "1" }}>
+          <SideNavbar userRole="coach" />
+        </div>
+        <section data-aos="zoom-in">
+          {/* <ToastContainer /> */}
+          <div className="container py-5 h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col-12">
+                <div
+                  className="card card-registration card-registration-2"
+                  style={{
+                    borderRadius: "15px",
+                    backgroundColor: "transparent",
+                  }}
+                >
+                  <div className="card-body p-0">
+                    <form>
+                      <div className="row g-0 ">
+                        <div className="col-lg-6 bg-partone">
+                          <div className="p-5">
+                            <h3 className="fw-normal mb-5">
+                              Coach Personal Info&emsp;
+                              <img
+                                className="img1"
+                                src={img1}
+                                alt="General Info"
+                              />
+                            </h3>
 
-                          <div className="row">
-                            <div className="col-md-6 mb-4 pb-2">
-                              <div className="form-outline">
-                                <MDBInput
-                                  name="coachName"
-                                  type="text"
-                                  className="form-control form-control-lg"
-                                  label="Coach Name"
-                                  onChange={(e) => setCoachName(e.target.value)}
-                                  required
-                                />
+                            <div className="row">
+                              <div className="col-md-6 mb-4 pb-2">
+                                <div className="form-outline">
+                                  <MDBInput
+                                    name="coachName"
+                                    type="text"
+                                    className="form-control form-control-lg"
+                                    label="Coach Name"
+                                    onChange={(e) =>
+                                      setFirstname(e.target.value)
+                                    }
+                                    value={firstname}
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-md-6 mb-4 pb-2">
+                                <div className="form-outline">
+                                  <MDBInput
+                                    name="coachEmail"
+                                    type="text"
+                                    className="form-control form-control-lg"
+                                    label="Email"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={email}
+                                    disabled
+                                  />
+                                </div>
                               </div>
                             </div>
-                            <div className="col-md-6 mb-4 pb-2">
-                              <div className="form-outline">
-                                <MDBInput
-                                  name="coachEmail"
-                                  type="text"
-                                  className="form-control form-control-lg"
-                                  label="Email"
-                                  onChange={(e) =>
-                                    setCoachEmail(e.target.value)
-                                  }
-                                  required
-                                />
+
+                            <div className="row">
+                              <div className="col-md-6 mb-4 pb-2">
+                                <FormControl>
+                                  <InputLabel id="lableGender">
+                                    Gender
+                                  </InputLabel>
+                                  <Select
+                                    name="coachGender"
+                                    sx={{ m: 1, minWidth: 150 }}
+                                    size="small"
+                                    labelId="lableGender"
+                                    id="demo-select-small"
+                                    label="Gender"
+                                    onChange={genderHandleChange}
+                                    value={gender}
+                                  >
+                                    <MenuItem value={"male"}>Male</MenuItem>
+                                    <MenuItem value={"female"}>Female</MenuItem>
+                                  </Select>
+                                </FormControl>
                               </div>
                             </div>
-                          </div>
 
-                          <div className="row">
-                            <div className="col-md-6 mb-4 pb-2">
-                              <FormControl>
-                                <InputLabel id="lableGender">Gender</InputLabel>
-                                <Select
-                                  name="coachGender"
-                                  sx={{ m: 1, minWidth: 150 }}
-                                  size="small"
-                                  labelId="lableGender"
-                                  id="demo-select-small"
-                                  label="Gender"
-                                  onChange={genderHandleChange}
-                                  required
-                                >
-                                  <MenuItem value={"male"}>Male</MenuItem>
-                                  <MenuItem value={"female"}>Female</MenuItem>
-                                </Select>
-                              </FormControl>
-                            </div>
-                          </div>
-
-                          <div className="row">
-                            <div className="col-md-6 mb-4 pb-2">
-                              <div className="form-outline">
-                                <MDBInput
-                                  name="coachAge"
-                                  type="number"
-                                  className="form-control form-control-lg"
-                                  label="Age"
-                                  onChange={(e) => setCoachAge(e.target.value)}
-                                  required
-                                />
+                            <div className="row">
+                              <div className="col-md-6 mb-4 pb-2">
+                                <div className="form-outline">
+                                  <MDBInput
+                                    name="coachAge"
+                                    type="number"
+                                    className="form-control form-control-lg"
+                                    label="Age"
+                                    onChange={(e) => setAge(e.target.value)}
+                                    value={age}
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-md-6 mb-4 pb-2">
+                                <div className="form-outline">
+                                  <MDBInput
+                                    name="coachContactNo"
+                                    type="text"
+                                    className="form-control form-control-lg"
+                                    label="Contact No"
+                                    onChange={(e) => setContact(e.target.value)}
+                                    value={contact}
+                                  />
+                                </div>
                               </div>
                             </div>
-                            <div className="col-md-6 mb-4 pb-2">
-                              <div className="form-outline">
-                                <MDBInput
-                                  name="coachContactNo"
-                                  type="text"
-                                  className="form-control form-control-lg"
-                                  label="Contact No"
-                                  onChange={(e) =>
-                                    setCoachContactNo(e.target.value)
-                                  }
-                                />
+
+                            <div className="row">
+                              <div className="col-md-6 mb-4 pb-2">
+                                <FormControl>
+                                  <InputLabel id="labelCoachType">
+                                    Coach Type
+                                  </InputLabel>
+                                  <Select
+                                    name="coachType"
+                                    sx={{ m: 1, minWidth: 200 }}
+                                    size="small"
+                                    labelId="labelCoachType"
+                                    id="demo-select-small"
+                                    label="Coach Type"
+                                    onChange={coachTypeHandleChange}
+                                    value={coachType}
+                                  >
+                                    <MenuItem value={"fitnessTrainer"}>
+                                      Fitness trainer
+                                    </MenuItem>
+                                    <MenuItem value={"sportsCoach"}>
+                                      Sports coach
+                                    </MenuItem>
+                                    <MenuItem value={"personalTrainer"}>
+                                      Personal trainer
+                                    </MenuItem>
+                                    <MenuItem value={"athleticTrainer"}>
+                                      Athletic trainer
+                                    </MenuItem>
+                                    <MenuItem value={"healthTrainer"}>
+                                      Health trainer
+                                    </MenuItem>
+                                    <MenuItem value={"bodybuildingCoach"}>
+                                      Bodybuilding coach
+                                    </MenuItem>
+                                  </Select>
+                                </FormControl>
                               </div>
                             </div>
-                          </div>
-
-                          <div className="row">
-                            <div className="col-md-6 mb-4 pb-2">
-                              <FormControl>
-                                <InputLabel id="labelCoachType">
-                                  Coach Type
-                                </InputLabel>
-                                <Select
-                                  name="coachType"
-                                  sx={{ m: 1, minWidth: 200 }}
-                                  size="small"
-                                  labelId="labelCoachType"
-                                  id="demo-select-small"
-                                  label="Coach Type"
-                                  onChange={coachTypeHandleChange}
-                                  required
-                                >
-                                  <MenuItem value={"fitnessTrainer"}>
-                                    Fitness trainer
-                                  </MenuItem>
-                                  <MenuItem value={"sportsCoach"}>
-                                    Sports coach
-                                  </MenuItem>
-                                  <MenuItem value={"personalTrainer"}>
-                                    Personal trainer
-                                  </MenuItem>
-                                  <MenuItem value={"athleticTrainer"}>
-                                    Athletic trainer
-                                  </MenuItem>
-                                  <MenuItem value={"healthTrainer"}>
-                                    Health trainer
-                                  </MenuItem>
-                                  <MenuItem value={"bodybuildingCoach"}>
-                                    Bodybuilding coach
-                                  </MenuItem>
-                                </Select>
-                              </FormControl>
+                            <div className="row">
+                              <div className="col-md-6 mb-4 pb-2"></div>
                             </div>
-                          </div>
-                          <div className="row">
-                            <div className="col-md-6 mb-4 pb-2"></div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="col-lg-6 bg-parttwo text-white">
-                        <div className="p-5">
-                          <h3 className="fw-normal mb-5">&emsp;&emsp;</h3>
-                          {/* <div className="row">
-                          <div className="col-md-5 mb-4 pb-2">
-                            <div className="form-outline form-white">
-                              <MDBInput
-                                name="password"
-                                type="password"
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="form-control form-control-lg"
-                                label="Password"
-                                style={{ backgroundColor: "transparent" }}
-                                required
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-5 mb-4 pb-2">
-                            <div className="form-outline form-white">
-                              <MDBInput
-                                name="confirmPwd"
-                                type="password"
-                                onChange={(e) => setConfirmPwd(e.target.value)}
-                                className="form-control form-control-lg"
-                                label="Confirm Password"
-                                style={{ backgroundColor: "transparent" }}
-                                required
-                              />
-                            </div>
-                          </div>
-                        </div> */}
-
-                          <div className="row">
-                            <div className="col-md-12 mb-4 pb-2">
-                              <div className="form-outline form-white">
-                                <MDBInput
-                                  name="address"
-                                  type="text"
-                                  className="form-control form-control-lg"
-                                  label="Address"
-                                  onChange={(e) => setAddress(e.target.value)}
-                                  style={{ backgroundColor: "transparent" }}
-                                  required
-                                />
+                        <div className="col-lg-6 bg-parttwo text-white">
+                          <div className="p-5">
+                            <h3 className="fw-normal mb-5">&emsp;&emsp;</h3>
+                            <div className="row">
+                              <div className="col-md-12 mb-4 pb-2">
+                                <div className="form-outline form-white">
+                                  <MDBInput
+                                    name="address"
+                                    type="text"
+                                    className="form-control form-control-lg"
+                                    label="Address"
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    style={{ backgroundColor: "transparent" }}
+                                    value={address}
+                                  />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="form-outline form-white">
-                            <MDBTextArea
-                              name="coachComment"
-                              type="text"
-                              className="form-control form-control-lg"
-                              label="Coach's Comment"
-                              onChange={(e) => setCoachComment(e.target.value)}
-                              style={{ backgroundColor: "transparent" }}
-                            />
-                          </div>
-                          <br />
-
-                          <Button variant="contained">Update</Button>
-                          <br />
-                          <br />
-
-                          <div className="row">
-                            <div className="col-md-6 mb-4 pb-2">
-                              <Button color="warning" variant="contained">
-                                Reset Password
-                              </Button>
+                            <div className="form-outline form-white">
+                              <MDBTextArea
+                                name="coachComment"
+                                type="text"
+                                className="form-control form-control-lg"
+                                label="Coach's Comment"
+                                value={userComments}
+                                onChange={(e) =>
+                                  setUserComments(e.target.value)
+                                }
+                                style={{ backgroundColor: "transparent" }}
+                              />
                             </div>
+                            <br />
 
-                            <div className="col-md-6 mb-4 pb-2">
-                              <Button
-                                color="error"
-                                variant="contained"
-                                startIcon={<DeleteIcon />}
-                              >
-                                Delete My Account
-                              </Button>
+                            <Button variant="contained" onClick={updateCoach}>
+                              Update
+                            </Button>
+                            <br />
+                            <br />
+
+                            <div className="row">
+                              <div className="col-md-6 mb-4 pb-2">
+                                <Button color="warning" variant="contained">
+                                  Reset Password
+                                </Button>
+                              </div>
+
+                              <div className="col-md-6 mb-4 pb-2">
+                                <Button
+                                  color="error"
+                                  variant="contained"
+                                  startIcon={<DeleteIcon />}
+                                >
+                                  Delete My Account
+                                </Button>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   );
 };
 export default CoachViewAndUpdateForm;

@@ -32,13 +32,14 @@ const MemberPayment = () => {
   const [gymDetails] = useState(cookie.LoggedUser[6]);
   const monthlyFee = useState(cookie.LoggedUser[6]?.gymMonthlyFee);
   const annualFee = useState(cookie.LoggedUser[6]?.gymAnnualFee);
+  const [registeredGymStatus] = useState(cookie.LoggedUser[7]);
 
   return (
     <div>
       <div style={{ position: "fixed", zIndex: "1" }}>
         <SideNavbar userRole="member" />
       </div>
-      {gymDetails ? (
+      {registeredGymStatus ? (
         <section data-aos="flip-right" className="vh-800 gradient-custom">
           <div className="container py-5 h-80">
             <div className="row d-flex justify-content-center align-items-center h-800">
@@ -109,10 +110,20 @@ const MemberPayment = () => {
                     <div className="mb-md-2 mt-md-4 pb-2">
                       <br />
                       <br />
-                      <h2 className="fw-bold mb-2 text-uppercase">
-                        You haven't Registered for a gym 😁
-                      </h2>
-                      <p>You can registered for a gym by searching...</p>
+                      {gymDetails ? (<h2 className="fw-bold mb-2 text-uppercase">
+                        Request Pending 🤞
+                      </h2>) :
+                        (<h2 className="fw-bold mb-2 text-uppercase">
+                          You haven't Registered for a gym 😁
+                        </h2>)}
+                      {gymDetails ? (
+                        <>
+                          <p>Please Wait Until the <b>{gymDetails?.gymName}</b> Accepts You.</p>
+                          <p>Contact the Gym <b>{gymDetails?.gymContactNo1}/{gymDetails?.gymContactNo2}</b></p>
+                        </>
+                      ) : (
+                        <p>You can registered for a gym by searching...</p>
+                      )}
                       <br />
                     </div>
 

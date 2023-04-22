@@ -10,6 +10,9 @@ const bcrypt = require("bcrypt");
 //importing the model
 const User = require("../models/userModel.js");
 
+//importing gym model
+const Gym = require("../models/gymModel.js");
+
 ////////////////////////////////////////    Controllers (START)   ////////////////////////////////////////
 
 /////////////////////////  Controller       : createUser()
@@ -130,35 +133,27 @@ const getUserEmailPwd = async (req, res) => {
 
 /////////////////////////  (END)
 
-
 /////////////////////////  Controller       : updateUser()
 /////////////////////////  Description      : Update a User using user id
 /////////////////////////  Developer        : Dilini Kariyawasam
 /////////////////////////  (START)
 
 const updateUser = async (req, res) => {
-  const { id } =req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
-  {
-    return res.status(404).json({error: "No such User"});
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such User" });
   }
 
-  const user1 =await User.findOneAndUpdate({_id: id},{ ...req.body,});
+  const user1 = await User.findOneAndUpdate({ _id: id }, { ...req.body, });
 
-  if(!user1)
-  {
-    return res.status(400).json({ error: " No such User"});
+  if (!user1) {
+    return res.status(400).json({ error: " No such User" });
   }
 
   res.status(200).json(user1);
 };
 
-
-
 /////////////////////////  (END)
-
-
-
 
 /////////////////////////  Controller       : deleteUser()
 /////////////////////////  Description      :  Delete a User using user id
@@ -166,19 +161,14 @@ const updateUser = async (req, res) => {
 /////////////////////////  (START)
 
 const deleteUser = async (req, res) => {
-  const { id }= req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
-  {
-    return res.status(404).json ({error : "No such User"})
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such User" })
   }
 
-  const user2 = await User.findByIdAndDelete (id)
-   .then( () => {res.status(200).send({status: "User deleted"});})
+  const user2 = await User.findByIdAndDelete(id)
+    .then(() => { res.status(200).send({ status: "User deleted" }); })
 };
-
-
-
-
 
 /////////////////////////  (END)
 
@@ -195,20 +185,20 @@ const updateUserStatus = async (req, res) => {
       { new: true }
     );
     res.json(user);
-  } catch (err) { 
+  } catch (err) {
     console.log(err);
     res.status(500).send('Server error');
   }
 };
 
-
 /////////////////////////  (END)
+
 /////////////////////////  Controller       : updateUserStatus()-registeredGymActivateStatus
 /////////////////////////  Description      :  update User Status
 /////////////////////////  Developer        : vimukthi
 /////////////////////////  (START)
 
-const updateregisteredGymActivateStatus = async (req, res) => {
+const updateRegisteredGymActivateStatus = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -216,11 +206,33 @@ const updateregisteredGymActivateStatus = async (req, res) => {
       { new: true }
     );
     res.json(user);
-  } catch (err) { 
+  } catch (err) {
     console.log(err);
     res.status(500).send('Server error');
   }
 };
+/////////////////////////  (END)
+
+/////////////////////////  Controller       : getUsersByGymId()
+/////////////////////////  Description      : Get all users and their information using registered gym Id
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+const getUsersByGymId = async (req, res) => {
+  const { email } = req.body;
+  const activeStatus = true;
+
+  const gym = await Gym.findOne({ email }).exec(); // Use const to declare gym variable
+  const registeredGym = gym._id; // Extract _id property using dot notation
+
+  const users = await User.find({ registeredGym, activeStatus }).sort({ createdAt: -1 });
+
+  if (!users) { // Check if users is null or empty array
+    res.status(400).json({ error: "No Users in the system" });
+  } else {
+    res.status(200).json(users);
+  }
+}
+/////////////////////////  (END)
 
 ////////////////////////////////////////     Controllers (END)    ////////////////////////////////////////
 
@@ -232,5 +244,6 @@ module.exports = {
   updateUser,
   deleteUser,
   updateUserStatus,
-  updateregisteredGymActivateStatus,
+  updateRegisteredGymActivateStatus,
+  getUsersByGymId,
 };

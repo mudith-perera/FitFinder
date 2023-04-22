@@ -1,21 +1,18 @@
 //////////Dilini Kariyawasam////
 
 import React, { useEffect, useState } from "react";
-//import { Link } from "react-router-dom";
 import "./GymViewAndUpdateForm.css";
 import { MDBInput, MDBTextArea } from "mdb-react-ui-kit";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-//import SendIcon from "@mui/icons-material/Send";
-//import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import img1 from "../../Images/gym.png";
 
-//import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Aos from "aos";
@@ -25,20 +22,17 @@ import SideNavbar from "../Shared/SideNavbar.js";
 
 import { useCookies } from "react-cookie";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 const GymViewAndUpdateForm = () => {
   const [cookie] = useCookies([""]);
   const [email] = useState(cookie.LoggedUser[4]);
-  const [gymData, setGymData] = useState(null);
+  const [gymData, setGymData] = useState("");
 
   //Input field location
   const locations = ["Kelaniya", "Mathara", "Colombo"];
 
   //All Input Fields
   const [gymName, setGymName] = useState("");
-  const [gymOwnerName, setGymOwnerName] = useState(cookie.LoggedUser[2]);
+  const [gymOwnerName, setGymOwnerName] = useState(cookie.LoggedUser[2] || '');
   const [gymSexType, setGymSexType] = useState("");
   const [gymContactNo1, setGymContactNo1] = useState("");
   const [gymContactNo2, setGymContactNo2] = useState("");
@@ -61,18 +55,21 @@ const GymViewAndUpdateForm = () => {
             "Content-Type": "application/json",
           },
         });
-        const data = await response.json();
-        setGymData(data[0]);
+        const data = await response?.json();
+        if (data) {
+          setGymData(data[0]);
+        }
+        
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
   }, [email]);
-  console.log(gymData);
 
   useEffect(() => {
     setGymName(gymData?.gymName);
+    setGymOwnerName(gymData?.gymOwnerName);
     setGymSexType(gymData?.gymSexType);
     setGymContactNo1(gymData?.gymContactNo1);
     setGymContactNo2(gymData?.gymContactNo2);
@@ -95,7 +92,7 @@ const GymViewAndUpdateForm = () => {
   };
 
   //success alert
-  const userSuccess = (gymName) => {
+  const userSuccess = () => {
     toast.success("Update Success 😊", {
       theme: "colored",
       position: toast.POSITION.TOP_LEFT,
@@ -126,7 +123,7 @@ const GymViewAndUpdateForm = () => {
       gymOwnerComment,
     };
     //user validation backend
-    const response = await fetch("/api/gyms/" + gymData._id, {
+    const response = await fetch("/api/gyms/" + gymData?._id, {
       method: "PATCH",
       body: JSON.stringify(formData),
       headers: {
@@ -139,7 +136,7 @@ const GymViewAndUpdateForm = () => {
       userError(json.error);
     }
     if (response.ok) {
-      userSuccess(gymName);
+      userSuccess();
     }
   };
 
@@ -188,7 +185,7 @@ const GymViewAndUpdateForm = () => {
                                     label="Gym Name"
                                     value={gymName}
                                     onChange={(e) => setGymName(e.target.value)}
-                                    required
+                                    
                                   />
                                 </div>
                               </div>
@@ -218,7 +215,6 @@ const GymViewAndUpdateForm = () => {
                                     className="form-control form-control-lg"
                                     label="Gym Owner's Email"
                                     value={email}
-                                    required
                                     disabled
                                   />
                                 </div>
@@ -237,7 +233,7 @@ const GymViewAndUpdateForm = () => {
                                     value={gymSexType}
                                     label="Gym Sex Type"
                                     onChange={handleChange}
-                                    required
+                                    
                                   >
                                     <MenuItem value={"unisex"}>Unisex</MenuItem>
                                     <MenuItem value={"male"}>Male</MenuItem>
@@ -259,7 +255,7 @@ const GymViewAndUpdateForm = () => {
                                     onChange={(e) =>
                                       setGymContactNo1(e.target.value)
                                     }
-                                    required
+                                    
                                   />
                                 </div>
                               </div>
@@ -286,7 +282,7 @@ const GymViewAndUpdateForm = () => {
                                     Location
                                   </InputLabel>
                                   <Select
-                                    name="Location"
+                                    name=""
                                     sx={{ m: 1, minWidth: 200 }}
                                     size="small"
                                     labelId="labelLocation"
@@ -296,7 +292,7 @@ const GymViewAndUpdateForm = () => {
                                     onChange={(e) =>
                                       setLocation(e.target.value)
                                     }
-                                    required
+                                    
                                   >
                                     {locations.map((element, index) => (
                                       <MenuItem key={index} value={element}>
@@ -363,7 +359,7 @@ const GymViewAndUpdateForm = () => {
                                       setGymAddress(e.target.value)
                                     }
                                     style={{ backgroundColor: "transparent" }}
-                                    required
+                                    
                                   />
                                 </div>
                               </div>

@@ -10,7 +10,7 @@ import { CDBSidebarMenuItem } from "cdbreact";
 
 import { MdManageAccounts, MdScheduleSend, MdPayments } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
-import { FaUsers, FaUserEdit, FaUserPlus, FaBars } from "react-icons/fa";
+import { FaUsers, FaUserEdit, FaUserPlus, FaBars,FaSearch,FaPeopleCarry } from "react-icons/fa";
 
 let iconStyle = { fontWeight: "600", color: "#fff", fontSize: "2rem" };
 
@@ -21,7 +21,7 @@ export const MenuItems = [
         NavsArray: [
             {
                 text: 'Search For Gyms',
-                icon: <FaUserEdit style={iconStyle} />,
+                icon: <FaSearch style={iconStyle} />,
                 path: "/",
             },
             {
@@ -54,7 +54,7 @@ export const MenuItems = [
         NavsArray: [
             {
                 text: 'Search For Gyms',
-                icon: <FaUserEdit style={iconStyle} />,
+                icon: <FaSearch style={iconStyle} />,
                 path: "/",
             },
             {
@@ -84,9 +84,14 @@ export const MenuItems = [
                 path: "/gym-home/gym-view-update",
             },
             {
-                text: 'View All Gym Members',
+                text: 'Manage Gym Members',
                 icon: <FaUsers style={iconStyle} />,
                 path: "/gym-home/view-all-gym-members",
+            },
+            {
+                text: 'Manage Gym Coaches',
+                icon: <FaPeopleCarry style={iconStyle} />,
+                path: "/gym-home/view-all-gym-coaches",
             },
             {
                 text: 'Add Gym Coach',

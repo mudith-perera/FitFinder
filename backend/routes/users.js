@@ -10,7 +10,8 @@ const {
   updateUser,
   deleteUser,
   updateUserStatus,
-  updateregisteredGymActivateStatus,
+  updateRegisteredGymActivateStatus,
+  getUsersByGymId,
 } = require("../controllers/userController");
 
 const { googleSignInUp } = require("../controllers/authController");
@@ -87,15 +88,23 @@ router.put('/updateUserStatus/:id', updateUserStatus);
 
 /////////////////////////  (END)
 
-/////////////////////////  Handler          : /updateregisteredGymActivateStatus/:id
-/////////////////////////  Controller       : updateregisteredGymActivateStatus()
+/////////////////////////  Handler          : /updateRegisteredGymActivateStatus/:id
+/////////////////////////  Controller       : updateRegisteredGymActivateStatus()
 /////////////////////////  Description      : update User registered Gym Activate Status 
 /////////////////////////  Developer        : vimukthi
 /////////////////////////  (START)
-router.put('/updateregisteredGymActivateStatus/:id', updateregisteredGymActivateStatus);
+router.put('/updateRegisteredGymActivateStatus/:id', updateRegisteredGymActivateStatus);
 
 /////////////////////////  (END)
 
+/////////////////////////  Handler          : /getUsersByGymId/
+/////////////////////////  Controller       : getUsersByGymId()
+/////////////////////////  Description      : Get all users and their information using registered gym Id
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+router.post('/getUsersByGymId/', getUsersByGymId);
+
+/////////////////////////  (END)
 
 ////////////////////////////////////////     Request Handlers (END)    ////////////////////////////////////////
 

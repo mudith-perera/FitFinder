@@ -191,7 +191,6 @@ const deleteGym = async (req, res) => {
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
 const getGymByOwnerEmail = async (req, res) => {
-  console.log("swsws");
   //grabbing the id from the route parameters
   const { email } = req.body;
   

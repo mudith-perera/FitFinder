@@ -89,7 +89,7 @@ const MemberViewAndUpdateForm = () => {
 
   ///////////////////////////////////////////////////// Member Update Function (START) /////////////////////////////////////////////////////
   //success alert
-  const userSuccess = (gymName) => {
+  const userSuccess = () => {
     toast.success("Update Success 😊", {
       theme: "colored",
       position: toast.POSITION.TOP_LEFT,
@@ -103,7 +103,7 @@ const MemberViewAndUpdateForm = () => {
       position: toast.POSITION.TOP_LEFT,
     });
   };
-  const updateUser = async (registeredGym, gymName) => {
+  const updateUser = async () => {
     //e.preventDefault();
     const formData = {
       firstname,
@@ -134,243 +134,265 @@ const MemberViewAndUpdateForm = () => {
       userError(json.error);
     }
     if (response.ok) {
-      userSuccess(gymName);
+      userSuccess();
     }
   };
   ///////////////////////////////////////////////////// Member Update Function (END) /////////////////////////////////////////////////////
 
   return (
     <>
-     <ToastContainer />
-    <div>
-      <div style={{ position: "fixed", zIndex: "1" }}>
-        <SideNavbar userRole="member" userName={username} />
-      </div>
-      <section data-aos="zoom-in">
-        <div className="container py-5 h-100">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-12">
-              <div
-                className="card card-registration card-registration-2"
-                style={{ borderRadius: "15px", backgroundColor: "transparent" }}
-              >
-                <div className="card-body p-0">
-                  <div className="row g-0 ">
-                    <div className="col-lg-6 bg-partone">
-                      <div className="p-5">
-                        <h3 className="fw-normal mb-5">
-                          General Infomation &emsp;
-                          <img className="img1" src={img1} alt="General Info" />
-                        </h3>
+      <ToastContainer />
+      <div>
+        <div style={{ position: "fixed", zIndex: "1" }}>
+          <SideNavbar userRole="member" userName={username} />
+        </div>
+        <section data-aos="zoom-in">
+          <div className="container py-5 h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col-12">
+                <div
+                  className="card card-registration card-registration-2"
+                  style={{
+                    borderRadius: "15px",
+                    backgroundColor: "transparent",
+                  }}
+                >
+                  <div className="card-body p-0">
+                    <div className="row g-0 ">
+                      <div className="col-lg-6 bg-partone">
+                        <div className="p-5">
+                          <h3 className="fw-normal mb-5">
+                            General Infomation &emsp;
+                            <img
+                              className="img1"
+                              src={img1}
+                              alt="General Info"
+                            />
+                          </h3>
 
-                        <div className="row">
-                          <div className="col-md-6 mb-4 pb-2">
-                            <div className="form-outline">
-                              <MDBInput
-                                type="text"
-                                className="form-control form-control-lg"
-                                label="First name"
-                                value={firstname}
-                                onChange={(e) => setFirstname(e.target.value)}
-                              />
+                          <div className="row">
+                            <div className="col-md-6 mb-4 pb-2">
+                              <div className="form-outline">
+                                <MDBInput
+                                  type="text"
+                                  className="form-control form-control-lg"
+                                  label="First name"
+                                  value={firstname}
+                                  onChange={(e) => setFirstname(e.target.value)}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6 mb-4 pb-2">
+                              <div className="form-outline">
+                                <MDBInput
+                                  type="text"
+                                  className="form-control form-control-lg"
+                                  label="Last name"
+                                  value={lastname}
+                                  onChange={(e) => setLastname(e.target.value)}
+                                />
+                              </div>
                             </div>
                           </div>
-                          <div className="col-md-6 mb-4 pb-2">
-                            <div className="form-outline">
-                              <MDBInput
-                                type="text"
-                                className="form-control form-control-lg"
-                                label="Last name"
-                                value={lastname}
-                                onChange={(e) => setLastname(e.target.value)}
-                              />
-                            </div>
-                          </div>
-                        </div>
 
-                        <div className="row">
-                          <div className="col-md-6 mb-4 pb-2">
-                            <div className="form-outline">
-                              <MDBInput
-                                type="text"
-                                className="form-control form-control-lg"
-                                label="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                              />
+                          <div className="row">
+                            <div className="col-md-6 mb-4 pb-2">
+                              <div className="form-outline">
+                                <MDBInput
+                                  type="text"
+                                  className="form-control form-control-lg"
+                                  label="Email"
+                                  value={email}
+                                  onChange={(e) => setEmail(e.target.value)}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6 mb-4 pb-2">
+                              <div className="form-outline">
+                                <MDBInput
+                                  type="text"
+                                  className="form-control form-control-lg"
+                                  label="NIC"
+                                  value={nic}
+                                  onChange={(e) => setNic(e.target.value)}
+                                />
+                              </div>
                             </div>
                           </div>
-                          <div className="col-md-6 mb-4 pb-2">
-                            <div className="form-outline">
-                              <MDBInput
-                                type="text"
-                                className="form-control form-control-lg"
-                                label="NIC"
-                                value={nic}
-                                onChange={(e) => setNic(e.target.value)}
-                              />
-                            </div>
-                          </div>
-                        </div>
 
-                        <div className="row">
-                          <div className="col-md-6 mb-4 pb-2">
-                            <div className="form-outline">
-                              <MDBInput
-                                type="number"
-                                className="form-control form-control-lg"
-                                label="Age"
-                                min="12"
-                                max="100"
-                                value={age}
-                                onChange={(e) => setAge(e.target.value)}
-                              />
+                          <div className="row">
+                            <div className="col-md-6 mb-4 pb-2">
+                              <div className="form-outline">
+                                <MDBInput
+                                  type="number"
+                                  className="form-control form-control-lg"
+                                  label="Age"
+                                  min="12"
+                                  max="100"
+                                  value={age}
+                                  onChange={(e) => setAge(e.target.value)}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6 mb-4 pb-2">
+                              <div className="form-outline">
+                                <MDBInput
+                                  type="text"
+                                  className="form-control form-control-lg"
+                                  label="Contact No"
+                                  value={contact}
+                                  onChange={(e) => setContact(e.target.value)}
+                                />
+                              </div>
                             </div>
                           </div>
-                          <div className="col-md-6 mb-4 pb-2">
-                            <div className="form-outline">
-                              <MDBInput
-                                type="text"
-                                className="form-control form-control-lg"
-                                label="Contact No"
-                                value={contact}
-                                onChange={(e) => setContact(e.target.value)}
-                              />
-                            </div>
-                          </div>
-                        </div>
 
-                        <div className="row">
-                          <div className="col-md-6 mb-4 pb-2">
-                            <label className="form-label">Gender</label>
-                            <select
-                              className="form-control"
-                              name="userType"
-                              value={gender}
-                              onChange={(e) => setGender(e.target.value)}
-                            >
-                              <option value="male">Male</option>
-                              <option value="female">Female</option>
-                              <option value="other">Other</option>
-                            </select>
-                          </div>
-                        </div>
-
-                        <div className="row">
-                          <div className="col-md-12 mb-4 pb-2">
-                            <div className="form-outline">
-                              <MDBInput
-                                type="text"
-                                className="form-control form-control-lg"
-                                label="Address"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="row">
-                          <div className="col-md-6 mb-4 pb-2">
-                            <div className="form-outline">
-                              <Box
-                                sx={{
-                                  "& .MuiTextField-root": {
-                                    m: 1,
-                                    width: "80%",
-                                  },
-                                  "& .MuiAutocomplete-root": { width: "200%" },
-                                }}
-                                noValidate
-                                autoComplete="off"
+                          <div className="row">
+                            <div className="col-md-6 mb-4 pb-2">
+                              <label className="form-label">Gender</label>
+                              <select
+                                className="form-control"
+                                name="userType"
+                                value={gender}
+                                onChange={(e) => setGender(e.target.value)}
                               >
-                                <FormControl>
-                                  <Autocomplete
-                                    options={locations}
-                                    getOptionLabel={getLocationOptionLabel}
-                                    value={selectedLocation}
-                                    size="small"
-                                    renderInput={(params) => (
-                                      <TextField {...params} label="Location" />
-                                    )}
-                                    onChange={handleOptionChangeLocation}
-                                  />
-                                </FormControl>
-                              </Box>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div className="row">
+                            <div className="col-md-12 mb-4 pb-2">
+                              <div className="form-outline">
+                                <MDBInput
+                                  type="text"
+                                  className="form-control form-control-lg"
+                                  label="Address"
+                                  value={address}
+                                  onChange={(e) => setAddress(e.target.value)}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-md-6 mb-4 pb-2">
+                              <div className="form-outline">
+                                <Box
+                                  sx={{
+                                    "& .MuiTextField-root": {
+                                      m: 1,
+                                      width: "80%",
+                                    },
+                                    "& .MuiAutocomplete-root": {
+                                      width: "200%",
+                                    },
+                                  }}
+                                  noValidate
+                                  autoComplete="off"
+                                >
+                                  <FormControl>
+                                    <Autocomplete
+                                      options={locations}
+                                      getOptionLabel={getLocationOptionLabel}
+                                      value={selectedLocation}
+                                      size="small"
+                                      renderInput={(params) => (
+                                        <TextField
+                                          {...params}
+                                          label="Location"
+                                        />
+                                      )}
+                                      onChange={handleOptionChangeLocation}
+                                    />
+                                  </FormControl>
+                                </Box>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="col-lg-6 bg-parttwo text-white">
-                      <div className="p-5">
-                        <h3 className="fw-normal mb-5">
-                          For Gym Use&emsp;&emsp;
-                          <img className="img1" src={img2} alt="General Info" />
-                        </h3>
-                        <div className="row">
-                          <div className="col-md-5 mb-4 pb-2">
-                            <div className="form-outline form-white">
-                              <MDBInput
-                                type="number"
-                                className="form-control form-control-lg"
-                                label="weight (kg)"
-                                min="20"
-                                value={weight}
-                                onChange={(e) => setWeight(e.target.value)}
-                                style={{ backgroundColor: "transparent" }}
-                              />
+                      <div className="col-lg-6 bg-parttwo text-white">
+                        <div className="p-5">
+                          <h3 className="fw-normal mb-5">
+                            For Gym Use&emsp;&emsp;
+                            <img
+                              className="img1"
+                              src={img2}
+                              alt="General Info"
+                            />
+                          </h3>
+                          <div className="row">
+                            <div className="col-md-5 mb-4 pb-2">
+                              <div className="form-outline form-white">
+                                <MDBInput
+                                  type="number"
+                                  className="form-control form-control-lg"
+                                  label="weight (kg)"
+                                  min="20"
+                                  value={weight}
+                                  onChange={(e) => setWeight(e.target.value)}
+                                  style={{ backgroundColor: "transparent" }}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-5 mb-4 pb-2">
+                              <div className="form-outline form-white">
+                                <MDBInput
+                                  type="number"
+                                  className="form-control form-control-lg"
+                                  label="Height (cm)"
+                                  value={height}
+                                  onChange={(e) => setHeight(e.target.value)}
+                                  style={{ backgroundColor: "transparent" }}
+                                />
+                              </div>
                             </div>
                           </div>
-                          <div className="col-md-5 mb-4 pb-2">
-                            <div className="form-outline form-white">
-                              <MDBInput
-                                type="number"
-                                className="form-control form-control-lg"
-                                label="Height (cm)"
-                                value={height}
-                                onChange={(e) => setHeight(e.target.value)}
-                                style={{ backgroundColor: "transparent" }}
-                              />
+
+                          <div className="row">
+                            <div className="col-md-5 mb-4 pb-2">
+                              <div className="form-outline form-white">
+                                <MDBInput
+                                  type="number"
+                                  className="form-control form-control-lg"
+                                  label="Fat (%)"
+                                  min="1"
+                                  max="100"
+                                  value={fat}
+                                  onChange={(e) => setFat(e.target.value)}
+                                  style={{ backgroundColor: "transparent" }}
+                                />
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div className="row">
-                          <div className="col-md-5 mb-4 pb-2">
-                            <div className="form-outline form-white">
-                              <MDBInput
-                                type="number"
-                                className="form-control form-control-lg"
-                                label="Fat (%)"
-                                min="1"
-                                max="100"
-                                value={fat}
-                                onChange={(e) => setFat(e.target.value)}
-                                style={{ backgroundColor: "transparent" }}
-                              />
-                            </div>
+                          <div className="col-md-5 mb-4 pb-2"></div>
+                          <div className="form-outline form-white">
+                            <MDBTextArea
+                              type="text"
+                              className="form-control form-control-lg"
+                              label="Medical Conditions (Seperated by ',' )"
+                              style={{ backgroundColor: "transparent" }}
+                              value={medicalConditions}
+                              onChange={(e) =>
+                                setMedicalConditions(e.target.value)
+                              }
+                            />
                           </div>
-                        </div>
+                          <br />
 
-                        <div className="col-md-5 mb-4 pb-2"></div>
-                        <div className="form-outline form-white">
-                          <MDBTextArea
-                            type="text"
-                            className="form-control form-control-lg"
-                            label="Medical Conditions (Seperated by ',' )"
-                            style={{ backgroundColor: "transparent" }}
-                            value={medicalConditions}
-                            onChange={(e) =>
-                              setMedicalConditions(e.target.value)
-                            }
-                          />
+                          <MDBBtn
+                            type="submit"
+                            outline
+                            color="light"
+                            onClick={updateUser}
+                          >
+                            Update
+                          </MDBBtn>
                         </div>
-                        <br />
-
-                        <MDBBtn type="submit" outline color="light" onClick={updateUser}>
-                          Update
-                        </MDBBtn>
                       </div>
                     </div>
                   </div>
@@ -378,9 +400,8 @@ const MemberViewAndUpdateForm = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
     </>
   );
 };

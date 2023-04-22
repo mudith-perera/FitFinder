@@ -74,7 +74,7 @@ const LoginForm = () => {
         googleJson["email"],
         googleJson["_id"],
         googleJson["registeredGym"],
-
+        googleJson["registeredGymActivateStatus"],
       ];
 
       setCookieAndNavigate(loggedUserDetails);
@@ -108,6 +108,7 @@ const LoginForm = () => {
         json["email"],
         json["_id"],
         json["registeredGym"],
+        json["registeredGymActivateStatus"],
       ];
 
       setCookieAndNavigate(loggedUserDetails);

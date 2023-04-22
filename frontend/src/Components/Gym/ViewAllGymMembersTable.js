@@ -1,104 +1,102 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { DataGrid } from '@mui/x-data-grid';
-import { TextField } from '@mui/material';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import SearchIcon from '@mui/icons-material/Search';
-import Box from '@mui/material/Box';
-import { createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@mui/material/styles';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { DataGrid } from "@mui/x-data-grid";
+import { TextField } from "@mui/material";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import SearchIcon from "@mui/icons-material/Search";
+import Box from "@mui/material/Box";
+import { createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 
-import './gymUserTable.css';
+import "./gymUserTable.css";
+
+import SideNavbar from "../Shared/SideNavbar.js";
+
+import { useCookies } from "react-cookie";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#004d80',
+      main: "#004d80",
     },
     secondary: {
-      main: '#b0bec5',
+      main: "#b0bec5",
     },
   },
 });
 
 const columns = [
-  { field: 'id', headerName: 'ID', hide: true },
+  { field: "id", headerName: "ID", flex: 0.5, hide: true,headerClassName: "table-header" },
   {
-    field: 'firstname',
-    headerName: 'First Name',
-    flex: 1.5,
-    headerClassName: 'table-header',
+    field: "firstname",
+    headerName: "First Name",
+    flex: 1,
+    headerClassName: "table-header",
   },
   {
-    field: 'lastname',
-    headerName: 'Last Name',
-    flex: 1.5,
-    headerClassName: 'table-header',
+    field: "lastname",
+    headerName: "Last Name",
+    flex: 1,
+    headerClassName: "table-header",
   },
-  { field: 'age', headerName: 'Age', flex: 0.25, headerClassName: 'table-header' },
   {
-    field: 'address',
-    headerName: 'Address',
+    field: "age",
+    headerName: "Age",
+    flex: 0.25,
+    headerClassName: "table-header",
+  },
+  {
+    field: "address",
+    headerName: "Address",
     flex: 2,
-    headerClassName: 'table-header',
+    headerClassName: "table-header",
   },
   {
-    field: 'email',
-    headerName: 'Email',
+    field: "email",
+    headerName: "Email",
     flex: 1.5,
-    headerClassName: 'table-header',
+    headerClassName: "table-header",
   },
   {
-    field: 'gender',
-    headerName: 'Gender',
+    field: "gender",
+    headerName: "Gender",
     flex: 0.75,
-    headerClassName: 'table-header',
+    headerClassName: "table-header",
   },
   {
-    field: 'contact',
-    headerName: 'Phone Number',
+    field: "contact",
+    headerName: "Phone Number",
     flex: 1,
-    headerClassName: 'table-header',
+    headerClassName: "table-header",
   },
   {
-    field: 'userType',
-    headerName: 'User',
+    field: "coachType",
+    headerName: "Coach Type",
     flex: 1,
-    headerClassName: 'table-header',
+    headerClassName: "table-header",
   },
   {
-    field: 'userComments',
-    headerName: 'Comments',
+    field: "registeredGymActivateStatus",
+    headerName: "Gym Status",
     flex: 2,
-    headerClassName: 'table-header',
-  },
-  {
-    field: 'coachType',
-    headerName: 'Coach Type',
-    flex: 1,
-    headerClassName: 'table-header',
-  },
-  {
-    field: 'registeredGymActivateStatus',
-    headerName: 'Gym Status',
-    flex: 2,
-    headerClassName: 'table-header',
+    headerClassName: "table-header",
     renderCell: (params) => {
       const handleStatusChange = async (event) => {
         try {
           const response = await axios.put(
             `/api/users/updateregisteredGymActivateStatus/${params.row._id}`, // Use the MongoDB ID of the user
             {
-              registeredGymActivateStatus: event.target.value === 'true' ? false : true,
+              registeredGymActivateStatus:
+                event.target.value === "true" ? false : true,
             },
             {
               headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
               },
             }
           );
-          alert('Status updated');
+          alert("Status updated");
           window.location.reload();
           params.setValue(response.data.registeredGymActivateStatus);
         } catch (error) {
@@ -107,7 +105,6 @@ const columns = [
       };
 
       return (
-        
         <ToggleButtonGroup
           value={params.value}
           exclusive
@@ -126,26 +123,44 @@ const columns = [
 ];
 
 const ViewAllGymMembersTable = () => {
+  const [cookie] = useCookies([""]);
   const [users, setUsers] = useState([]);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const [email] = useState(cookie.LoggedUser[4]);
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await axios.get('/api/users');
-        const filteredUsers = response.data.filter(user => user.userType === 'coach' || user.userType === 'member');
-        const updatedUsers = filteredUsers.map((user, index) => {
-          return { ...user, id: index + 1 };
+        const formData = { email };
+        const response = await fetch("/api/users/getUsersByGymId", {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
-        setUsers(updatedUsers);
+  
+        if (response.ok) {
+          const data = await response.json(); // Parse response body as JSON
+          console.log(data);
+          const filteredUsers = data.filter(
+            (user) =>  user.userType === "member"
+          );
+          const updatedUsers = filteredUsers.map((user, index) => {
+            return { ...user, id: index + 1 };
+          });
+          setUsers(updatedUsers);
+        } else {
+          console.log("Server responded with error", response.status);
+        }
       } catch (error) {
         console.log(error);
       }
     };
-    
-
+  
     getUsers();
-  }, []);
+  }, [email]);
+  
 
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
@@ -158,32 +173,60 @@ const ViewAllGymMembersTable = () => {
   );
 
   return (
-    //<div className='tablev&u' style={{background:"#e2e7e9"}}>
-    <div>
-      <h2 style={{textAlign:"center"}}>View & Update All GymMembers Table</h2>
-      <ThemeProvider theme={theme}>
-        <Box className='' sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-          <SearchIcon sx={{ color: 'text.secondary', mr: 1 }} />
-          <TextField
-            label="Search"
-            variant="standard"
-            size="small"
-            fullWidth
-            value={searchText}
-            onChange={handleSearchChange}
-          />
-        </Box>
-        <div className='table-row'style={{ height: 600, width: '100%' }}>
-          <DataGrid
-            rows={filteredUsers}
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10, 25, 50]}
-            disableSelectionOnClick
-          />
+    <>
+      <div style={{ position: "fixed", zIndex: "1" }}>
+        <SideNavbar userRole="gym" />
+      </div>
+
+      <section data-aos="fade-right" className=" gradient-custom">
+        <div className="container py-5">
+          <div className="row d-flex justify-content-center align-items-center">
+            <div className="col-12 col-md-8 col-lg-2 col-xl-11">
+              <div
+                className="card bg-white"
+                style={{ borderRadius: "1rem", width: "1250px" }}
+              >
+                <div className="card-body p-3">
+                  <div>
+                    <h2 style={{ textAlign: "center" }}>
+                      Manage Gym Members
+                    </h2>
+                    <ThemeProvider theme={theme}>
+                      <Box
+                        className=""
+                        sx={{ display: "flex", alignItems: "center", p: 1 }}
+                      >
+                        <SearchIcon sx={{ color: "text.secondary", mr: 1 }} />
+                        <TextField
+                          label="Search"
+                          variant="standard"
+                          size="small"
+                          fullWidth
+                          value={searchText}
+                          onChange={handleSearchChange}
+                        />
+                      </Box>
+                      <div
+                        className="table-row"
+                        style={{ height: 600, width: "100%" }}
+                      >
+                        <DataGrid
+                          rows={filteredUsers}
+                          columns={columns}
+                          pageSize={10}
+                          rowsPerPageOptions={[10, 25, 50]}
+                          disableSelectionOnClick
+                        />
+                      </div>
+                    </ThemeProvider>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </ThemeProvider>
-    </div>
+      </section>
+    </>
   );
 };
 export default ViewAllGymMembersTable;
