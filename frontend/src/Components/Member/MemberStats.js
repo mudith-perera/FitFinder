@@ -81,6 +81,7 @@ const MemberStats = () => {
         setFat(userData?.fat);
         const { bmi, status, normalWeightRange } = calculateBMI(height, weight);
         setBmrInfo(calculateBMR(gender, height, weight, age));
+        console.log(gender, height, weight, age);
         setBodyFatDes(getBodyFatDescription(gender,fat));
         setBmiInfo({ bmi, status, normalWeightRange });
     }, [userData,age,gender,weight,height,fat]);

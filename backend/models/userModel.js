@@ -47,6 +47,7 @@ const userSchema = new Schema(
         values: ["male", "female", "other"],
         message: "Gender Should be : [ 'male', 'female', 'other']",
       },
+      default: "male",
       required: false,
     },
     age: {
