@@ -93,8 +93,8 @@ const MemberStats = () => {
                     <div style={styles.cardContent}>
                         <div style={styles.title}>Your BMI : {bmiInfo?.bmi} kg/m<sup>2</sup></div>
                         <div style={styles.text}>
-                            Your Height  : {height} <br />
-                            Your Weight  : {weight} <br />
+                            Your Height  : {height} cm <br />
+                            Your Weight  : {weight} kg <br />
                             Your are  <b>{bmiInfo?.status}</b>
                         </div>
                     </div>
