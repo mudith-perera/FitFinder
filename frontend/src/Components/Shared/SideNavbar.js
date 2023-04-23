@@ -10,9 +10,10 @@ import { CDBSidebarMenuItem } from "cdbreact";
 
 import {  MdScheduleSend, MdPayments } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
-import { FaUsers, FaUserEdit, FaUserPlus, FaBars,FaSearch,FaPeopleCarry,FaDumbbell } from "react-icons/fa";
+import { FaUsers, FaUserPlus, FaBars,FaSearch,FaPeopleCarry,FaDumbbell,FaHome } from "react-icons/fa";
+import { AiFillSetting } from "react-icons/ai";
 
-let iconStyle = { fontWeight: "600", color: "#fff", fontSize: "2rem" };
+let iconStyle = { fontWeight: "400", color: "#fff", fontSize: "1.5rem" };
 
 export const MenuItems = [
     {
@@ -20,17 +21,22 @@ export const MenuItems = [
         Name: "Mr.Member",
         NavsArray: [
             {
+                text: 'Home',
+                icon: <FaHome style={iconStyle} />,
+                path: "/member-home",
+            },
+            {
                 text: 'Search For Gyms',
                 icon: <FaSearch style={iconStyle} />,
                 path: "/",
             },
             {
-                text: 'View Schedule',
+                text: 'Schedule',
                 icon: <AiFillSchedule style={iconStyle} />,
                 path: "/member-home/schedule",
             },
             {
-                text: 'Manage Registered Gym',
+                text: 'My Gym',
                 icon: <FaDumbbell style={iconStyle} />,
                 path: "/member-home/member-registered-gym",
             },
@@ -42,7 +48,7 @@ export const MenuItems = [
             },
             {
                 text: 'Profile',
-                icon: <FaUserEdit style={iconStyle} />,
+                icon: <AiFillSetting style={iconStyle} />,
                 path: "/member-home/member-view-update",
             },
              //////// (Mudith Perera) Payment added - (END) ///////
@@ -63,13 +69,13 @@ export const MenuItems = [
                 path: "/coach-home/choose-user",
             },
             {
-                text: 'Manage Registered Gym',
+                text: 'My Gym',
                 icon: <FaDumbbell style={iconStyle} />,
                 path: "/coach-home/coach-registered-gym",
             },
             {
                 text: 'Profile',
-                icon: <FaUserEdit style={iconStyle} />,
+                icon: <AiFillSetting style={iconStyle} />,
                 path: "/coach-home/coach-view-update",
             },
         ],
@@ -95,7 +101,7 @@ export const MenuItems = [
             },
             {
                 text: 'Gym Profile',
-                icon: <FaUserEdit style={iconStyle} />,
+                icon: <AiFillSetting style={iconStyle} />,
                 path: "/gym-home/gym-view-update",
             },
         ],
@@ -177,13 +183,13 @@ const StyledNavLink = styled(NavLink)`
     height: 80px;
 
     &:hover{
-        background: lightskyblue;
-        color: #000;
+        background: #6a11cb;
+        color: #fff;
         transition: all 0.5s;
     }
     &:active{
-        background: lightskyblue;
-        color: #000;
+        background: #6a11cb;
+        color: #fff;
     }
 
 `
@@ -204,7 +210,7 @@ const Signout = styled.div`
 const Footer = styled.div`
     display: flex;
     flex-direction: column;
-    padding-top: 20%;
+    padding-top: 10%;
     height: 15%;
 
     &:hover{

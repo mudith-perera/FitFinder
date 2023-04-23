@@ -99,7 +99,7 @@ const SearchBar = ({ onDataFromSearchBar }) => {
   };
 
   return (
-    <section data-aos="fade-down">
+    <section data-aos="fade-right">
       <div className="container py-5">
         <div className="row d-flex justify-content-center align-items-center">
           <div className="col-11">
