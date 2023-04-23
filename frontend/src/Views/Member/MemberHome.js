@@ -3,9 +3,9 @@ import React,{useState} from 'react';
 
 //import SideNavBar from '../../Components/SideNavBar.js';
 import SideNavbar from '../../Components/Shared/SideNavbar.js';
-import DefaultHome from '../DefaultHome.js';
 
 import { useCookies } from 'react-cookie';
+import MemberStats from '../../Components/Member/MemberStats.js';
 
 const MemberHome = () => {
   const [cookie] = useCookies(['']);
@@ -13,11 +13,11 @@ const MemberHome = () => {
   return (
     <div style={{ display: "flex", flexDirection: "row"}}>
     <div>
-      {/* <SideNavBar userRole='member'/> */}
     <SideNavbar userRole='member' userName = {username}/>
     </div>
     <div>
-      <DefaultHome />
+      {/* <DefaultHome /> */}
+      <MemberStats/>
     </div>
     </div>
   );

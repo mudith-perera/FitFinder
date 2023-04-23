@@ -177,15 +177,16 @@ const MemberViewAndUpdateForm = () => {
         <div style={{ position: "fixed", zIndex: "1" }}>
           <SideNavbar userRole="member" userName={username} />
         </div>
-        <section data-aos="fade-down">
-          <div className="container py-5 h-100">
+        <section data-aos="fade-right">
+          <div className="container py-3">
             <div className="row d-flex justify-content-center align-items-center h-100">
-              <div className="col-12">
+              <div className="col-11">
                 <div
                   className="card card-registration card-registration-2"
                   style={{
                     borderRadius: "15px",
                     backgroundColor: "transparent",
+            
                   }}
                 >
                   <div className="card-body p-0">
