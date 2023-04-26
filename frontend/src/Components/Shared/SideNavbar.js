@@ -95,11 +95,6 @@ export const MenuItems = [
                 path: "/gym-home/view-all-gym-coaches",
             },
             {
-                text: 'Add Gym Coach',
-                icon: <FaUserPlus style={iconStyle} />,
-                path: "/uc-w",
-            },
-            {
                 text: 'Gym Profile',
                 icon: <AiFillSetting style={iconStyle} />,
                 path: "/gym-home/gym-view-update",

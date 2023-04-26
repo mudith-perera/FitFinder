@@ -33,7 +33,7 @@ const GymViewAndUpdateForm = () => {
   const [userId] = useState(cookie.LoggedUser[5]);
 
   //Input field location
-  const locations = ["Kelaniya", "Mathara", "Colombo"];
+  //const locations = ["Kelaniya", "Mathara", "Colombo"];
 
   //All Input Fields
   const [gymName, setGymName] = useState("");
@@ -41,7 +41,7 @@ const GymViewAndUpdateForm = () => {
   const [gymSexType, setGymSexType] = useState("");
   const [gymContactNo1, setGymContactNo1] = useState("");
   const [gymContactNo2, setGymContactNo2] = useState("");
-  const [location, setLocation] = useState("");
+  //const [location, setLocation] = useState("");
   const [gymMonthlyFee, setGymMonthlyFee] = useState("");
   const [gymAnnualFee, setGymAnnualFee] = useState("");
   const [gymAddress, setGymAddress] = useState("");
@@ -300,7 +300,7 @@ const GymViewAndUpdateForm = () => {
                             </div>
 
                             <div className="row">
-                              <div className="col-md-6 mb-4 pb-2">
+                              {/* <div className="col-md-6 mb-4 pb-2">
                                 <FormControl>
                                   <InputLabel id="labelLocation">
                                     Location
@@ -325,7 +325,7 @@ const GymViewAndUpdateForm = () => {
                                     ))}
                                   </Select>
                                 </FormControl>
-                              </div>
+                              </div> */}
                             </div>
                             <div className="row">
                               <div className="col-md-6 mb-4 pb-2"></div>

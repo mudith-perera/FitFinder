@@ -2,7 +2,7 @@
 ///////////////////////// Modified Date   : 07-02-2023     /////////////////////////
 /////////////////////////           (START)                /////////////////////////
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback  } from "react";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -22,6 +22,10 @@ import { locations } from "../Shared/locations.js";
 const SearchBar = ({ onDataFromSearchBar }) => {
   const [options, setOptions] = useState([]);
 
+  const memoizedOnDataFromSearchBar = useCallback((data) => {
+    onDataFromSearchBar(data);
+  }, [onDataFromSearchBar]);
+
   useEffect(() => {
     Aos.init({ duration: 1000 });
 
@@ -30,8 +34,10 @@ const SearchBar = ({ onDataFromSearchBar }) => {
       const response = await fetch("api/gyms/");
       const data = await response.json();
       setOptions(data);
+      memoizedOnDataFromSearchBar(data);
     };
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   //Gym Drop Down Handlers (START)
@@ -114,8 +120,8 @@ const SearchBar = ({ onDataFromSearchBar }) => {
                       <div className="p-3">
                         <Box
                           sx={{
-                            "& .MuiTextField-root": { m: 1, width: "80%" },
-                            "& .MuiAutocomplete-root": { width: "200%" },
+                            "& .MuiTextField-root": { m: 1 },
+                            "& .MuiAutocomplete-root": { maxWidth: "300px", minWidth: "180px" },
                           }}
                           noValidate
                           autoComplete="off"
@@ -126,7 +132,7 @@ const SearchBar = ({ onDataFromSearchBar }) => {
 
                           <div className="row">
                             <div className="col-md-3 mb-3 pb-2"></div>
-                            
+
                             <div className="col-md-2 mb-3 pb-2">
                               <div className="form-outline">
                                 <FormControl>
@@ -162,12 +168,12 @@ const SearchBar = ({ onDataFromSearchBar }) => {
                             </div>
 
                             <div className="col-md-2 pb-2">
-                              
+
                               <FormControl>
                                 <InputLabel id="labelLocation">Sex</InputLabel>
                                 <Select
                                   name="gymSexType"
-                                  sx={{ m: 1, minWidth: 120 }}
+                                  sx={{ m: 1, minWidth: 80 }}
                                   size="small"
                                   labelId="demo-select-small"
                                   id="demo-select-small"
