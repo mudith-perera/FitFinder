@@ -67,10 +67,9 @@ const Home = () => {
   }
   return (
     <div>
-      <Counter dataG={dataG} dataU={dataU}/>
       <SearchBar onDataFromSearchBar={handleDataFromSearchBar} />
       {searchResult ? (
-        <div data-aos="fade-right" style={styles.searchResult}>
+        <div data-aos="fade-left" style={styles.searchResult}>
           <div style={styles.searchResultCard}>
             <h5 style={styles.searchResultTitle}>
               {searchResult?.length || "0"} Results found
@@ -81,6 +80,7 @@ const Home = () => {
       ) : (
         <></>
       )}
+      <Counter dataG={dataG} dataU={dataU}/>
     </div>
   );
 };
