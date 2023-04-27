@@ -2,20 +2,21 @@
 .c-wrapper {
     display: flex;
     justify-content: space-between;
-    margin-top: 50px;
-    padding: 0 400px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    padding: 0 300px;
   }
   
   .c-container {
-    width: 20%;
-    height: 15%;
+    width:20%;
+    height:15%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1em 0;
+    padding: 2em 0;
     position: relative;
-    font-size: 12px;
+    font-size:25px;
     border-radius: 0.5em;
     background-color: #21242b;
     border-bottom: 10px solid #188cf9;
@@ -23,7 +24,7 @@
   
   .c-container i {
     color: #188cf9;
-    font-size: 2.5em;
+    font-size:4.5em;
     text-align: center;
   }
   
@@ -37,11 +38,20 @@
   
   .c-container .text {
     color: #e0e0e0;
-    font-size: 1.1em;
     text-align: center;
-    pad: 0.7em 0;
+    pad:2em 0;
     font-weight: 400;
     line-height: 0;
+  }
+
+  .c-item {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+  }
+  
+  .c-item.in-view {
+    height: auto;
   }
   
   /* Media query for screens smaller than 768px */
