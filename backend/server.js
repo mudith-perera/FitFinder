@@ -24,6 +24,8 @@ const searchRoutes = require("./routes/search.js");
 const scheduleRouters = require("./routes/schedule.js");
 //get stripe router
 const stripeRouters = require("./routes/stripe");
+//get password-reset router
+const resetPasswordRouters = require("./routes/passwordReset.js");
 //get Routers(END)
 
 //connect to db(START)
@@ -73,4 +75,5 @@ app.use("/api/faq", faqRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/schedule" , scheduleRouters);
 app.use("/api/stripe", stripeRouters);
+app.use("/api/passwordReset", resetPasswordRouters);
 //MIDDLE-WARE (END)
