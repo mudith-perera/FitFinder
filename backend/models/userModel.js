@@ -120,6 +120,8 @@ const userSchema = new Schema(
       default: true,
       required: [true, "A user must be Active/Deactive"],
     },
+    resetToken: String,
+    expireToken: Date,
   },
   { timestamps: true }
 );

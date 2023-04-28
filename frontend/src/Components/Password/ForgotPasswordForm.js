@@ -3,36 +3,75 @@
 import React, { useEffect, useState } from "react";
 import { MDBInput } from "mdb-react-ui-kit";
 import Button from "@mui/material/Button";
-//import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
+import { useNavigate } from 'react-router-dom'
+
 const ForgotPasswordForm = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     Aos.init({ duration: 500 });
   });
-//on Success
-// const notifError = () => {
-//   toast.error("Passwords do not match 😥", {
-//     theme: "colored",
-//     position: toast.POSITION.TOP_LEFT,
-//   });
-// };
+  //on Success
+  // const notifError = () => {
+  //   toast.error("Email sent successfully 😥", {
+  //     theme: "colored",
+  //     position: toast.POSITION.TOP_LEFT,
+  //   });
+  // };
 
-//On Error
-// const notifSuccess = () => {
-//   toast.success("User Successfully Added 😊👍", {
-//     theme: "colored",
-//     position: toast.POSITION.TOP_LEFT,
-//   });
-// };
-  
+  //On Success
+  const notifSuccess = () => {
+    toast.success("Email sent successfully 😊👍", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");   // state to hold the message to show to the user
+
+  //get data from backend
+  const handleSubmit = () => {
+    // e.preventDefault(); // prevent default form submission behavior
+    // make an API call to the backend to submit the email address
+    fetch("/api/passwordReset/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // handle the response from the backend API call
+        if (data.status === "success") {
+          setMessage("Password reset email sent!"); // show success message
+          navigate('/send-email')
+        } else {
+          setMessage("Error: " + data.message); // show error message
+        }
+      })
+      .catch((error) => {
+        setMessage("Error: " + error.message); // show error message
+      });
+  };
+
   console.log(email);
-    return (
+
+  const handleResetPassword = (e) => {
+    e.preventDefault();
+    // Call the notifSuccess() method here
+    notifSuccess();
+    // Add your password reset logic here
+  };
+  return (
     <section data-aos="flip-left" className="vh-800 gradient-custom">
-      {/* <ToastContainer /> */}
+      <ToastContainer />
       <div className="container py-5 h-80">
         <div className="row d-flex justify-content-center align-items-center h-800">
           <div className="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -41,12 +80,12 @@ const ForgotPasswordForm = () => {
               style={{ borderRadius: "1rem" }}
             >
               <div className="card-body p-3 text-center">
-                <form >
+                <form onSubmit={handleResetPassword}>
                   <div className="mb-md-5 mt-md-4 pb-3">
-                  <h3> Enter your email to reset your password</h3>
+                    <h3> Enter your email to reset your password</h3>
                     <br />
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     <div className="form-outline form-white">
                       <MDBInput
                         name="email"
@@ -59,25 +98,30 @@ const ForgotPasswordForm = () => {
                       />
                     </div>
                     <br />
-                    <br/>
-                    
                     <br />
-                    <br/>
 
-                      
-                          
-                        
-                      
+                    <br />
+                    <br />
 
-                        <div className="row">
-                          <Button variant="contained" type="submit" color="success">
-                              Reset MyPassword
-                          </Button>
-                        </div>
-                      </div>
+
+
+
+
+
+                    <div className="row">
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        color="success"
+                        onClick={() => handleSubmit()}
+                      >
+                        Reset MyPassword
+                      </Button>
+                    </div>
+                  </div>
                 </form>
                 <div>
-                 
+
                 </div>
               </div>
             </div>

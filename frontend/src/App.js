@@ -41,6 +41,7 @@ import ScheduleManage from "./Components/Coach/ManageSchedule.js";
 import ChooseUsers from "./Components/Coach/ChooseUsers.js";
 
 import PasswordReset from "./Components/Password/ResetPasswordForm.js";
+import PasswordResetReroute from "./Components/Password/PasswordResetReroute.js"
 import ToTopBtn from "./Components/BackToTop/ToTopBtn.jsx"
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
 
           <Route exact path="/manage-schedule/:userId" element={<ScheduleManage />} />
           <Route exact path="/password-reset" element={<PasswordReset />} />
+          <Route exact path="/password-reset-reroute/:token" element={<PasswordResetReroute />} />
         </Route>
 
         <Route element={<WithNavBar />}>
