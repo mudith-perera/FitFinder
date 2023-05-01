@@ -23,6 +23,21 @@ import { useCookies } from "react-cookie";
 
 import SideNavbar from "../Shared/SideNavbar.js";
 
+import Rating from '@mui/material/Rating';
+
+import Box from '@mui/material/Box';
+
+import { Typography } from '@mui/material';
+
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import axios from 'axios';
+
 const MemberRegisteredGym = () => {
   useEffect(() => {
     Aos.init({ duration: 500 });
@@ -53,6 +68,23 @@ const MemberRegisteredGym = () => {
 
   const userId = cookie.LoggedUser[5];
 
+  const [open, setOpen] = useState(false);
+  //const avgRating = 2;
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [comment, setComment] = useState('');
+
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
   const gymRegistered = async () => {
     const registeredGym = null;
     const registeredGymActivateStatus = false;
@@ -75,6 +107,22 @@ const MemberRegisteredGym = () => {
       setGymDetails(null);
       setRegisteredGymStatus(false);
     }
+  };
+
+  const [rateValue, setValue] = useState(null);
+
+  const handleRating = () => {
+    // Send POST request with rating value
+    axios.post('/api/rating', { rating: rateValue, comment })
+      .then(response => {
+        console.log('Rating posted successfully:', response.data);
+        setOpen(false)
+        // Optionally, show a success message to the user
+      })
+      .catch(error => {
+        console.error('Failed to post rating:', error);
+        // Optionally, show an error message to the user
+      });
   };
 
   return (
@@ -176,6 +224,74 @@ const MemberRegisteredGym = () => {
                     </td>
                   </tr>
                 </Table>
+
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    p: 2,
+                    //bgcolor: 'secondary.light',
+                    //color: 'primary.contrastText',
+                    borderRadius: 1,
+                    boxShadow: 1,
+                    border: '1px solid black',
+                    mb: 2
+                  }}
+                >
+                <Typography variant="h5">Rate this product:</Typography>
+                <Rating name="read-only" value={rateValue} readOnly />
+                
+                                    {/* {rateValue && <p>You rated {rateValue} stars.</p>} */}
+                                    <div>
+                          <Button variant="contained" color="primary" onClick={handleClickOpen} sx={{ mt: 2 }}>
+                  Rate Me
+                </Button>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {"Rate this Gym"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                        Please rate the gym from 1 to 5 stars:
+                    </DialogContentText>
+                    <DialogActions style={{ justifyContent: 'flex-start' }}>
+                      <Rating
+                        name="gym-rating"
+                        value={rateValue}
+                        onChange={event => setValue(event.target.value)}
+                        precision={0.5}
+                        size="large"
+                      />
+                    </DialogActions>
+                                      
+                    {rateValue && <p>You rated {rateValue} stars.</p>}
+                  </DialogContent>
+
+                  <Typography variant="subtitle1" gutterBottom>
+                  Comment:
+                </Typography>
+                <textarea
+                  id="comment"
+                  name="comment"
+                  value={comment}
+                  onChange={handleCommentChange}
+                />
+                                    
+                  <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleRating}>Submit</Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+              </Box>
+
                 <Button
                   variant="contained"
                   type="submit"
