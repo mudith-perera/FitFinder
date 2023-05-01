@@ -41,7 +41,7 @@ export default function App() {
             <HR/>
             <Links>
               <Link1 className="FooterLink">
-                <Link to = "/uc" style={{color:"inherit", textDecoration: 'none'}}>
+                <Link to = "/privacy-policy" style={{color:"inherit", textDecoration: 'none'}}>
                   Privacy
                 <Span className="Ho" ></Span>
                 </Link>
@@ -59,7 +59,7 @@ export default function App() {
                 </Link>
               </Link1>
               <Link1 className="FooterLink">
-                <Link to = "/uc" style={{color:"inherit", textDecoration: 'none'}}>
+                <Link to = "/about-us" style={{color:"inherit", textDecoration: 'none'}}>
                   Contact Us
                 <Span className="Ho"></Span>
                 </Link>

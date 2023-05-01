@@ -12,10 +12,12 @@ import Home from "./Views/Home.js";
 import AboutUs from "./Components/About/AboutUs.js";
 import ForgotPassword from "./Components/Password/ForgotPasswordForm.js";
 import FAQ from "./Components/Home/FAQ";
+import PrivacyPolicy from "./Views/PrivacyPolicy.js";
 
 import AdminHome from "./Views/Admin/AdminHome.js";
 import FaQTable from "./Components/Admin/FaQTable.js";
-import ViewAndUpdateAllUsersTable from "./Components/Admin/ViewAndUpdateAllUseresTable.js";
+import ManageMembers from "./Components/Admin/ManageMembers.js";
+import ManageCoaches from "./Components/Admin/ManageCoaches.js";
 import ManageGyms from "./Components/Admin/ManageGyms.js";
 
 import CoachHome from "./Views/Coach/CoachHome.js";
@@ -54,7 +56,8 @@ function App() {
           <Route exact path="/uc-w" element={<UC />} />
           <Route exact path="/admin-home" element={<AdminHome />} />
           <Route exact path="/admin-home/faq-table" element={<FaQTable />} />
-          <Route exact path="/admin-home/manage-members" element={<ViewAndUpdateAllUsersTable />} />
+          <Route exact path="/admin-home/manage-members" element={<ManageMembers />} />
+          <Route exact path="/admin-home/manage-coaches" element={<ManageCoaches />} />
           <Route exact path="/admin-home/manage-gyms" element={<ManageGyms/>} />
 
           <Route exact path="/coach-home" element={<CoachHome />} />
@@ -87,7 +90,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/about-us" element={<AboutUs />} />
           <Route exact path="/forgot-password" element={<ForgotPassword />} />
-
+          <Route exact path="/privacy-policy" element={<PrivacyPolicy/>}/>
           <Route exact path="/gym-sign-up" element={<GymSignUpForm />} />
           <Route exact path="/Coach-sign-up" element={<CoachSignUpForm />} />
 

@@ -14,6 +14,15 @@ import "./gymUserTable.css";
 import SideNavbar from "../Shared/SideNavbar.js";
 
 import { useCookies } from "react-cookie";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = {
+  position: "absolute",
+  top: "47%",
+  left: "44%",
+  zIndex: 9990,
+};
+
 
 const theme = createTheme({
   palette: {
@@ -133,6 +142,7 @@ const ViewAllGymCoachesTable = () => {
   const [users, setUsers] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [email] = useState(cookie.LoggedUser[4]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -145,7 +155,7 @@ const ViewAllGymCoachesTable = () => {
             "Content-Type": "application/json",
           },
         });
-  
+
         if (response.ok) {
           const data = await response.json(); // Parse response body as JSON
           const filteredUsers = data.filter(
@@ -155,6 +165,7 @@ const ViewAllGymCoachesTable = () => {
             return { ...user, id: index + 1 };
           });
           setUsers(updatedUsers);
+          setLoading(false);
         } else {
           console.log("Server responded with error", response.status);
         }
@@ -162,10 +173,10 @@ const ViewAllGymCoachesTable = () => {
         console.log(error);
       }
     };
-  
+
     getUsers();
   }, [email]);
-  
+
 
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
@@ -193,6 +204,15 @@ const ViewAllGymCoachesTable = () => {
               >
                 <div className="card-body p-3">
                   <div>
+
+                    <ClipLoader
+                      color={"#ffffff"}
+                      loading={loading}
+                      cssOverride={override}
+                      size={150}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
                     <h2 style={{ textAlign: "center" }}>
                       Manage Gym Coaches
                     </h2>
@@ -234,4 +254,4 @@ const ViewAllGymCoachesTable = () => {
     </>
   );
 };
-export default ViewAllGymCoachesTable ;
+export default ViewAllGymCoachesTable;

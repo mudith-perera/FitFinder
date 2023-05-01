@@ -8,6 +8,7 @@ import "aos/dist/aos.css";
 import { FaDumbbell, FaUserAlt } from 'react-icons/fa';
 import { GiTeacher } from 'react-icons/gi';
 
+import Trust from "../../Images/trust.png"
 
 let iconStyle = { fontWeight: "400", color: "#fff", fontSize: "3.5rem" };
 const Counter = (props) => {
@@ -33,6 +34,8 @@ const Counter = (props) => {
 
     return (
         <>
+            <div className="c-header" data-aos="fade-right"><h2>We are trusted with &nbsp;&nbsp;<img style={{ height: "70px" }} alt="trust" src={Trust} /></h2></div>
+
             <div className="c-wrapper">
                 <div className="c-container" data-aos="flip-right">
                     <FaDumbbell style={iconStyle} />

@@ -17,15 +17,15 @@ const mongoose = require("mongoose");
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 const crypto = require('crypto')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+//const jwt = require('jsonwebtoken')
 // const {JWT_SECRET} = require('../routes')
 
 const User = require("../models/userModel.js");
 
-const ejs = require('ejs');
-const fs = require('fs');
-const path = require('path');
+//const ejs = require('ejs');
+//const fs = require('fs');
+//const path = require('path');
 
 //get .env package
 require("dotenv").config();
@@ -36,43 +36,43 @@ dotenv.config({ path: "./config.env" });
 
 
 const transporter = nodemailer.createTransport(sendgridTransport({
-    auth: {
-        //api_key: "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"
-        api_key: process.env.SENDGRID_API
+  auth: {
+    //api_key: "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"
+    api_key: process.env.SENDGRID_API
 
-    }
+  }
 }))
 
 // console.log("90");
 
 router.post('/send-email', (req, res) => {
 
-    //create a token
-    crypto.randomBytes(32, (err, buffer) => {
-        if (err) {
-            console.log(err)
+  //create a token
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err)
+    }
+    const token = buffer.toString("hex")
+
+    // console.log("99");
+    const { email } = req.body
+
+    console.log({ email });
+
+    // Replace User with your own Mongoose model for users
+    User.findOne({ email: email, activeStatus: true })
+      .then((oldUser) => {
+        if (!oldUser) {
+          return res.status(404).json({ message: "User not found with that email" });
         }
-        const token = buffer.toString("hex")
 
-        // console.log("99");
-        const { email } = req.body
+        oldUser.resetToken = token
+        oldUser.expireToken = Date.now() + 3600000     //able to reset password only with one hour
 
-        console.log({email});
+        const subject = "Reset Password";      // define the subject here
+        const name = oldUser.firstname + " " + oldUser.lastname;
 
-        // Replace User with your own Mongoose model for users
-        User.findOne({ email: email, activeStatus: true })
-            .then((oldUser) => {
-                if (!oldUser) {
-                    return res.status(404).json({ message: "User not found with that email" });
-                }
-
-                oldUser.resetToken = token
-                oldUser.expireToken = Date.now() + 3600000     //able to reset password only with one hour
-
-                const subject = "Reset Password";      // define the subject here
-                const name = oldUser.firstname +" " + oldUser.lastname;
-
-                const html = `
+        const html = `
             
             <!DOCTYPE html>
             <html>
@@ -160,36 +160,36 @@ router.post('/send-email', (req, res) => {
           </body>
             `;
 
-                console.log(oldUser);
+        console.log(oldUser);
 
-                oldUser.save().then((result) => {
-                    transporter
-                        .sendMail({
-                            to: oldUser.email,
-                            from: "fitfinder.uor@gmail.com",
-                            subject: "Reset Password",
-                            html: html
-                        })
-                        .then(() => {
-                            res.json({ message: "Email sent successfully" });
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                            res.status(500).json({ message: "Error sending email" });
-                        });
-                })
+        oldUser.save().then((result) => {
+          transporter
+            .sendMail({
+              to: oldUser.email,
+              from: "fitfinder.uor@gmail.com",
+              subject: "Reset Password",
+              html: html
+            })
+            .then(() => {
+              res.json({ message: "Email sent successfully" });
             })
             .catch((err) => {
-                console.error(err);
-                res.status(500).json({ message: "Error finding user" });
+              console.error(err);
+              res.status(500).json({ message: "Error sending email" });
             });
+        })
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json({ message: "Error finding user" });
+      });
 
-    })
+  })
 
 });
 
 
-router.post('/new-password',(req,res)=>{
+router.post('/new-password', (req, res) => {
   //console.log("25");
   const newPassword = req.body.password
   const sentToken = req.body.token
@@ -197,23 +197,23 @@ router.post('/new-password',(req,res)=>{
   console.log(newPassword);
   console.log(sentToken);
 
-  User.findOne({resetToken:sentToken,expireToken:{$gt:Date.now()}})
-  .then(user=>{
-      if(!user){
-          return res.status(422).json({error:"Try again session expired"})
+  User.findOne({ resetToken: sentToken, expireToken: { $gt: Date.now() } })
+    .then(user => {
+      if (!user) {
+        return res.status(422).json({ error: "Try again session expired" })
       }
       console.log(user);
-      bcrypt.hash(newPassword,12).then(hashedpassword=>{
-         user.password = hashedpassword
-         user.resetToken = undefined
-         user.expireToken = undefined
-         user.save().then((saveduser)=>{
-             res.json({message:"password updated success"})
-         })
+      bcrypt.hash(newPassword, 12).then(hashedpassword => {
+        user.password = hashedpassword
+        user.resetToken = undefined
+        user.expireToken = undefined
+        user.save().then((saveduser) => {
+          res.json({ message: "password updated success" })
+        })
       })
-  }).catch(err=>{
+    }).catch(err => {
       console.log(err)
-  })
+    })
 })
 
 

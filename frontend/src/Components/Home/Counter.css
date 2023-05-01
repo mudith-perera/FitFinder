@@ -1,70 +1,74 @@
 /* Default styles */
+.c-header {
+  margin-left:13%;
+  padding-bottom: 1rem;
+}
+
 .c-wrapper {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    margin-bottom: 40px;
-    padding: 0 300px;
-  }
-  
-  .c-container {
-    width:20%;
-    height:15%;
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  padding: 0 300px;
+}
+
+.c-container {
+  width: 20%;
+  height: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2em 0;
+  position: relative;
+  font-size: 25px;
+  border-radius: 0.5em;
+  background-color: #21242b;
+  border-bottom: 10px solid #188cf9;
+}
+
+.c-container i {
+  color: #188cf9;
+  font-size: 4.5em;
+  text-align: center;
+}
+
+.c-container .num {
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 3em;
+}
+
+.c-container .text {
+  color: #e0e0e0;
+  text-align: center;
+  pad: 2em 0;
+  font-weight: 400;
+  line-height: 0;
+}
+
+.c-item {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
+}
+
+.c-item.in-view {
+  height: auto;
+}
+
+/* Media query for screens smaller than 768px */
+@media (max-width: 767px) {
+  .c-wrapper {
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    padding: 2em 0;
-    position: relative;
-    font-size:25px;
-    border-radius: 0.5em;
-    background-color: #21242b;
-    border-bottom: 10px solid #188cf9;
-  }
-  
-  .c-container i {
-    color: #188cf9;
-    font-size:4.5em;
-    text-align: center;
-  }
-  
-  .c-container .num {
-    color: #fff;
-    display: grid;
-    place-items: center;
-    font-weight: 600;
-    font-size: 3em;
-  }
-  
-  .c-container .text {
-    color: #e0e0e0;
-    text-align: center;
-    pad:2em 0;
-    font-weight: 400;
-    line-height: 0;
+    padding: 0 20px;
   }
 
-  .c-item {
-    height: 0;
-    overflow: hidden;
-    transition: height 0.3s ease-in-out;
+  .c-container {
+    width: 40%;
+    margin: 10px;
   }
-  
-  .c-item.in-view {
-    height: auto;
-  }
-  
-  /* Media query for screens smaller than 768px */
-  @media (max-width: 767px) {
-    .c-wrapper {
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 0 20px;
-    }
-    
-    .c-container {
-      width: 40%;
-      margin: 10px;
-    }
-  }
-  
+}

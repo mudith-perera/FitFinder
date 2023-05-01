@@ -10,7 +10,7 @@ import { useCookies } from "react-cookie";
 
 const Home = () => {
   const [cookie] = useCookies([""]);
-  const [LoggedUser] = useState(cookie.LoggedUser ? cookie.LoggedUser[1] :false);
+  const [LoggedUser] = useState(cookie.LoggedUser ? cookie.LoggedUser[1] : false);
   const [showLogo, setShowLogo] = useState(true);
   const [currentPath] = useState(window.location.pathname);
   const [dataG, setDataG] = useState(null);
@@ -22,17 +22,17 @@ const Home = () => {
       const responseU = await fetch("api/users/");
       setDataG(await responseG.json());
       setDataU(await responseU.json());
-  };
-  fetchData();
+    };
+    fetchData();
     if (currentPath === "/") {
       const timeout = setTimeout(() => {
         setShowLogo(false);
       }, 4500);
       return () => clearTimeout(timeout);
-    }else{
+    } else {
       setShowLogo(false);
     }
-  }, [showLogo, currentPath,LoggedUser]);
+  }, [showLogo, currentPath, LoggedUser]);
 
   const [searchResult, setSearchResult] = useState("");
 
@@ -67,7 +67,8 @@ const Home = () => {
   }
   return (
     <div>
-      <SearchBar onDataFromSearchBar={handleDataFromSearchBar} />
+      <div data-aos="fade-right"><SearchBar onDataFromSearchBar={handleDataFromSearchBar} /></div>
+
       {searchResult ? (
         <div data-aos="fade-left" style={styles.searchResult}>
           <div style={styles.searchResultCard}>
@@ -80,7 +81,7 @@ const Home = () => {
       ) : (
         <></>
       )}
-      <Counter dataG={dataG} dataU={dataU}/>
+      <Counter dataG={dataG} dataU={dataU} />
     </div>
   );
 };
