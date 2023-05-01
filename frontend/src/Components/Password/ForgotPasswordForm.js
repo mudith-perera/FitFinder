@@ -59,6 +59,8 @@ const ForgotPasswordForm = () => {
       .catch((error) => {
         setMessage("Error: " + error.message); // show error message
       });
+
+    console.log(message);
   };
 
   console.log(email);

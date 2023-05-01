@@ -8,9 +8,9 @@ import { NavLink } from 'react-router-dom';
 
 import { CDBSidebarMenuItem } from "cdbreact";
 
-import {  MdScheduleSend, MdPayments } from "react-icons/md";
+import { MdScheduleSend, MdPayments } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
-import { FaUsers, FaUserPlus, FaBars,FaSearch,FaPeopleCarry,FaDumbbell,FaHome } from "react-icons/fa";
+import { FaUsers, FaBars, FaSearch, FaPeopleCarry, FaDumbbell, FaHome } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 
 let iconStyle = { fontWeight: "400", color: "#fff", fontSize: "1.5rem" };
@@ -51,7 +51,7 @@ export const MenuItems = [
                 icon: <AiFillSetting style={iconStyle} />,
                 path: "/member-home/member-view-update",
             },
-             //////// (Mudith Perera) Payment added - (END) ///////
+            //////// (Mudith Perera) Payment added - (END) ///////
         ],
     },
     {
@@ -107,7 +107,7 @@ export const MenuItems = [
         NavsArray: [
             {
                 text: 'Manage Gyms',
-                icon: <FaUserPlus style={iconStyle} />,
+                icon: <FaDumbbell style={iconStyle} />,
                 path: "/admin-home/manage-gyms",
             },
             {
@@ -116,11 +116,16 @@ export const MenuItems = [
                 path: "/admin-home/manage-members",
             },
             {
+                text: 'Manage Coaches',
+                icon: <FaPeopleCarry style={iconStyle} />,
+                path: "/admin-home/manage-coaches",
+            },
+            {
                 text: 'View FAQs',
                 icon: <MdScheduleSend style={iconStyle} />,
                 path: "/admin-home/faq-table",
             },
-            
+
         ],
     },
 ]

@@ -193,11 +193,26 @@ const updateUserStatus = async (req, res) => {
       { activeStatus: req.body.activeStatus },
       { new: true }
     );
+    if (user.userType === 'gym') {
+      const gym = await Gym.find({ email: user.email }).sort({ createdAt: -1 });
+      if (gym.length) {
+        const gymId = gym[0]._id;
+        const updatedGym = await Gym.findOneAndUpdate(
+          { _id: gymId },
+          {
+            activeStatus: req.body.activeStatus,
+          },
+          { new: true }
+        );
+        console.log(updatedGym);
+      }
+    }
     res.json(user);
   } catch (err) {
     res.status(500).send('Server error');
   }
 };
+
 
 /////////////////////////  (END)
 

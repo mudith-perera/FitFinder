@@ -15,7 +15,14 @@ import SideNavbar from "../Shared/SideNavbar.js";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
+import ClipLoader from "react-spinners/ClipLoader";
 
+const override = {
+  position: "absolute",
+  top: "47%",
+  left: "44%",
+  zIndex: 9990,
+};
 const theme = createTheme({
   palette: {
     primary: {
@@ -28,7 +35,7 @@ const theme = createTheme({
 });
 
 const columns = [
-  { field: "id", headerName: "ID", hide: true,headerClassName: "table-header" },
+  { field: "id", headerName: "ID", hide: true, headerClassName: "table-header" },
   {
     field: "firstname",
     headerName: "First Name",
@@ -57,12 +64,6 @@ const columns = [
   {
     field: "contact",
     headerName: "Phone Number",
-    flex: 1,
-    headerClassName: "table-header",
-  },
-  {
-    field: "userType",
-    headerName: "User Type",
     flex: 1,
     headerClassName: "table-header",
   },
@@ -117,9 +118,10 @@ const columns = [
   }
 ];
 
-const ViewAndUpdateAllUsersTable = () => {
+const ManageCoaches = () => {
   const [users, setUsers] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Aos.init({ duration: 1000 });
@@ -127,12 +129,13 @@ const ViewAndUpdateAllUsersTable = () => {
       try {
         const response = await axios.get("/api/users");
         const filteredUsers = response.data.filter(
-          (user) =>  user.userType === "member" || user.userType === "coach"
+          (user) => user.userType === "coach"
         );
         const updatedUsers = filteredUsers.map((user, index) => {
           return { ...user, id: index + 1 };
         });
         setUsers(updatedUsers);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -161,11 +164,19 @@ const ViewAndUpdateAllUsersTable = () => {
         <div className="container py-5">
           <div className="row d-flex justify-content-center align-items-center">
             <div className="col-12 col-md-8 col-lg-2 col-xl-11">
-              <div className="card bg-white" style={{ borderRadius: "1rem",width: "1250px" }}>
+              <div className="card bg-white" style={{ borderRadius: "1rem", width: "1250px" }}>
                 <div className="card-body p-3">
                   <div>
+                    <ClipLoader
+                      color={"#ffffff"}
+                      loading={loading}
+                      cssOverride={override}
+                      size={150}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
                     <h2 style={{ textAlign: "center" }}>
-                      Manage Members And Coaches
+                      Manage Coaches
                     </h2>
                     <ThemeProvider theme={theme}>
                       <Box
@@ -205,4 +216,4 @@ const ViewAndUpdateAllUsersTable = () => {
     </>
   );
 };
-export default ViewAndUpdateAllUsersTable;
+export default ManageCoaches;

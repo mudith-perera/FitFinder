@@ -17,12 +17,12 @@ import "aos/dist/aos.css";
 
 const AboutUs = () => {
   useEffect(() => {
-    Aos.init({ duration: 500 });
+    Aos.init({ duration: 1000 });
   });
 
 
   return (
-    <section data-aos="zoom-in">
+    
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12">
@@ -32,7 +32,7 @@ const AboutUs = () => {
             >
               <div className="card-body p-0">
                 <div className="row g-0 ">
-                  <div className="col-lg-6 bg-part-one">
+                  <div className="col-lg-6 bg-part-one" data-aos="fade-right">
                     <div className="p-5">
                       <h3 className="fw-normal mb-5">About Us&emsp;</h3>
                       <div>
@@ -51,8 +51,8 @@ const AboutUs = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-6 bg-part-two text-white">
-                    <div className="p-5">
+                  <div className="col-lg-6 bg-part-two text-white" data-aos="fade-left">
+                    <div className="p-5 text-center">
                       <h3 className="fw-normal mb-5">
                         Team <span style={{ color: "#6a11cb" }}>M</span>embers&emsp;&emsp;
                       </h3>
@@ -65,11 +65,11 @@ const AboutUs = () => {
 
                     </div>
                   </div>
-                  <div className="col-lg-6 bg-part-four text-white">
+                  <div className="col-lg-6 bg-part-four text-white" data-aos="fade-right">
                     <div className="p-5">
-                      <h3 className="fw-normal mb-5">Where we are&emsp;</h3>
+                      <h3 className="fw-normal mb-5">Where we are,&emsp;</h3>
                       <div>
-                        <MDBRow className='w-100'>
+                        <MDBRow className='w-150'>
                           <MDBCol className='my-4'>
                             <iframe
                               src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3968.40994407125!2d80.57394571586256!3d5.938097431336243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae1391b4a29e707%3A0xd54277175e326bc2!2sUniversity%20of%20Ruhuna!5e0!3m2!1sen!2slk!4v1678863583832!5m2!1sen!2slk'
@@ -84,10 +84,10 @@ const AboutUs = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-6 bg-part-five">
+                  <div className="col-lg-6 bg-part-five" data-aos="fade-left">
                     <div className="p-5">
                       <h3 className="fw-normal mb-5">
-                        Contact <span style={{ color: "#6a11cb" }}>U</span>s&emsp;&emsp;
+                        <b>Contact <span style={{ color: "#6a11cb" }}>U</span>s&emsp;&emsp;</b>
                       </h3>
                       <MDBValidation noValidate id='form' className='text-center' style={{ width: '100%' }}>
 
@@ -124,7 +124,6 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
-    </section>
   );
 };
 

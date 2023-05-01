@@ -54,6 +54,10 @@ const googleSignInUp = async (req, res) => {
     //check for the user email existance
     const foundUser = await User.findOne({ email });
     if (foundUser) {
+      console.log(foundUser.activeStatus)
+      if(!foundUser.activeStatus){
+        res.status(401).json({message:'This Account is deactivated'});
+      }
       res.status(200).json(foundUser);
     }else{
       const user = await User.create({email,firstname,lastname});
