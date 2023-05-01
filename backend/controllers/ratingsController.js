@@ -48,13 +48,13 @@ const getRatings = async (req, res) => {
 /////////////////////////  (END)
 
 /////////////////////////  Controller       : getUser()
-/////////////////////////  Description      : Get a single user information
+/////////////////////////  Description      : Get a single rating by using the  userid and gymid
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
 const getRating = async (req, res) => {
   
-  const { id } = req.params;
-  const rating = await Rating.findById(id);
+  const {user,gym} = req.body;
+  const rating = await Rating.findOne({user,gym});
 
   if (!rating) {
     return res.status(404).json({ error: "No such Rating" });
@@ -95,6 +95,21 @@ const updateRating = async (req, res) => {
   
 };
 
+/////////////////////////  Controller       : getGymRatings()
+/////////////////////////  Description      : Get all the ratings belongs to a single gym
+/////////////////////////  Developer        : Mudith Perera
+/////////////////////////  (START)
+const getGymRatings = async (req, res) => {
+  
+  const {gym} = req.body;
+  const rating = await Rating.find({gym});
+
+  if (!rating) {
+    return res.status(404).json({ error: "No ratings" });
+  }
+  res.status(200).json(rating);
+};
+/////////////////////////  (END)
 
 /////////////////////////  (END)
 
@@ -103,5 +118,5 @@ module.exports = {
   getRatings,
   updateRating,
   getRating,
-  
+  getGymRatings,
 };

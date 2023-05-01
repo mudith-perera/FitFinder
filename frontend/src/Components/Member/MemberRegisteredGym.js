@@ -4,31 +4,20 @@
 
 import React, { useEffect, useState } from "react";
 import "./UserGymHome.css";
-
 import Carousel from "react-bootstrap/Carousel";
 import Button from "@mui/material/Button";
 import Table from "react-bootstrap/Table";
-
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import gym from "../../Images/gym.png";
-
 import Aos from "aos";
 import "aos/dist/aos.css";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { useCookies } from "react-cookie";
-
 import SideNavbar from "../Shared/SideNavbar.js";
-
 import Rating from '@mui/material/Rating';
-
 import Box from '@mui/material/Box';
-
 import { Typography } from '@mui/material';
-
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -39,22 +28,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 
 const MemberRegisteredGym = () => {
-  useEffect(() => {
-    Aos.init({ duration: 500 });
-  }, []);
-
-  //user account create success alert
-  const userSuccess = () => {
-    toast.success("User Successfully Removed 😊👍", {
-      theme: "colored",
-      position: toast.POSITION.TOP_LEFT,
-    });
-  };
-
   const [cookie, setCookie] = useCookies(["LoggedUser"]);
-  const [gymDetails, setGymDetails] = useState(cookie.LoggedUser[6]);
-  const [registeredGymStatus,setRegisteredGymStatus] = useState(cookie.LoggedUser[7]);
+  const [ratingData, setRatingData] = useState('');
+  const userId = cookie.LoggedUser[5];
 
+  const [rateValue, setValue] = useState(null);
+  const [comment, setComment] = useState(null);
+  const [gymDetails, setGymDetails] = useState(cookie.LoggedUser[6]);
+  const [registeredGymStatus, setRegisteredGymStatus] = useState(cookie.LoggedUser[7]);
+  const [GymId] = useState(gymDetails?._id);
   const [GymName] = useState(gymDetails?.gymName);
   const [GymOwnerName] = useState(gymDetails?.gymOwnerName);
   const [GymOwnerEmail] = useState(gymDetails?.email);
@@ -66,8 +48,36 @@ const MemberRegisteredGym = () => {
   const [AnnualFee] = useState(gymDetails?.gymAnnualFee);
   const [GymImages] = useState(gymDetails?.images);
 
-  const userId = cookie.LoggedUser[5];
+  useEffect(() => {
+    Aos.init({ duration: 500 });
+    fetch(`/api/rating/getUserGymRating`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: userId,
+        gym: GymId,
+        
+      })
+    })
+    .then((response) => response.json())
+    .then((data) => setRatingData(data));
+  }, [userId,GymId]);
 
+  useEffect(() => {
+    setValue(ratingData?.rating || null);
+    setComment(ratingData?.comment || null);
+  },[rateValue,ratingData?.rating,ratingData?.comment])
+  
+
+  //user account create success alert
+  const userSuccess = () => {
+    toast.success("User Successfully Removed 😊👍", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
   const [open, setOpen] = useState(false);
   //const avgRating = 2;
 
@@ -78,8 +88,6 @@ const MemberRegisteredGym = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const [comment, setComment] = useState('');
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
@@ -109,11 +117,9 @@ const MemberRegisteredGym = () => {
     }
   };
 
-  const [rateValue, setValue] = useState(null);
-
   const handleRating = () => {
     // Send POST request with rating value
-    axios.post('/api/rating', { rating: rateValue, comment })
+    axios.post('/api/rating', { rating: rateValue, comment,user: userId,gym: GymId })
       .then(response => {
         console.log('Rating posted successfully:', response.data);
         setOpen(false)
@@ -240,57 +246,56 @@ const MemberRegisteredGym = () => {
                     mb: 2
                   }}
                 >
-                <Typography variant="h5">Rate this product:</Typography>
-                <Rating name="read-only" value={rateValue} readOnly />
-                
-                                    {/* {rateValue && <p>You rated {rateValue} stars.</p>} */}
-                                    <div>
-                          <Button variant="contained" color="primary" onClick={handleClickOpen} sx={{ mt: 2 }}>
-                  Rate Me
-                </Button>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title">
-                    {"Rate this Gym"}
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText>
-                        Please rate the gym from 1 to 5 stars:
-                    </DialogContentText>
-                    <DialogActions style={{ justifyContent: 'flex-start' }}>
-                      <Rating
-                        name="gym-rating"
-                        value={rateValue}
-                        onChange={event => setValue(event.target.value)}
-                        precision={0.5}
-                        size="large"
-                      />
-                    </DialogActions>
-                                      
-                    {rateValue && <p>You rated {rateValue} stars.</p>}
-                  </DialogContent>
+                  <Typography variant="h5">Rate this Gym:</Typography>
+                  <Rating name="read-only" value={rateValue} readOnly />
+                  <div>
+                    <Button variant="contained" color="primary" onClick={handleClickOpen} sx={{ mt: 2 }}>
+                      Rate Me
+                    </Button>
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle id="alert-dialog-title">
+                        {"Rate this Gym"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          Please rate the gym from 1 to 5 stars:
+                        </DialogContentText>
+                        <DialogActions style={{ justifyContent: 'flex-start' }}>
+                          <Rating
+                            name="size-large"
+                            value={rateValue}
+                            onChange={event => setValue(event.target.value)}
+                            size="large"
+                          />
+                        </DialogActions>
 
-                  <Typography variant="subtitle1" gutterBottom>
-                  Comment:
-                </Typography>
-                <textarea
-                  id="comment"
-                  name="comment"
-                  value={comment}
-                  onChange={handleCommentChange}
-                />
-                                    
-                  <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleRating}>Submit</Button>
-                  </DialogActions>
-                </Dialog>
-              </div>
-              </Box>
+                        {rateValue && <p>You rated {rateValue} stars.</p>}
+
+                        <Typography variant="subtitle1" gutterBottom>
+                          Comment:
+                        </Typography>
+                        <textarea
+                          id="comment"
+                          name="comment"
+                          value={comment}
+                          onChange={handleCommentChange}
+                        />
+
+                        <DialogActions>
+                          <Button onClick={handleClose}>Cancel</Button>
+                          <Button onClick={handleRating}>Submit</Button>
+                        </DialogActions>
+                      </DialogContent>
+
+
+                    </Dialog>
+                  </div>
+                </Box>
 
                 <Button
                   variant="contained"

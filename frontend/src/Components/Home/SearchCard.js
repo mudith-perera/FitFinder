@@ -13,6 +13,14 @@ import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 const styles = {
   boxes: {
     position: "absolute",
@@ -30,6 +38,17 @@ const styles = {
     alignItems: "center",
     gap: "4px",
   },
+  boxes2: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 700,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 2,
+    borderRadius: 4,
+  },
   scrollableDiv: {
     overflow: "auto",
   },
@@ -39,6 +58,7 @@ const SearchCard = (props) => {
   const [cookie] = useCookies([""]);
   const [loggedState, setLoggedState] = useState(false);
   const [userId, setUserId] = useState("");
+  const [ratingData, setRatingData] = useState("");
 
   useEffect(() => {
     Aos.init({ duration: 1000 });
@@ -90,6 +110,8 @@ const SearchCard = (props) => {
 
   const [openModalId, setOpenModalId] = useState(null);
 
+  const [openModalReviewsId, setOpenModalReviewsId] = useState(null);
+
   const handleOpenModal = (id) => {
     setOpenModalId(id);
   };
@@ -98,6 +120,26 @@ const SearchCard = (props) => {
     setOpenModalId(null);
   };
 
+  const handleOpenViewReviews = (id) => {
+    fetch(`/api/rating/getGymRatings`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        gym: id,
+
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => setRatingData(data));
+    setOpenModalReviewsId(id);
+  };
+
+  const handleCloseViewReviews = () => {
+    setRatingData(null);
+    setOpenModalReviewsId(null);
+  };
   return (
     <>
       <ToastContainer />
@@ -106,6 +148,48 @@ const SearchCard = (props) => {
           results.map((result) => (
             <div style={{ width: "90%", margin: "0 auto" }}>
               <Card key={result._id} sx={{ marginBottom: 2 }}>
+
+                {/* Modal to show all the reviews of a gym (START) */}
+                <Modal
+                  open={openModalReviewsId === result._id}
+                  onClose={handleCloseViewReviews}
+                  aria-labelledby={`modal-title-${result._id}`}
+                  aria-describedby={`modal-description-${result._id}`}
+                >
+                  <Box sx={styles.boxes2}>
+                  {Array.isArray(ratingData) && ratingData.length > 0 ?
+                    (
+                      <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell align="left">User</TableCell>
+                              <TableCell align="left">Rating</TableCell>
+                              <TableCell align="left">Comment</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {ratingData?.map((rating) => (
+                              <TableRow
+                                key={rating._id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                              >
+                                <TableCell align="left">{rating.user.firstname + " " + rating.user.lastname}</TableCell>
+                                <TableCell align="left"><Rating name="read-only" value={rating.rating} readOnly /></TableCell>
+                                <TableCell align="left">{rating.comment}</TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    ) : (
+                      <p>No ratings found.</p>
+                    )}
+                    </Box>
+                </Modal>
+                {/* Modal to show all the reviews of a gym (END) */}
+
+                {/* Modal to show Extra details of the gym (START) */}
                 <Modal
                   open={openModalId === result._id}
                   onClose={handleCloseModal}
@@ -167,7 +251,7 @@ const SearchCard = (props) => {
                     </Carousel>
                   </Box>
                 </Modal>
-
+                {/* Modal to show Extra details of the gym (END) */}
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "row-reverse" }}>
                   <Carousel sx={{ marginRight: "2rem", width: "60%", borderRadius: "1rem" }}>
                     {result.images.map((image, index) => (
@@ -216,6 +300,12 @@ const SearchCard = (props) => {
                         onClick={() => handleOpenModal(result._id)}
                       >
                         More Details
+                      </Button>
+                      <Button
+                        size="small"
+                        onClick={() => handleOpenViewReviews(result._id)}
+                      >
+                        View Reviews
                       </Button>
                     </CardActions>
                   </div>

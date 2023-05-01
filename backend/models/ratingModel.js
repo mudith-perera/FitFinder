@@ -25,14 +25,9 @@ const ratingSchema = new Schema(
       min: 1,
       max: 5,
     },
-    avgRating :{
-      type: Number,
-      required: false,
-    },
     comment: {
       type: String,
     },
-
     createdAt: {
       type: Date,
       default: Date.now,
@@ -56,8 +51,8 @@ ratingSchema.pre(/^find/, function (next) {
   this.populate({
     path: "gym",
     select:
-    "gymName gymOwnerName email gymSexType gymContactNo1 gymContactNo2 location  gymAddress gymOwnerComment activeStatus images gymRating",
-  
+      "gymName gymOwnerName email gymSexType gymContactNo1 gymContactNo2 location  gymAddress gymOwnerComment activeStatus images gymRating",
+
   });
 
   next();

@@ -15,7 +15,6 @@ const faqSchema = new Schema(
     },
     
     email: {
-      unique: true,
       type: String,
       lowercase: true,
       required: [true, "Member must have an email"],

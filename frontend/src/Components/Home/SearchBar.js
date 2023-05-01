@@ -80,7 +80,7 @@ const SearchBar = ({ onDataFromSearchBar }) => {
   //Location Drop Down Handlers (END)
 
   //gymSexType Drop Down Handlers (START)
-  const [gymSexType, setGender] = useState();
+  const [gymSexType, setGender] = useState('');
 
   const handleChange = (event) => {
     setGender(event.target.value);

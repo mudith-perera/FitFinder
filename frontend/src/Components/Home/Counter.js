@@ -30,8 +30,6 @@ const Counter = (props) => {
         }
     }, [props.dataG, props.dataU]);
 
-    console.log(gyms, users, coaches)
-
     return (
         <>
             <div className="c-header" data-aos="fade-right"><h2>We are trusted with &nbsp;&nbsp;<img style={{ height: "70px" }} alt="trust" src={Trust} /></h2></div>

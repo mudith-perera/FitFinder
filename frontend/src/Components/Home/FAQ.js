@@ -27,7 +27,7 @@ const FAQ = () => {
 
       //user account create success alert
   const userSuccess = () => {
-    toast.success("User Successfully Added 😊👍", {
+    toast.success("We are looking to your question.. 🤞", {
       theme: "colored",
       position: toast.POSITION.TOP_LEFT,
     });
@@ -35,7 +35,7 @@ const FAQ = () => {
 
   //user account create error alert
   const userError = (error) => {
-    toast.error("😢 " + error, {
+    toast.error("Something Wrong 😢 ", {
       theme: "colored",
       position: toast.POSITION.TOP_LEFT,
     });
