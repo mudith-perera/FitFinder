@@ -26,6 +26,8 @@ const scheduleRouters = require("./routes/schedule.js");
 const stripeRouters = require("./routes/stripe");
 //get password-reset router
 const resetPasswordRouters = require("./routes/passwordReset.js");
+//get ratings
+const ratingRoutes = require("./routes/ratings.js");
 //get Routers(END)
 
 //connect to db(START)
@@ -76,4 +78,5 @@ app.use("/api/search", searchRoutes);
 app.use("/api/schedule" , scheduleRouters);
 app.use("/api/stripe", stripeRouters);
 app.use("/api/passwordReset", resetPasswordRouters);
+app.use("/api/rating", ratingRoutes);
 //MIDDLE-WARE (END)
