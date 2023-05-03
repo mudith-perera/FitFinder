@@ -1,3 +1,6 @@
+///////////////////////// Developer       : Mudith Perera  /////////////////////////
+///////////////////////// Modified Date   : 07-03-2023     /////////////////////////
+/////////////////////////           (START)                /////////////////////////
 import React, { useEffect } from "react";
 
 import Box from "@mui/material/Box";
@@ -8,8 +11,6 @@ import { useNavigate } from "react-router-dom";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-//import { useCookies } from "react-cookie";
-
 import imgPayment from "../../Images/payment.png";
 
 const PaymentSuccess = () => {
@@ -17,10 +18,6 @@ const PaymentSuccess = () => {
     //removing the current cookie when page loads
     Aos.init({ duration: 1000 });
   });
-  //const [cookie] = useCookies([""]);
-  // const [username] = useState(
-  //   cookie.LoggedUser[2] + " " + cookie.LoggedUser[3]
-  // );
   const navigate = useNavigate();
 
   function gotoHome() {
