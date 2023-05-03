@@ -12,10 +12,10 @@ code {
     monospace;
 }
 
-.bg-myNavColor{
+.bg-myNavColor {
   background-color: #202020;
 }
 
-.navbar-toggler-icon{
-  background-image:url('./Images/navbarIco.png') !important;
+.navbar-toggler-icon {
+  background-image: url('./Images/navbarIco.png') !important;
 }

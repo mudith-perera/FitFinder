@@ -23,7 +23,7 @@ const router = express.Router();
 /////////////////////////  Description      : create a single gym
 /////////////////////////  Developer        : Madara Senevirathna
 /////////////////////////  (START)
-router.post("/",createRating);
+router.post("/", createRating);
 /////////////////////////  (END)
 
 /////////////////////////  Handler          : /

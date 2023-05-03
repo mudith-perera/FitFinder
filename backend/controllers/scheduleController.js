@@ -170,8 +170,8 @@ const getCoachUsers = async (req, res) => {
     const user = await User.findOne({ _id: userId });
     const type = user.userType;
     const gym = user.registeredGym._id.valueOf();
-    if(type == "coach"){
-        const Coachusers = await User.find({registeredGym: gym}).sort({ createdAt: -1 });
+    if (type == "coach") {
+        const Coachusers = await User.find({ registeredGym: gym }).sort({ createdAt: -1 });
         if (!user) {
             res.status(400).json({ error: "You don't have any users registered under you" });
         } else {

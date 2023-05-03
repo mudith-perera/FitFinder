@@ -3,12 +3,9 @@
 /////////////////////////           (START)                /////////////////////////
 
 import React, { useEffect, useState } from "react";
-
 import { useCookies } from "react-cookie";
-
 import Aos from "aos";
 import "aos/dist/aos.css";
-
 import { calculateBMI, calculateBMR, getBodyFatDescription } from "../Shared/Calculators.js"
 
 const MemberStats = () => {
@@ -53,10 +50,7 @@ const MemberStats = () => {
     const [username] = useState(
         cookie.LoggedUser[2] + " " + cookie.LoggedUser[3]
     );
-
     const [userData, setUserData] = useState(null);
-
-
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
     const [weight, setWeight] = useState("");
@@ -114,22 +108,22 @@ const MemberStats = () => {
                                 Your basal metabolic rate (BMR) is the number of calories your body needs to accomplish its most basic life-sustaining functions
                             </div>
                         </>) : (<><div style={styles.title}>Set your Height, Weight, Age, Gender to Check BMR</div>
-                        <div style={styles.text}>
-                        Your basal metabolic rate (BMR) is the number of calories your body needs to accomplish its most basic life-sustaining functions
-                    </div></>)}
+                            <div style={styles.text}>
+                                Your basal metabolic rate (BMR) is the number of calories your body needs to accomplish its most basic life-sustaining functions
+                            </div></>)}
                     </div>
-                    </div>
-                    <div data-aos="fade-left" style={styles.card}>
-                        <div style={styles.cardContent}>
-                            <div style={styles.title}>Your Body-Fat Description</div>
-                            {fat?(<div style={styles.text}>
-                                Exercise Body Fat Categorization: <b>{bodyFatDes}</b>
-                            </div>):(<div style={styles.text}>Set Your Body Fat</div>)}
-                        </div>
+                </div>
+                <div data-aos="fade-left" style={styles.card}>
+                    <div style={styles.cardContent}>
+                        <div style={styles.title}>Your Body-Fat Description</div>
+                        {fat ? (<div style={styles.text}>
+                            Exercise Body Fat Categorization: <b>{bodyFatDes}</b>
+                        </div>) : (<div style={styles.text}>Set Your Body Fat</div>)}
                     </div>
                 </div>
             </div>
-        
+        </div>
+
     );
 };
 export default MemberStats;

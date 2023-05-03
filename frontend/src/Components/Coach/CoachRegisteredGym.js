@@ -3,24 +3,16 @@
 /////////////////////////           (START)                /////////////////////////
 
 import React, { useEffect, useState } from "react";
-import "./UserGymHome.css";
-
 import Carousel from "react-bootstrap/Carousel";
 import Button from "@mui/material/Button";
 import Table from "react-bootstrap/Table";
-
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import gym from "../../Images/gym.png";
-
 import Aos from "aos";
 import "aos/dist/aos.css";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { useCookies } from "react-cookie";
-
 import SideNavbar from "../Shared/SideNavbar.js";
 
 const CoachRegisteredGym = () => {

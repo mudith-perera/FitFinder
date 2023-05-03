@@ -55,18 +55,18 @@ const googleSignInUp = async (req, res) => {
     const foundUser = await User.findOne({ email });
     if (foundUser) {
       console.log(foundUser.activeStatus)
-      if(!foundUser.activeStatus){
-        res.status(401).json({message:'This Account is deactivated'});
+      if (!foundUser.activeStatus) {
+        res.status(401).json({ message: 'This Account is deactivated' });
       }
       res.status(200).json(foundUser);
-    }else{
-      const user = await User.create({email,firstname,lastname});
+    } else {
+      const user = await User.create({ email, firstname, lastname });
       const newUser = await User.findOne({ email });
       res.status(201).json(newUser);
     }
-    
+
   } else {
-    res.status(401).json({message:'Unauthorized'}); // return a 401 status code if the token is invalid
+    res.status(401).json({ message: 'Unauthorized' }); // return a 401 status code if the token is invalid
   }
 };
 /////////////////////////  (END)

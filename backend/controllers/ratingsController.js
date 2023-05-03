@@ -19,8 +19,8 @@ const path = require("path");
 /////////////////////////  (START)
 
 const createRating = async (req, res) => {
-  const { user, gym, rating,comment } = req.body;
-  const newRating = new Rating({ user, gym, rating,comment });
+  const { user, gym, rating, comment } = req.body;
+  const newRating = new Rating({ user, gym, rating, comment });
   try {
     await newRating.save();
     res.json(newRating);
@@ -38,7 +38,7 @@ const createRating = async (req, res) => {
 
 
 const getRatings = async (req, res) => {
-  const ratings = await Rating.find({activeStatus:true}).sort({ createdAt: -1 });
+  const ratings = await Rating.find({ activeStatus: true }).sort({ createdAt: -1 });
   if (!ratings) {
     res.status(400).json({ error: "No rating in the system" });
   } else {
@@ -52,9 +52,9 @@ const getRatings = async (req, res) => {
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
 const getRating = async (req, res) => {
-  
-  const {user,gym} = req.body;
-  const rating = await Rating.findOne({user,gym});
+
+  const { user, gym } = req.body;
+  const rating = await Rating.findOne({ user, gym });
 
   if (!rating) {
     return res.status(404).json({ error: "No such Rating" });
@@ -69,13 +69,13 @@ const getRating = async (req, res) => {
 /////////////////////////  (START)
 const updateRating = async (req, res) => {
   try {
-    const { user, gym, rating,comment } = req.body;
+    const { user, gym, rating, comment } = req.body;
     const ratingId = req.params.id;
-    const updatedRating = await Rating.findByIdAndUpdate({_id: ratingId}, { user, gym, rating,comment }, { new: true });
+    const updatedRating = await Rating.findByIdAndUpdate({ _id: ratingId }, { user, gym, rating, comment }, { new: true });
     if (!updatedRating) {
       return res.status(404).json({ message: 'Rating not found' });
     }
-    res.json({ updatedRating});
+    res.json({ updatedRating });
 
     /* const updatedProduct = await Rating.findByIdAndUpdate(
       gym, {rating},{new: true,}
@@ -85,14 +85,14 @@ const updateRating = async (req, res) => {
     const getallratings = await Rating.findById(gym);
     let totalRating = getallratings.rating.length;
     const sumOfRatings = getallratings.reduce((acc, curr) => acc + curr.rating, 0);
-    let actualRating = Math.round(sumOfRatings/totalRating);
-    let finalproduct = await Rating.findByIdAndUpdate(email, {gymRating:actualRating}, {new: true});
+    let actualRating = Math.round(sumOfRatings / totalRating);
+    let finalproduct = await Rating.findByIdAndUpdate(email, { gymRating: actualRating }, { new: true });
     res.json(finalproduct);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 
-  
+
 };
 
 /////////////////////////  Controller       : getGymRatings()
@@ -100,9 +100,9 @@ const updateRating = async (req, res) => {
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
 const getGymRatings = async (req, res) => {
-  
-  const {gym} = req.body;
-  const rating = await Rating.find({gym});
+
+  const { gym } = req.body;
+  const rating = await Rating.find({ gym });
 
   if (!rating) {
     return res.status(404).json({ error: "No ratings" });

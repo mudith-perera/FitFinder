@@ -16,13 +16,6 @@ const ForgotPasswordForm = () => {
   useEffect(() => {
     Aos.init({ duration: 500 });
   });
-  //on Success
-  // const notifError = () => {
-  //   toast.error("Email sent successfully 😥", {
-  //     theme: "colored",
-  //     position: toast.POSITION.TOP_LEFT,
-  //   });
-  // };
 
   //On Success
   const notifSuccess = () => {
@@ -37,7 +30,6 @@ const ForgotPasswordForm = () => {
 
   //get data from backend
   const handleSubmit = () => {
-    // e.preventDefault(); // prevent default form submission behavior
     // make an API call to the backend to submit the email address
     fetch("/api/passwordReset/send-email", {
       method: "POST",
@@ -101,15 +93,8 @@ const ForgotPasswordForm = () => {
                     </div>
                     <br />
                     <br />
-
                     <br />
                     <br />
-
-
-
-
-
-
                     <div className="row">
                       <Button
                         variant="contained"
@@ -122,9 +107,6 @@ const ForgotPasswordForm = () => {
                     </div>
                   </div>
                 </form>
-                <div>
-
-                </div>
               </div>
             </div>
           </div>

@@ -25,4 +25,4 @@ export const Span = styled.span`
         z-index: -1;
         transition: 0.5s;
     `
-;
+    ;

@@ -78,7 +78,7 @@ const gymSchema = new Schema(
       type: [String],
       required: false,
     },
-    gymRating :{
+    gymRating: {
       type: Number,
       required: false,
     },

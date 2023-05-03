@@ -3,7 +3,6 @@
 /////////////////////////           (START)                /////////////////////////
 
 import React, { useEffect, useState } from "react";
-import "./UserGymHome.css";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "@mui/material/Button";
 import Table from "react-bootstrap/Table";
@@ -58,18 +57,18 @@ const MemberRegisteredGym = () => {
       body: JSON.stringify({
         user: userId,
         gym: GymId,
-        
+
       })
     })
-    .then((response) => response.json())
-    .then((data) => setRatingData(data));
-  }, [userId,GymId]);
+      .then((response) => response.json())
+      .then((data) => setRatingData(data));
+  }, [userId, GymId]);
 
   useEffect(() => {
     setValue(ratingData?.rating || null);
     setComment(ratingData?.comment || null);
-  },[rateValue,ratingData?.rating,ratingData?.comment])
-  
+  }, [rateValue, ratingData?.rating, ratingData?.comment])
+
 
   //user account create success alert
   const userSuccess = () => {
@@ -119,7 +118,7 @@ const MemberRegisteredGym = () => {
 
   const handleRating = () => {
     // Send POST request with rating value
-    axios.post('/api/rating', { rating: rateValue, comment,user: userId,gym: GymId })
+    axios.post('/api/rating', { rating: rateValue, comment, user: userId, gym: GymId })
       .then(response => {
         console.log('Rating posted successfully:', response.data);
         setOpen(false)

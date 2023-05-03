@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
-import { MdKeyboardArrowUp } from 'react-icons/md';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useLocation } from "react-router-dom";
+import { MdKeyboardArrowUp } from "react-icons/md";
 
 const Button = styled.button`
   width: 4rem;
@@ -58,15 +58,15 @@ const ToTopBtn = () => {
     const scrollToTopBehavior = () => {
       window.scrollTo({
         top: 0,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     };
 
     const unlisten = () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     scrollToTopBehavior();
 
@@ -76,7 +76,7 @@ const ToTopBtn = () => {
   return (
     <>
       {scrollToTop && (
-        <Button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <Button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           <MdKeyboardArrowUp />
         </Button>
       )}

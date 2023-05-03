@@ -1,36 +1,35 @@
 /* styles.css */
 .rootT {
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .headerT {
-    background-color: #404040;
-    color: #000000;
-    font-weight: bold;
-    text-align: center;
-    height: 40px;
-  }
-  
-  .rowT {
-    text-align: center;
-    height: 30px;
-  }
-  
-  .rowT:nth-of-type(odd) {
-    background-color: #eaeaea;
-  }
-  
-  .rowT:nth-of-type(even) {
-    background-color: #e6faff;
-  }
-  
-  .buttonT {
-    background-color: #a3a3ff;
-    color: #fff;
-  }
-  
-  .buttonT:hover {
-    background-color: #4d4dff;
-  }
-  
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.headerT {
+  background-color: #404040;
+  color: #000000;
+  font-weight: bold;
+  text-align: center;
+  height: 40px;
+}
+
+.rowT {
+  text-align: center;
+  height: 30px;
+}
+
+.rowT:nth-of-type(odd) {
+  background-color: #eaeaea;
+}
+
+.rowT:nth-of-type(even) {
+  background-color: #e6faff;
+}
+
+.buttonT {
+  background-color: #a3a3ff;
+  color: #fff;
+}
+
+.buttonT:hover {
+  background-color: #4d4dff;
+}

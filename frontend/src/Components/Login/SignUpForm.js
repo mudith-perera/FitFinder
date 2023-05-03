@@ -7,8 +7,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import "./SignUpForm.css";
-import "./GoogleButton.css";
-//import googlepng from "../../Images/google.png";
 
 import { MDBInput } from "mdb-react-ui-kit";
 import ButtonGroup from "@mui/material/ButtonGroup";

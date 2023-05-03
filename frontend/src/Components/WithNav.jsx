@@ -1,14 +1,14 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Navbar from './NavBar.js'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Navbar from "./NavBar.js";
 
 const WithNav = () => {
   return (
-      <>
-          <Navbar />
-          <Outlet/>
+    <>
+      <Navbar />
+      <Outlet />
     </>
-  )
-}
+  );
+};
 
-export default WithNav
+export default WithNav;

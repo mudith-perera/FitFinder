@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const {getSchedule, updateSchedule, addExercise, deleteExercise, getCoachUsers} = require("../controllers/scheduleController");
+const { getSchedule, updateSchedule, addExercise, deleteExercise, getCoachUsers } = require("../controllers/scheduleController");
 
 // Route to get a user's schedule
 router.get("/:userId", getSchedule);

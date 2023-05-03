@@ -8,7 +8,6 @@ const PayButton = (props) => {
   const [fee] = useState(props.fee);
   const [email] = useState(props.useremail);
 
-
   const handleCheckout = async (e) => {
     e.preventDefault();
     const formData = { username, fee, email };

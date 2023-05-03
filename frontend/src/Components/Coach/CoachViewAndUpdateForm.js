@@ -193,7 +193,7 @@ const CoachViewAndUpdateForm = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <ResetPasswordForm userId={userId}/>
+        <ResetPasswordForm userId={userId} />
       </Dialog>
       <div>
         <div style={{ position: "fixed", zIndex: "1" }}>

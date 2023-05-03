@@ -136,9 +136,9 @@ function FaQTable() {
                     <TableBody>
                       {(rowsPerPage > 0
                         ? data.slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage
-                          )
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
                         : data
                       ).map((item) => (
                         <TableRow key={item._id} className="rowT">
