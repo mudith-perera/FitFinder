@@ -73,9 +73,9 @@ app.use((req, res, next) => {
 //routes handlers
 app.use("/api/users", userRoutes);
 app.use("/api/gyms", gymRoutes);
-app.use("/api/faq", faqRoutes); 
+app.use("/api/faq", faqRoutes);
 app.use("/api/search", searchRoutes);
-app.use("/api/schedule" , scheduleRouters);
+app.use("/api/schedule", scheduleRouters);
 app.use("/api/stripe", stripeRouters);
 app.use("/api/passwordReset", resetPasswordRouters);
 app.use("/api/rating", ratingRoutes);

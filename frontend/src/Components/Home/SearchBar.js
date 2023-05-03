@@ -2,7 +2,7 @@
 ///////////////////////// Modified Date   : 07-02-2023     /////////////////////////
 /////////////////////////           (START)                /////////////////////////
 
-import React, { useEffect, useState, useCallback  } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -14,9 +14,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 import InputLabel from "@mui/material/InputLabel";
 
-import Aos from "aos";
-import "aos/dist/aos.css";
-
 import { locations } from "../Shared/locations.js";
 
 const SearchBar = ({ onDataFromSearchBar }) => {
@@ -27,7 +24,6 @@ const SearchBar = ({ onDataFromSearchBar }) => {
   }, [onDataFromSearchBar]);
 
   useEffect(() => {
-    Aos.init({ duration: 1000 });
 
     //get all the gyms that are active
     const fetchData = async () => {

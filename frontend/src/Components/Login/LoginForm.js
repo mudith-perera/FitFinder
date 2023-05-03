@@ -5,7 +5,6 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-//import JWT from "jwt-decode";
 
 import { MDBInput } from "mdb-react-ui-kit";
 import Button from "@mui/material/Button";
@@ -13,8 +12,6 @@ import Box from "@mui/material/Box";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
-import "./GoogleButton.css";
-//import googlepng from "../../Images/google.png";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

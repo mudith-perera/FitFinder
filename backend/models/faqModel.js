@@ -13,7 +13,7 @@ const faqSchema = new Schema(
       type: String,
       required: true,
     },
-    
+
     email: {
       type: String,
       lowercase: true,
@@ -23,9 +23,9 @@ const faqSchema = new Schema(
       type: String,
       default: "",
     },
-    
-  },{timestamps:true}
-  
+
+  }, { timestamps: true }
+
 );
 //end of the Schema
 

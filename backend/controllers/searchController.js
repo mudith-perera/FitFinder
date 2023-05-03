@@ -24,7 +24,7 @@ const searchGyms = async (req, res) => {
 
     if (!gymName && !location && !gymSexType) {
       gyms = await Gym.find().sort({ createdAt: -1 });
-    } 
+    }
 
     if (location && gymSexType) {
       gyms = await Gym.find({ location, gymSexType, activeStatus }).sort({

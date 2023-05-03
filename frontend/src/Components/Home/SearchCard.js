@@ -157,35 +157,35 @@ const SearchCard = (props) => {
                   aria-describedby={`modal-description-${result._id}`}
                 >
                   <Box sx={styles.boxes2}>
-                  {Array.isArray(ratingData) && ratingData.length > 0 ?
-                    (
-                      <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                          <TableHead>
-                            <TableRow>
-                              <TableCell align="left">User</TableCell>
-                              <TableCell align="left">Rating</TableCell>
-                              <TableCell align="left">Comment</TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {ratingData?.map((rating) => (
-                              <TableRow
-                                key={rating._id}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                              >
-                                <TableCell align="left">{rating.user.firstname + " " + rating.user.lastname}</TableCell>
-                                <TableCell align="left"><Rating name="read-only" value={rating.rating} readOnly /></TableCell>
-                                <TableCell align="left">{rating.comment}</TableCell>
+                    {Array.isArray(ratingData) && ratingData.length > 0 ?
+                      (
+                        <TableContainer component={Paper}>
+                          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell align="left">User</TableCell>
+                                <TableCell align="left">Rating</TableCell>
+                                <TableCell align="left">Comment</TableCell>
                               </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                    ) : (
-                      <p>No ratings found.</p>
-                    )}
-                    </Box>
+                            </TableHead>
+                            <TableBody>
+                              {ratingData?.map((rating) => (
+                                <TableRow
+                                  key={rating._id}
+                                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                  <TableCell align="left">{rating.user.firstname + " " + rating.user.lastname}</TableCell>
+                                  <TableCell align="left"><Rating name="read-only" value={rating.rating} readOnly /></TableCell>
+                                  <TableCell align="left">{rating.comment}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                      ) : (
+                        <p>No ratings found.</p>
+                      )}
+                  </Box>
                 </Modal>
                 {/* Modal to show all the reviews of a gym (END) */}
 

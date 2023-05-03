@@ -192,7 +192,7 @@ const deleteGym = async (req, res) => {
 const getGymByOwnerEmail = async (req, res) => {
   //grabbing the id from the route parameters
   const { email } = req.body;
-  
+
   gym = await Gym.find({ email }).sort({ createdAt: -1 });
 
   if (!gym) {

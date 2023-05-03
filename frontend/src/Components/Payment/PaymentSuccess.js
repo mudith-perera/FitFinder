@@ -40,10 +40,10 @@ const PaymentSuccess = () => {
                   <p className="text-dark-50 mb-3">
                     Please check your <a href="https://dashboard.stripe.com/login">Stripe account </a> 😊
                   </p>
-                  
+
 
                   <div className="form-outline form-white">
-                    <img src={imgPayment} alt="success" height="250px"/>
+                    <img src={imgPayment} alt="success" height="250px" />
                   </div>
                   <br />
 

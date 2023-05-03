@@ -5,31 +5,22 @@
 import React, { useEffect, useState } from "react";
 import "./MemberViewAndUpdateForm.css";
 import { MDBInput, MDBTextArea } from "mdb-react-ui-kit";
-
 import SideNavbar from "../Shared/SideNavbar.js";
-
 import img1 from "../../Images/SignupInfo.png";
 import img2 from "../../Images/SignUpGymInfo.png";
-
 import Aos from "aos";
 import "aos/dist/aos.css";
-
 import { locations } from "./../Shared/locations.js";
 import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-
 import { useCookies } from "react-cookie";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import Dialog from '@mui/material/Dialog';
-
 import ResetPasswordForm from "../Password/ResetPasswordForm";
 
 const MemberViewAndUpdateForm = () => {
@@ -171,7 +162,7 @@ const MemberViewAndUpdateForm = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <ResetPasswordForm userId={userId}/>
+        <ResetPasswordForm userId={userId} />
       </Dialog>
       <div>
         <div style={{ position: "fixed", zIndex: "1" }}>
@@ -186,7 +177,7 @@ const MemberViewAndUpdateForm = () => {
                   style={{
                     borderRadius: "15px",
                     backgroundColor: "transparent",
-            
+
                   }}
                 >
                   <div className="card-body p-0">

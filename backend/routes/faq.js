@@ -7,16 +7,16 @@ const path = require("path");
 
 //importing the controller
 const {
-    createFAQ,
-    getFAQ,
-    updateData
-  } = require("../controllers/faqController.js");
+  createFAQ,
+  getFAQ,
+  updateData
+} = require("../controllers/faqController.js");
 
 const router = express.Router();
 
 router.get("/", getFAQ);
 
-router.post("/",createFAQ);
+router.post("/", createFAQ);
 
 router.put("/:id", updateData);
 

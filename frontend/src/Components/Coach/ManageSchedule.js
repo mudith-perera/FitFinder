@@ -330,9 +330,9 @@ const ScheduleForm = () => {
                           <tr key={index}>
                             {schedule.map((day, i) =>
                               day.exercises?.[index] ||
-                              day.reps?.[index] ||
-                              day.time?.[index] ||
-                              day.instructions?.[index] ? (
+                                day.reps?.[index] ||
+                                day.time?.[index] ||
+                                day.instructions?.[index] ? (
                                 <td key={i}>
                                   {day.exercises?.[index] && (
                                     <h5>{day.exercises[index]}</h5>

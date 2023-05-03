@@ -68,7 +68,7 @@ const ResetPasswordForm = (props) => {
       <ToastContainer />
       <div
         className="card bg-dark text-white"
-        style={{width: '500px', margin: "0 auto" }}
+        style={{ width: '500px', margin: "0 auto" }}
       >
         <div className="card-body p-3 text-center" >
           <form>

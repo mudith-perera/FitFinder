@@ -49,7 +49,7 @@ import ToTopBtn from "./Components/BackToTop/ToTopBtn.jsx"
 function App() {
   return (
     <Router>
-      <ToTopBtn/>
+      <ToTopBtn />
       <Routes>
         <Route element={<WithoutNavBar />}>
 
@@ -58,7 +58,7 @@ function App() {
           <Route exact path="/admin-home/faq-table" element={<FaQTable />} />
           <Route exact path="/admin-home/manage-members" element={<ManageMembers />} />
           <Route exact path="/admin-home/manage-coaches" element={<ManageCoaches />} />
-          <Route exact path="/admin-home/manage-gyms" element={<ManageGyms/>} />
+          <Route exact path="/admin-home/manage-gyms" element={<ManageGyms />} />
 
           <Route exact path="/coach-home" element={<CoachHome />} />
           <Route exact path="/coach-home/coach-view-update" element={<CoachViewUpdateForm />} />
@@ -66,17 +66,17 @@ function App() {
           <Route exact path="/coach-home/choose-user" element={<ChooseUsers />} />
 
           <Route exact path="/gym-home" element={<GymHome />} />
-          <Route exact path="/gym-home/gym-view-update" element={<GymViewUpdateForm />}/>
-          <Route exact path="/gym-home/view-all-gym-members" element={<ViewAllGymMembers/>}/>
-          <Route exact path="/gym-home/view-all-gym-coaches" element={<ViewAllGymCoaches/>}/>
+          <Route exact path="/gym-home/gym-view-update" element={<GymViewUpdateForm />} />
+          <Route exact path="/gym-home/view-all-gym-members" element={<ViewAllGymMembers />} />
+          <Route exact path="/gym-home/view-all-gym-coaches" element={<ViewAllGymCoaches />} />
 
           <Route exact path="/member-home" element={<MemberHome />} />
-          <Route exact path="/member-home/member-view-update"  element={<MemberViewUpdate />}/>
-          <Route exact path="/member-home/member-registered-gym"  element={<MemberRegisteredGym />}/>
+          <Route exact path="/member-home/member-view-update" element={<MemberViewUpdate />} />
+          <Route exact path="/member-home/member-registered-gym" element={<MemberRegisteredGym />} />
           <Route exact path="/member-home/schedule" element={<Schedule />} />
-          <Route exact path="/member-home/member-payment" element={<MemberPayment/>}/>
-          <Route exact path="/member-home/member-stats" element={<MemberStats/>}/>
-          <Route exact path="/checkout-success" element={<PaymentSuccess/>}/>
+          <Route exact path="/member-home/member-payment" element={<MemberPayment />} />
+          <Route exact path="/member-home/member-stats" element={<MemberStats />} />
+          <Route exact path="/checkout-success" element={<PaymentSuccess />} />
 
           <Route exact path="/manage-schedule/:userId" element={<ScheduleManage />} />
           <Route exact path="/password-reset" element={<PasswordReset />} />
@@ -90,7 +90,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/about-us" element={<AboutUs />} />
           <Route exact path="/forgot-password" element={<ForgotPassword />} />
-          <Route exact path="/privacy-policy" element={<PrivacyPolicy/>}/>
+          <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route exact path="/gym-sign-up" element={<GymSignUpForm />} />
           <Route exact path="/Coach-sign-up" element={<CoachSignUpForm />} />
 

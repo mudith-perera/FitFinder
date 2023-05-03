@@ -16,7 +16,7 @@ const PrivacyPolicy = () => {
                     <div className="col-11">
                         <div
                             className="card card-registration card-registration-2"
-                            style={{ borderRadius: "15px", backgroundColor: "white", padding:"50px" }}
+                            style={{ borderRadius: "15px", backgroundColor: "white", padding: "50px" }}
                         >
                             <div className="card-body p-0"></div>
                             <div>
@@ -72,8 +72,8 @@ const PrivacyPolicy = () => {
                     </div>
                 </div>
             </div>
-        
-    </section >
+
+        </section >
     );
 };
 

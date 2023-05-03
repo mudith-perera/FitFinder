@@ -25,7 +25,7 @@ const router = express.Router();
 /////////////////////////  Description      : create a single gym
 /////////////////////////  Developer        : Mudith Perera
 /////////////////////////  (START)
-router.post("/",uploadImages.array("images", 5),createGym);
+router.post("/", uploadImages.array("images", 5), createGym);
 /////////////////////////  (END)
 
 /////////////////////////  Handler          : /

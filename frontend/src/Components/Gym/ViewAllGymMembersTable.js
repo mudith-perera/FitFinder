@@ -8,11 +8,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
-
 import "./gymUserTable.css";
-
 import SideNavbar from "../Shared/SideNavbar.js";
-
 import { useCookies } from "react-cookie";
 import ClipLoader from "react-spinners/ClipLoader";
 
