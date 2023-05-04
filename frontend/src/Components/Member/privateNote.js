@@ -38,7 +38,7 @@ function PrivateNote() {
       </button>
       {panelVisible && (
         <div className="panel">
-          <h2>Previous Note</h2>
+          <h2>Previous Notes</h2>
           <p>{previousNote}</p>
         </div>
       )}

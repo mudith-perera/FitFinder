@@ -1,10 +1,6 @@
 //Create routes using express package
 const express = require("express");
 
-//importing multer image handler
-const multer = require("multer");
-const path = require("path");
-
 //importing the controller
 const {
   createRating,
