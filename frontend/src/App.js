@@ -45,6 +45,7 @@ import ChooseUsers from "./Components/Coach/ChooseUsers.js";
 import PasswordReset from "./Components/Password/ResetPasswordForm.js";
 import PasswordResetReroute from "./Components/Password/PasswordResetReroute.js"
 import ToTopBtn from "./Components/BackToTop/ToTopBtn.jsx"
+import PrivateNote from "./Views/Member/privateNote.js";
 
 function App() {
   return (
@@ -77,6 +78,7 @@ function App() {
           <Route exact path="/member-home/member-payment" element={<MemberPayment />} />
           <Route exact path="/member-home/member-stats" element={<MemberStats />} />
           <Route exact path="/checkout-success" element={<PaymentSuccess />} />
+          <Route exact path="/private-note" element= {<PrivateNote/>}/>
 
           <Route exact path="/manage-schedule/:userId" element={<ScheduleManage />} />
           <Route exact path="/password-reset" element={<PasswordReset />} />

@@ -7,6 +7,10 @@ import { useCookies } from "react-cookie";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { calculateBMI, calculateBMR, getBodyFatDescription } from "../Shared/Calculators.js"
+import PrivateNote from "../../Views/Member/privateNote.js";
+import { Link } from "react-router-dom";
+import note from "../../Images/paper.png";
+
 
 const MemberStats = () => {
     const styles = {
@@ -82,6 +86,13 @@ const MemberStats = () => {
     return (
         <div>
             <h2 style={styles.h2}>Welcome {username},</h2>
+            <Link to={"/private-note"}>
+            <button className="keepnote"  > 
+           
+            Keep Notes
+            <img className="putnote" src={note}/>
+            </button> 
+              </Link> 
             <div style={styles.root}>
                 <div data-aos="fade-right" style={styles.card}>
                     <div style={styles.cardContent}>
@@ -122,8 +133,9 @@ const MemberStats = () => {
                     </div>
                 </div>
             </div>
+            
         </div>
-
+     
     );
 };
 export default MemberStats;
