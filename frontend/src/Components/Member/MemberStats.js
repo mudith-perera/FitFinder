@@ -104,7 +104,7 @@ const MemberStats = () => {
         <div>
             <h2 style={styles.h2}>Welcome {username},</h2>
 
-            <button className="keep-note" onClick={handleOpen}>
+            <button data-aos="fade-right" className="keep-note" onClick={handleOpen}>
                 Keep Notes <img alt="note" className="put-note" src={note} />
             </button>
 
