@@ -7,8 +7,13 @@ import { useCookies } from "react-cookie";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { calculateBMI, calculateBMR, getBodyFatDescription } from "../Shared/Calculators.js"
+import note from "../../Images/paper.png";
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import PrivateNote from "./privateNote";
 
 const MemberStats = () => {
+
     const styles = {
         root: {
             marginTop: '-3rem',
@@ -45,6 +50,16 @@ const MemberStats = () => {
         }
     };
 
+    const modalStyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 600,
+        bgColor: 'background.paper',
+        p: 4,
+    };
+
     const [cookie] = useCookies([""]);
     const [userId] = useState(cookie.LoggedUser[5]);
     const [username] = useState(
@@ -59,6 +74,12 @@ const MemberStats = () => {
     const [bmiInfo, setBmiInfo] = useState(null);
     const [bmrInfo, setBmrInfo] = useState(null);
     const [bodyFatDes, setBodyFatDes] = useState(null);
+
+    //Modal attributes (START)
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    //Modal attributes (END)
 
     useEffect(() => {
         Aos.init({ duration: 1000 });
@@ -82,6 +103,11 @@ const MemberStats = () => {
     return (
         <div>
             <h2 style={styles.h2}>Welcome {username},</h2>
+
+            <button data-aos="fade-right" className="keep-note" onClick={handleOpen}>
+                Keep Notes <img alt="note" className="put-note" src={note} />
+            </button>
+
             <div style={styles.root}>
                 <div data-aos="fade-right" style={styles.card}>
                     <div style={styles.cardContent}>
@@ -122,6 +148,16 @@ const MemberStats = () => {
                     </div>
                 </div>
             </div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={modalStyle}>
+                    <PrivateNote />
+                </Box>
+            </Modal>
         </div>
 
     );
