@@ -9,11 +9,16 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { useCookies } from 'react-cookie';
 import SideNavbar from '../../Components/Shared/SideNavbar.js';
+import { useNavigate } from "react-router-dom";
+import {
+  MDBBtn,
+} from "mdb-react-ui-kit";
 
 export default function App() {
 
   const [cookie] = useCookies(['']);
   const [userId] = useState((cookie.LoggedUser[5]));
+  const navigate = useNavigate();
 
   const [schedule, setScheduleState] = useState([]);
 
@@ -31,6 +36,10 @@ export default function App() {
   }, [userId]);
 
   const [selectedDay, setSelectedDay] = useState("");
+
+  const handleManageSchedule = () => {
+    navigate(`/manage-schedule/${userId}`);
+  };
 
   useEffect(() => {
     const daysOfWeek = [
@@ -59,6 +68,9 @@ export default function App() {
         <SideNavbar userRole="member" />
       </div>
       <div className="app-container">
+      <MDBBtn  className="manage-schedule-btn" onClick={() => handleManageSchedule()}>
+                      Manage Schedule
+                    </MDBBtn>
         <div className="header">
           <div className="day-selector-container">
             {schedule.map((day, index) => (

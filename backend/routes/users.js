@@ -15,7 +15,7 @@ const {
   updatePassword,
 } = require("../controllers/userController");
 
-const { googleSignInUp } = require("../controllers/authController");
+const { googleSignInUp, googleSignInUpMobile } = require("../controllers/authController");
 
 //get the Router instatnce from the express package
 const router = express.Router();
@@ -62,6 +62,13 @@ router.post("/getUserEmailPwd/", getUserEmailPwd);
 router.post("/googleSignInUp/", googleSignInUp);
 /////////////////////////  (END)
 
+/////////////////////////  Handler          : /googleSignUpMobile
+/////////////////////////  Controller       : googleSignUpMobile()
+/////////////////////////  Description      : create a new account and sign in from mobile application
+/////////////////////////  Developer        : Sachintha Imindhu
+/////////////////////////  (START)
+router.post("/googleSignInUpMobile/", googleSignInUpMobile);
+/////////////////////////  (END)
 
 /////////////////////////  Handler          : /:id
 /////////////////////////  Controller       : updateUser()

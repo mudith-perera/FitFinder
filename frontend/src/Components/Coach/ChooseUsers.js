@@ -43,35 +43,39 @@ const UserTable = () => {
           padding: "20px",
         }}
       >
-        <MDBCard
-          background="dark"
-          style={{ borderRadius: "10px", overflow: "hidden" }}
-        >
-          <MDBTable hover responsive bordered>
-            <MDBTableHead>
-              <tr className="table-dark">
-                <th>Name</th>
-                <th>Email</th>
-                <th>CreatedAt</th>
-                <th>Manage Schedule</th>
-              </tr>
-            </MDBTableHead>
-            <MDBTableBody>
-              {users.map((user) => (
-                <tr key={user._id} className="table-dark">
-                  <td>{user.firstname}</td>
-                  <td>{user.email}</td>
-                  <td>{user.createdAt}</td>
-                  <td>
-                    <MDBBtn onClick={() => handleManageSchedule(user._id)}>
-                      Manage Schedule
-                    </MDBBtn>
-                  </td>
+        {users.length > 0 ? (
+          <MDBCard
+            background="dark"
+            style={{ borderRadius: "10px", overflow: "hidden" }}
+          >
+            <MDBTable hover responsive bordered>
+              <MDBTableHead>
+                <tr className="table-dark">
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>CreatedAt</th>
+                  <th>Manage Schedule</th>
                 </tr>
-              ))}
-            </MDBTableBody>
-          </MDBTable>
-        </MDBCard>
+              </MDBTableHead>
+              <MDBTableBody>
+                {users.map((user) => (
+                  <tr key={user._id} className="table-dark">
+                    <td>{user.firstname}</td>
+                    <td>{user.email}</td>
+                    <td>{user.createdAt}</td>
+                    <td>
+                      <MDBBtn onClick={() => handleManageSchedule(user._id)}>
+                        Manage Schedule
+                      </MDBBtn>
+                    </td>
+                  </tr>
+                ))}
+              </MDBTableBody>
+            </MDBTable>
+          </MDBCard>
+        ) : (
+          <h3>No users are found</h3>
+        )}
       </div>
     </div>
   );

@@ -32,6 +32,10 @@
 	margin-right: 0;
 }
 
+.manage-schedule-btn {
+	margin-top: 20px; /* Adjust this value to your preference */
+  }
+  
 .day-selector.selected {
 	color: white;
 	font-weight: bold;

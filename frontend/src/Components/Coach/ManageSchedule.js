@@ -17,7 +17,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useParams } from "react-router-dom";
-
+import { useCookies } from 'react-cookie';
 import SideNavbar from "../Shared/SideNavbar.js";
 
 const ScheduleForm = () => {
@@ -30,6 +30,9 @@ const ScheduleForm = () => {
   const [editIndex, setEditIndex] = useState(null);
   const [addExerciseButtonLabel, setAddExerciseButtonLabel] =
     useState("Add Exercise");
+
+  const [cookie] = useCookies(['']);
+  const [userType] = useState((cookie.LoggedUser[0]));
 
   const [schedule, setScheduleState] = useState([]);
   const [username, setUsernameState] = useState([]);
@@ -183,7 +186,12 @@ const ScheduleForm = () => {
   return (
     <div>
       <div style={{ position: "fixed", zIndex: "1" }}>
-        <SideNavbar userRole="coach" />
+        {/* Conditionally render the side navbar based on the user type */}
+        {userType === "coach" ? (
+          <SideNavbar userRole="coach" />
+        ) : (
+          <SideNavbar userRole="member" />
+        )}
       </div>
       <div className="row g-0 d-flex justify-content-center">
         <div className="col-lg-6">
