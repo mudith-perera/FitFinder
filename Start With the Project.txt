@@ -3,18 +3,28 @@
 1. Clone the Whole Project into your local repo (Health And Physical Fitness Platform)
 
 2. Inside folder frontend do,
-              i. Open the terminal, and execute >> npm install
-              ii. To run the frontend, execute >> npm start
+            i.      Open the terminal, and execute >> npm install
+            ii.     To run the frontend, execute >> npm start
 
 3. Inside folder backend do,
-              i. Open the terminal, and execute >> npm install
-              ii. To run the backend, execute >> nodemon server
+            i.      Open the terminal, and execute >> npm install
+            ii.     To run the backend, execute >> npm run dev
 
 4. Connecting with the database,
-              i. Install mongoDBCompass
-              ii. use the below Database Connection String to connnect to the database
+            i.      Install mongoDBCompass
+            ii.     use the below Database Connection String to connect to the database
+
+5. Mobile
+            i.      Download flutter from the flutter website
+            ii.     Add the flutter bin path to the windows system environmental variables
+            iii.    Check flutter dependencies by >> flutter doctor      
+            iv.     install flutter dependencies to the project by  >> flutter pub get
+            v.      Download and install Android Studio.
+            vi.     Run the project  >> flutter run
+
 
 Database connection string
+
 mongodb+srv://groupprojectAdmin:groupAdmin123@healthandphysicalfitnes.icyjlid.mongodb.net/test
 
 Client ID : 338037268448-96oj399dqcc7l8a5ie31ke0t6fb8r6ut.apps.googleusercontent.com
