@@ -28,7 +28,8 @@ Database connection string
 mongodb+srv://groupprojectAdmin:groupAdmin123@healthandphysicalfitnes.icyjlid.mongodb.net/test
 
 Client ID : 338037268448-96oj399dqcc7l8a5ie31ke0t6fb8r6ut.apps.googleusercontent.com
-
 Client secret : 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
+
+Mobile Client ID :
 
 
