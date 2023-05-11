@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="server_client_id">814415258055-mv8fm4il1t8m9mgruuf4tqgoos0vdkkh.apps.googleusercontent.com</string>
+<!-- this is the web client id not the mobile client id (Google Console) -->
+    <string name="server_client_id">338037268448-96oj399dqcc7l8a5ie31ke0t6fb8r6ut.apps.googleusercontent.com</string>
 </resources>
