@@ -17,15 +17,15 @@ const mongoose = require("mongoose");
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 const crypto = require('crypto')
-const bcrypt = require('bcrypt')
-//const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 // const {JWT_SECRET} = require('../routes')
 
 const User = require("../models/userModel.js");
 
-//const ejs = require('ejs');
-//const fs = require('fs');
-//const path = require('path');
+const ejs = require('ejs');
+const fs = require('fs');
+const path = require('path');
 
 //get .env package
 require("dotenv").config();
@@ -37,7 +37,7 @@ dotenv.config({ path: "./config.env" });
 
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth: {
-    //api_key: "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"
+    //api_key: "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"
     api_key: process.env.SENDGRID_API
 
   }
@@ -53,6 +53,8 @@ router.post('/send-email', (req, res) => {
       console.log(err)
     }
     const token = buffer.toString("hex")
+
+    console.log("25");
 
     // console.log("99");
     const { email } = req.body
@@ -70,18 +72,24 @@ router.post('/send-email', (req, res) => {
         oldUser.expireToken = Date.now() + 3600000     //able to reset password only with one hour
 
         const subject = "Reset Password";      // define the subject here
-        const name = oldUser.firstname + " " + oldUser.lastname;
+        const name = oldUser.firstname;
 
         const html = `
             
-            <!DOCTYPE html>
+                <!DOCTYPE html>
             <html>
             <head>
               <title>${subject}</title>
             </head>
-            <body style="background: linear-gradient(to right, rgb(11, 94, 215), rgb(106, 17, 203));padding: 20px;color: white;width: 800px; height: 600px;">
+            <body style="display:flex">
+                <div style="background: #3B3D35;width:120px">
+                    
+                </div>
+                
+            <div style="background: black;color: white;width: 600px; height: 400px;padding: 30px">
             <div style="display:flex; align-items:center;">
-            <img src="logo.png" alt="logo">
+            <img src="https://drive.google.com/file/d/1inK_3hYGBfdS2dlyCBGLdVS7UL5lNWWw" alt="name" width="20px">
+
             <h1 style="color: white;font-weight: bold;">FitFinder</h1>
             </div>
             <table class="body" role="presentation" border="0" cellpadding="0" cellspacing="0">
@@ -114,7 +122,7 @@ router.post('/send-email', (req, res) => {
                                                   <tr>
                                                     <td>
                                                         
-                                                    <a href="${process.env.CLIENT_URL}/password-reset-reroute/${token}" style="color: red;">Reset your password</a>
+                                                    <a href="${process.env.CLIENT_URL}/password-reset-reroute/${token}" style="color: #0096FF;">Reset your password</a>
                                                     
                                                     </td>
                                                   </tr>
@@ -138,8 +146,8 @@ router.post('/send-email', (req, res) => {
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                           <tbody>
                             <tr>
-                              <td class="content-block"><span class="apple-link">
-                                <!-- © <span id="year"></span> by Department of Computer Science <br> -->
+                              <td style="transform: translateY(10px); class="content-block"><span class="apple-link" ">
+                                <span id="year"></span> By Department of Computer Science <br> 
         
                                 University Of Ruhuna<br>
                                 
@@ -157,7 +165,20 @@ router.post('/send-email', (req, res) => {
               const y=new Date();
               document.getElementById('year').innerText=y.getFullYear();
             </script>
-          </body>
+            <div style=";padding-top:40px;display:flex">
+                <hr style="border: 1px solid grey;width:150px">
+                <img src="https://drive.google.com/file/d/1ZG6pJH3vGZdcCDKa972R0TP1skfKMmtP/view?usp=share_link" alt="logo">
+                <hr style="border: 1px solid grey;width:150px">
+            </div>
+        
+            </div>
+            
+            <div style="background: #3B3D35;width:120px">
+                    
+            </div>
+          
+        </body>
+      
             `;
 
         console.log(oldUser);
