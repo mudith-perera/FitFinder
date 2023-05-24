@@ -2,7 +2,7 @@
 ///////////////////////// Modified Date   : 19-02-2023     /////////////////////////
 /////////////////////////           (START)                /////////////////////////
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "@mui/material/Button";
 import Table from "react-bootstrap/Table";
@@ -47,28 +47,32 @@ const MemberRegisteredGym = () => {
   const [AnnualFee] = useState(gymDetails?.gymAnnualFee);
   const [GymImages] = useState(gymDetails?.images);
 
+  const isInitialMount = useRef(true);
+
   useEffect(() => {
     Aos.init({ duration: 500 });
-    fetch(`/api/rating/getUserGymRating`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        user: userId,
-        gym: GymId,
-
+    if (isInitialMount.current) {
+      console.log("test")
+      isInitialMount.current = false;
+      fetch(`/api/rating/getUserGymRating`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: userId,
+          gym: GymId,
+        })
       })
-    })
-      .then((response) => response.json())
-      .then((data) => setRatingData(data));
+        .then((response) => response.json())
+        .then((data) => setRatingData(data));
+    }
   }, [userId, GymId]);
 
   useEffect(() => {
     setValue(ratingData?.rating || null);
     setComment(ratingData?.comment || null);
-  }, [rateValue, ratingData?.rating, ratingData?.comment])
-
+  }, [ratingData]);
 
   //user account create success alert
   const userSuccess = () => {
@@ -290,8 +294,6 @@ const MemberRegisteredGym = () => {
                           <Button onClick={handleRating}>Submit</Button>
                         </DialogActions>
                       </DialogContent>
-
-
                     </Dialog>
                   </div>
                 </Box>
