@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 //importing the model
 const Rating = require("../models/ratingModel.js");
+const Gym = require("../models/gymModel.js");
 
 //importing multer image handler
 const multer = require("multer");
@@ -23,11 +24,21 @@ const createRating = async (req, res) => {
   const newRating = new Rating({ user, gym, rating, comment });
   try {
     await newRating.save();
-    //x= Rating.find({gym})
-    //[]=x.rating //logic
-    //avg_gym_rating
-    //y = Gym.finAndUpdate({gym}){pass the new avgRating}
-    res.json(newRating);
+
+    const ratings = await Rating.find(gym);
+    //const currRatings = ratings.rating;
+    console.log({ratings});
+
+    if (!currRatings) {
+      const gymRating2 = await Gym.findByIdAndUpdate({ _id:gym }, { gymRating: rating });
+      //const gymRating2 = await Gym.findOne({ user, gym });
+      res.json(gymRating2);
+    } else {
+      const totRating = currRatings + newRating.rating;
+      const gymRating1 = await Gym.findByIdAndUpdate({ _id: gym }, { gymRating: totRating });
+      //const gymRating1 = await Gym.findOne({ user, gym });
+      res.json(gymRating1);
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'server error' });
