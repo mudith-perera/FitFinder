@@ -23,6 +23,10 @@ const createRating = async (req, res) => {
   const newRating = new Rating({ user, gym, rating, comment });
   try {
     await newRating.save();
+    //x= Rating.find({gym})
+    //[]=x.rating //logic
+    //avg_gym_rating
+    //y = Gym.finAndUpdate({gym}){pass the new avgRating}
     res.json(newRating);
   } catch (err) {
     console.error(err);
