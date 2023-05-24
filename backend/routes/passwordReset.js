@@ -19,12 +19,21 @@ const sendgridTransport = require('nodemailer-sendgrid-transport')
 const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+
+// Import the fs module for file system operations
+const fs = require('fs')
+
 // const {JWT_SECRET} = require('../routes')
 
 const User = require("../models/userModel.js");
 
+// Read the image file
+const headerImage = fs.readFileSync('D:/3rd_yr_project/Health-And-Fitness-Platform/frontend/src/Images/fitfindertext.png'); // Read the content of the image file
+const footerImage = fs.readFileSync('D:/3rd_yr_project/Health-And-Fitness-Platform/frontend/src/Images/logo.png'); // Read the content of the image file
+
+//import {image1} from "../../frontend/src/Images/fitfindertext.png"
+
 const ejs = require('ejs');
-const fs = require('fs');
 const path = require('path');
 
 //get .env package
@@ -87,10 +96,10 @@ router.post('/send-email', (req, res) => {
                 </div>
                 
             <div style="background: black;color: white;width: 600px; height: 400px;padding: 30px">
-            <div style="display:flex; align-items:center;">
-            <img src="https://drive.google.com/file/d/1inK_3hYGBfdS2dlyCBGLdVS7UL5lNWWw" alt="name" width="20px">
+            <div style="display: flex; justify-content: center;">
+            
+            <img src="cid:fitfindertext" alt="name" width="50%" height="20%" >
 
-            <h1 style="color: white;font-weight: bold;">FitFinder</h1>
             </div>
             <table class="body" role="presentation" border="0" cellpadding="0" cellspacing="0">
               <tbody>
@@ -165,12 +174,11 @@ router.post('/send-email', (req, res) => {
               const y=new Date();
               document.getElementById('year').innerText=y.getFullYear();
             </script>
-            <div style=";padding-top:40px;display:flex">
-                <hr style="border: 1px solid grey;width:150px">
-                <img src="https://drive.google.com/file/d/1ZG6pJH3vGZdcCDKa972R0TP1skfKMmtP/view?usp=share_link" alt="logo">
-                <hr style="border: 1px solid grey;width:150px">
-            </div>
-        
+           
+                <div style="padding-top:10px;display:flex;padding-left:50%;justify-content: center;">
+                <img src="cid:logo" alt="logo" width="150px" height="150px">
+                </div>
+                
             </div>
             
             <div style="background: #3B3D35;width:120px">
@@ -189,7 +197,18 @@ router.post('/send-email', (req, res) => {
               to: oldUser.email,
               from: "fitfinder.uor@gmail.com",
               subject: "Reset Password",
-              html: html
+              html: html,
+              attachments: [{
+                filename: 'fitfindertext.png',
+                content: headerImage,
+                cid: 'fitfindertext' // Use the same 'cid' value as the src attribute in the HTML
+              },
+              {
+                filename: 'logo.png',
+                content: footerImage,
+                cid: 'logo' // Use the same 'cid' value as the src attribute in the HTML
+              }
+              ]
             })
             .then(() => {
               res.json({ message: "Email sent successfully" });
