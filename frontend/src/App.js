@@ -44,13 +44,14 @@ import ChooseUsers from "./Components/Coach/ChooseUsers.js";
 
 import PasswordReset from "./Components/Password/ResetPasswordForm.js";
 import PasswordResetReroute from "./Components/Password/PasswordResetReroute.js"
-import ToTopBtn from "./Components/BackToTop/ToTopBtn.jsx"
-
+import ToTopBtn from "./Components/BackToTop/ToTopBtn.jsx";
+import ChatBot from "./Components/Home/FitFinderChatbot.js";
 
 function App() {
   return (
     <Router>
       <ToTopBtn />
+      <ChatBot/>
       <Routes>
         <Route element={<WithoutNavBar />}>
 
