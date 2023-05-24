@@ -4,7 +4,6 @@ import SearchResult from "../Components/Home/SearchCard.js";
 import Counter from "../Components/Home/Counter.js";
 import Aos from "aos";
 import "aos/dist/aos.css";
-
 import Fitfinder from "./../Images/fitfinderani.gif";
 import { useCookies } from "react-cookie";
 
@@ -68,7 +67,6 @@ const Home = () => {
   return (
     <div>
       <div data-aos="fade-right"><SearchBar onDataFromSearchBar={handleDataFromSearchBar} /></div>
-
       {searchResult ? (
         <div data-aos="fade-left" style={styles.searchResult}>
           <div style={styles.searchResultCard}>

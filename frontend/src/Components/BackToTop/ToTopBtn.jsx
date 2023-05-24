@@ -13,8 +13,8 @@ const Button = styled.button`
   align-items: center;
   font-size: 2.5rem;
   position: fixed;
-  bottom: 2%;
-  left: 95%;
+  bottom: 13%;
+  left: 94%;
   color: #fff;
   outline: none;
   border: none;
