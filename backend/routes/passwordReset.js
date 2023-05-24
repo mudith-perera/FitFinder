@@ -17,8 +17,7 @@ const mongoose = require("mongoose");
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 const crypto = require('crypto')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 // Import the fs module for file system operations
 const fs = require('fs')
@@ -28,8 +27,8 @@ const fs = require('fs')
 const User = require("../models/userModel.js");
 
 // Read the image file
-const headerImage = fs.readFileSync('D:/3rd_yr_project/Health-And-Fitness-Platform/frontend/src/Images/fitfindertext.png'); // Read the content of the image file
-const footerImage = fs.readFileSync('D:/3rd_yr_project/Health-And-Fitness-Platform/frontend/src/Images/logo.png'); // Read the content of the image file
+const headerImage = fs.readFileSync('D:/Documents/Studies/UOR/3rd Year/Sem 01/Group Project - CSC3113/FitFinder/frontend/src/Images/fitfindertext.png'); // Read the content of the image file
+const footerImage = fs.readFileSync('D:/Documents/Studies/UOR/3rd Year/Sem 01/Group Project - CSC3113/FitFinder/frontend/src/Images/logo.png'); // Read the content of the image file
 
 //import {image1} from "../../frontend/src/Images/fitfindertext.png"
 
@@ -71,19 +70,24 @@ router.post('/send-email', (req, res) => {
     User.findOne({ email: email, activeStatus: true })
       .then((oldUser) => {
         console.log(oldUser)
-        
+
+        if (!oldUser.password) {
+          console.log("google account")
+          return res.status(404).json({ message: "This is google registered account " });
+        }
+
         if (!oldUser) {
+          console.log("not found")
           return res.status(404).json({ message: "User not found with that email" });
+
         }
-        if (!oldUser.password){
-          return res.status(404).json({ message: "This is google registerd account " });
-        }
+
 
         oldUser.resetToken = token
         oldUser.expireToken = Date.now() + 3600000     //able to reset password only with one hour
 
         const subject = "Reset Password";      // define the subject here
-        const name = oldUser.firstname;        
+        const name = oldUser.firstname;
 
         const html = `
             
@@ -211,7 +215,7 @@ router.post('/send-email', (req, res) => {
               ]
             })
             .then(() => {
-              res.json({ message: "Email sent successfully" });
+              res.json({ message: "success" });
             })
             .catch((err) => {
               console.error(err);
@@ -221,7 +225,7 @@ router.post('/send-email', (req, res) => {
       })
       .catch((err) => {
         console.error(err);
-        res.status(500).json({ message: "Error finding user" });
+        res.status(500).json({ message: "User not found" });
       });
 
   })
@@ -233,27 +237,51 @@ router.post('/new-password', (req, res) => {
   //console.log("25");
   const newPassword = req.body.password
   const sentToken = req.body.token
-
+  console.log(sentToken)
   User.findOne({ resetToken: sentToken, expireToken: { $gt: Date.now() } })
     .then(user => {
+
       if (!user) {
-        return res.status(422).json({ error: "Try again session expired" })
+        return res.status(404).json({ error: "Try again session expired" })
       }
-      bcrypt.hash(newPassword, 12).then(hashedpassword => {
-        user.password = hashedpassword
-        user.resetToken = undefined
-        user.expireToken = undefined
-        user.save().then((saveduser) => {
-          res.json({ message: "password updated success" })
-        })
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) {
+          return next(err);
+        }
+
+        // Hash the new password with the generated salt
+        bcrypt.hash(newPassword, salt, (err, hashedPassword) => {
+          if (err) {
+            return next(err);
+          }
+
+          // Update the user's password and clear resetToken and expireToken
+          //user.password = hashedPassword;
+
+          user.resetToken = undefined;
+          user.expireToken = undefined;
+          User.findByIdAndUpdate(user._id, { password: hashedPassword }, (err, user) => {
+            console.log(user._id);
+            if (err) {
+              return next(err);
+            }
+    
+            res.status(200).json({ message: "Password updated successfully" });
+          });
+          // Save the updated user
+          // user.save((err, savedUser) => {
+          //   if (err) {
+          //     return next(err);
+          //   }
+
+          //   res.json({ message: "Password updated successfully" });
+          // });
+        });
       })
     }).catch(err => {
       console.log(err)
     })
 })
-
-
-
 
 //export the created routes
 module.exports = router;

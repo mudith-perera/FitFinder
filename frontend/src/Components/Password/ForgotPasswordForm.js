@@ -8,10 +8,10 @@ import "react-toastify/dist/ReactToastify.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-import { useNavigate } from 'react-router-dom'
+//import { useNavigate } from 'react-router-dom'
 
 const ForgotPasswordForm = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   useEffect(() => {
     Aos.init({ duration: 500 });
@@ -34,7 +34,6 @@ const ForgotPasswordForm = () => {
   };
 
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");   // state to hold the message to show to the user
 
   //get data from backend
   const handleSubmit = () => {
@@ -49,19 +48,14 @@ const ForgotPasswordForm = () => {
       .then((response) => response.json())
       .then((data) => {
         // handle the response from the backend API call
-        if (data.status === "success") {
-          setMessage("Password reset email sent!"); // show success message
-          navigate('/send-email')
+        if (data.message === "success") {
           notifSuccess();
-        } else {
-          setMessage("Error: " + data.message); // show error message
-          //userError(data.message);
-          
+        }else {
+          userError(data.message);
         }
       })
       .catch((error) => {
-        setMessage("Error: " + error.message); // show error message
-        userError(error.message);
+        userError("Server Error");
       });
   };
 
@@ -109,7 +103,7 @@ const ForgotPasswordForm = () => {
                         color="success"
                         onClick={() => handleSubmit()}
                       >
-                        Reset MyPassword
+                        Reset My Password
                       </Button>
                     </div>
                   </div>
