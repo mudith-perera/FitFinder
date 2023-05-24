@@ -63,25 +63,27 @@ router.post('/send-email', (req, res) => {
     }
     const token = buffer.toString("hex")
 
-    console.log("25");
-
     // console.log("99");
     const { email } = req.body
 
-    console.log({ email });
 
     // Replace User with your own Mongoose model for users
     User.findOne({ email: email, activeStatus: true })
       .then((oldUser) => {
+        console.log(oldUser)
+        
         if (!oldUser) {
           return res.status(404).json({ message: "User not found with that email" });
+        }
+        if (!oldUser.password){
+          return res.status(404).json({ message: "This is google registerd account " });
         }
 
         oldUser.resetToken = token
         oldUser.expireToken = Date.now() + 3600000     //able to reset password only with one hour
 
         const subject = "Reset Password";      // define the subject here
-        const name = oldUser.firstname;
+        const name = oldUser.firstname;        
 
         const html = `
             
@@ -175,7 +177,7 @@ router.post('/send-email', (req, res) => {
               document.getElementById('year').innerText=y.getFullYear();
             </script>
            
-                <div style="padding-top:10px;display:flex;padding-left:50%;justify-content: center;">
+                <div style="padding-top:10px;display:flex;padding-left:40%;padding-bottom:10%;justify-content: center;">
                 <img src="cid:logo" alt="logo" width="150px" height="150px">
                 </div>
                 
@@ -188,8 +190,6 @@ router.post('/send-email', (req, res) => {
         </body>
       
             `;
-
-        console.log(oldUser);
 
         oldUser.save().then((result) => {
           transporter
@@ -234,15 +234,11 @@ router.post('/new-password', (req, res) => {
   const newPassword = req.body.password
   const sentToken = req.body.token
 
-  console.log(newPassword);
-  console.log(sentToken);
-
   User.findOne({ resetToken: sentToken, expireToken: { $gt: Date.now() } })
     .then(user => {
       if (!user) {
         return res.status(422).json({ error: "Try again session expired" })
       }
-      console.log(user);
       bcrypt.hash(newPassword, 12).then(hashedpassword => {
         user.password = hashedpassword
         user.resetToken = undefined

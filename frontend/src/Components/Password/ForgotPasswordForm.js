@@ -25,6 +25,14 @@ const ForgotPasswordForm = () => {
     });
   };
 
+  //On Error 
+  const userError = (error) => {
+    toast.error(error + " 😢", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");   // state to hold the message to show to the user
 
@@ -44,23 +52,22 @@ const ForgotPasswordForm = () => {
         if (data.status === "success") {
           setMessage("Password reset email sent!"); // show success message
           navigate('/send-email')
+          notifSuccess();
         } else {
           setMessage("Error: " + data.message); // show error message
+          //userError(data.message);
+          
         }
       })
       .catch((error) => {
         setMessage("Error: " + error.message); // show error message
+        userError(error.message);
       });
-
-    console.log(message);
   };
-
-  console.log(email);
 
   const handleResetPassword = (e) => {
     e.preventDefault();
     // Call the notifSuccess() method here
-    notifSuccess();
     // Add your password reset logic here
   };
   return (
