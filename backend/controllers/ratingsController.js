@@ -18,32 +18,40 @@ const path = require("path");
 /////////////////////////  Description      : create a single rating
 /////////////////////////  Developer        : Madara Senevirathna
 /////////////////////////  (START)
-
 const createRating = async (req, res) => {
   const { user, gym, rating, comment } = req.body;
   const newRating = new Rating({ user, gym, rating, comment });
+  const gymId = gym;
+
+  const session = await mongoose.startSession();
   try {
+    const gymObjectId = mongoose.Types.ObjectId.isValid(gymId) ? mongoose.Types.ObjectId(gymId) : null;
+
+    session.startTransaction();
     await newRating.save();
+    const ratings = await Rating.find({ gym: gymObjectId });
+    const currRatings = ratings.map((rating) => rating.rating);
+    console.log(currRatings);
 
-    const ratings = await Rating.find(gym);
-    //const currRatings = ratings.rating;
-    console.log({ratings});
-
-    if (!currRatings) {
-      const gymRating2 = await Gym.findByIdAndUpdate({ _id:gym }, { gymRating: rating });
-      //const gymRating2 = await Gym.findOne({ user, gym });
-      res.json(gymRating2);
-    } else {
-      const totRating = currRatings + newRating.rating;
-      const gymRating1 = await Gym.findByIdAndUpdate({ _id: gym }, { gymRating: totRating });
-      //const gymRating1 = await Gym.findOne({ user, gym });
-      res.json(gymRating1);
-    }
+    // Calculate the average rating
+    const sumRatings = currRatings.reduce((total, curr) => total + curr, 0);
+    const averageRating = sumRatings / currRatings.length;
+    const roundedRating = averageRating.toFixed();
+    const gym = await Gym.findOneAndUpdate(
+      { _id: gymObjectId },
+      {
+        gymRating: roundedRating
+      }
+    );
+    const commit = await session.commitTransaction();
+    session.endSession();
+    res.status(200).json({ message: 'Success' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'server error' });
   }
 };
+
 /////////////////////////  (END)
 
 /////////////////////////  Controller       : getRatings()

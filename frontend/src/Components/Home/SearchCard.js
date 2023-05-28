@@ -21,6 +21,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import Favorite from './Favorite.js'
+
 const styles = {
   boxes: {
     position: "absolute",
@@ -307,6 +309,16 @@ const SearchCard = (props) => {
                       >
                         View Reviews
                       </Button>
+
+                      {loggedState ? (
+                        <Favorite
+                          size="small"
+                          gymId={result._id}
+                          userId={cookie.LoggedUser[5]}
+                        />
+                          
+                      ) : null
+                      }
                     </CardActions>
                   </div>
                 </div>
