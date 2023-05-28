@@ -47,6 +47,8 @@ import PasswordResetReroute from "./Components/Password/PasswordResetReroute.js"
 import ToTopBtn from "./Components/BackToTop/ToTopBtn.jsx";
 import ChatBot from "./Components/Home/FitFinderChatbot.js";
 
+import FavoriteGym from "./Components/Shared/FavoritedGyms.js"
+
 function App() {
   return (
     <Router>
@@ -79,6 +81,9 @@ function App() {
           <Route exact path="/member-home/member-payment" element={<MemberPayment />} />
           <Route exact path="/member-home/member-stats" element={<MemberStats />} />
           <Route exact path="/checkout-success" element={<PaymentSuccess />} />
+          <Route exact path="/member-home/member-favorited-gym" element={<FavoriteGym />} />
+
+
 
           <Route exact path="/manage-schedule/:userId" element={<ScheduleManage />} />
           <Route exact path="/password-reset" element={<PasswordReset />} />

@@ -28,6 +28,8 @@ const stripeRouters = require("./routes/stripe");
 const resetPasswordRouters = require("./routes/passwordReset.js");
 //get ratings
 const ratingRoutes = require("./routes/ratings.js");
+//get favorite router
+const favoriteRouters = require("./routes/favorite.js");
 //get Routers(END)
 
 //connect to db(START)
@@ -79,4 +81,5 @@ app.use("/api/schedule", scheduleRouters);
 app.use("/api/stripe", stripeRouters);
 app.use("/api/passwordReset", resetPasswordRouters);
 app.use("/api/rating", ratingRoutes);
+app.use("/api/favorite", favoriteRouters);
 //MIDDLE-WARE (END)

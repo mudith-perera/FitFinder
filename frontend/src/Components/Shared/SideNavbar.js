@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 
 import { CDBSidebarMenuItem } from "cdbreact";
 
-import { MdScheduleSend, MdPayments } from "react-icons/md";
+import { MdScheduleSend, MdPayments, MdFavorite } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
 import { FaUsers, FaBars, FaSearch, FaPeopleCarry, FaDumbbell, FaHome } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
@@ -52,6 +52,11 @@ export const MenuItems = [
                 path: "/member-home/member-view-update",
             },
             //////// (Mudith Perera) Payment added - (END) ///////
+            {
+                text: 'Favorite Gyms',
+                icon: <MdFavorite style={iconStyle} />,
+                path: "/member-home/member-favorited-gym",
+            },
         ],
     },
     {
@@ -183,12 +188,12 @@ const StyledNavLink = styled(NavLink)`
     height: 80px;
 
     &:hover{
-        background: #6a11cb;
+        background: #6F7777;
         color: #fff;
         transition: all 0.5s;
     }
     &:active{
-        background: #6a11cb;
+        background: #6F7777;
         color: #fff;
     }
 
