@@ -57,7 +57,7 @@ function Favorite(props) {
         console.error('Error:', error);
         alert('Failed to get favorite info');
       });
-  }, []);
+  });
 
   const onClickFavorite = () => {
     if (favorited) {
