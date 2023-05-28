@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./About.css";
 import { MDBRow, MDBCol, MDBInput, MDBCheckbox, MDBBtn, MDBValidation, MDBValidationItem, MDBTextArea } from 'mdb-react-ui-kit';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -16,14 +18,64 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 
 const AboutUs = () => {
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [sendCopy, setSendCopy] = useState(false);
+
+  const emailSuccess = () => {
+    toast.success("Message Successfully Sent. Please Expect a Reply From Us Shortly 😊👍", {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
+  const emailError = (error) => {
+    toast.error("😢 " + error, {
+      theme: "colored",
+      position: toast.POSITION.TOP_LEFT,
+    });
+  };
+
   useEffect(() => {
     Aos.init({ duration: 1000 });
   });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/passwordReset/send-contact-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          subject,
+          message,
+          sendCopy,
+        }),
+      });
+
+      if (response.ok) {
+        emailSuccess();
+      } else {
+        emailError();
+      }
+    } catch (error) {
+      emailError();
+    }
+  };
 
 
   return (
 
     <div className="container py-5 h-100">
+      <ToastContainer />
       <div className="row d-flex justify-content-center align-items-center h-100">
         <div className="col-12">
           <div
@@ -89,26 +141,31 @@ const AboutUs = () => {
                     <h3 className="fw-normal mb-5">
                       <b>Contact <span style={{ color: "#6a11cb" }}>U</span>s&emsp;&emsp;</b>
                     </h3>
-                    <MDBValidation noValidate id='form' className='text-center' style={{ width: '100%' }}>
+                    <MDBValidation noValidate id='form' className='text-center' style={{ width: '100%' }} onSubmit={handleSubmit}>
 
                       <MDBValidationItem invalid feedback='Please provide your name.'>
-                        <MDBInput label='Name' v-model='name' wrapperClass='mb-4' required />
+                        <MDBInput label='Name' value={name} onChange={(e) => setName(e.target.value)} wrapperClass='mb-4' required />
                       </MDBValidationItem>
 
                       <MDBValidationItem invalid feedback='Please provide your email.'>
-                        <MDBInput type='email' label='Email address' v-model='email' wrapperClass='mb-4' required />
+                        <MDBInput type='email' label='Email address' value={email} onChange={(e) => setEmail(e.target.value)} wrapperClass='mb-4' required />
                       </MDBValidationItem>
 
                       <MDBValidationItem invalid feedback='Please provide mail subject.'>
-                        <MDBInput label='Subject' v-model='subject' wrapperClass='mb-4' required />
+                        <MDBInput label='Subject' value={subject} onChange={(e) => setSubject(e.target.value)} wrapperClass='mb-4' required />
                       </MDBValidationItem>
 
                       <MDBValidationItem invalid feedback='Please provide a message text.'>
-                        <MDBTextArea wrapperClass='mb-4' label='Message' required />
+                        <MDBTextArea value={message} onChange={(e) => setMessage(e.target.value)} wrapperClass='mb-4' label='Message' required />
                       </MDBValidationItem>
 
                       <MDBValidationItem feedback=''>
-                        <MDBCheckbox wrapperClass='d-flex justify-content-center' label='Send me copy' />
+                        <MDBCheckbox
+                          wrapperClass='d-flex justify-content-center'
+                          label='Send me copy'
+                          checked={sendCopy}   // Bind the checked status to sendCopy state
+                          onChange={(e) => setSendCopy(e.target.checked)}  // Update the sendCopy state when checkbox status changes
+                        />
                       </MDBValidationItem>
 
                       <MDBBtn type='submit' color='primary' block className='my-4'>
