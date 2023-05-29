@@ -10,14 +10,17 @@ class AuthService {
       'openid',
       'https://www.googleapis.com/auth/userinfo.profile',
     ],
-    //this is the web client id not the mobile client id (Google Console)
-    clientId:
-        '338037268448-96oj399dqcc7l8a5ie31ke0t6fb8r6ut.apps.googleusercontent.com',
+    serverClientId:
+        '814415258055-mv8fm4il1t8m9mgruuf4tqgoos0vdkkh.apps.googleusercontent.com',
   );
   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   Future<void> storeUserId(String userId) async {
     await _secureStorage.write(key: 'userId', value: userId);
+  }
+
+  Future<void> storeEmail(String email) async {
+    await _secureStorage.write(key: 'email', value: email);
   }
 
   Future<List<dynamic>> login(String email, String password) async {
@@ -38,6 +41,7 @@ class AuthService {
       ];
       await _secureStorage.write(key: 'token', value: response['token']);
       await storeUserId(response["_id"]);
+      await storeEmail(response["email"]);
       return loggedUserDetails;
     }
   }
@@ -71,6 +75,7 @@ class AuthService {
         ];
         await _secureStorage.write(key: 'token', value: response['token']);
         await storeUserId(response["_id"]);
+        await storeEmail(response["email"]);
         return loggedUserDetails;
       }
     } catch (error) {
@@ -132,6 +137,10 @@ class AuthService {
 
   Future<String?> getUserId() async {
     return await _secureStorage.read(key: 'userId');
+  }
+
+  Future<String?> getEmail() async {
+    return await _secureStorage.read(key: 'email');
   }
 
   Future<void> logout() async {

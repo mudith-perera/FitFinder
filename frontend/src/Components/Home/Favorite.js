@@ -30,12 +30,12 @@ function Favorite(props) {
         if (data.success) {
           setFavoriteNumber(data.favoriteNumber);
         } else {
-          alert('Failed to get favorite number');
+          console.log('Failed to get favorite number');
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('Failed to get favorite number');
+        console.log('Failed to get favorite number');
       });
 
     fetch('/api/favorite/is-favorited', {
@@ -50,14 +50,14 @@ function Favorite(props) {
         if (data.success) {
           setFavorited(data.favorited);
         } else {
-          alert('Failed to get favorite info');
+          console.log('Failed to get favorite info');
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('Failed to get favorite info');
+        console.log('Failed to get favorite info');
       });
-  }, []);
+  });
 
   const onClickFavorite = () => {
     if (favorited) {
@@ -75,12 +75,12 @@ function Favorite(props) {
             setFavoriteNumber(favoriteNumber - 1);
             setFavorited(!favorited);
           } else {
-            alert('Failed to remove from favorites');
+            console.log('Failed to remove from favorites');
           }
         })
         .catch(error => {
           console.error('Error:', error);
-          alert('Failed to remove from favorites');
+          console.log('Failed to remove from favorites');
         });
     } else {
       // When not adding gym to favorites yet
@@ -97,12 +97,12 @@ function Favorite(props) {
             setFavoriteNumber(favoriteNumber + 1);
             setFavorited(!favorited);
           } else {
-            alert('Failed to add to favorites');
+            console.log('Failed to add to favorites');
           }
         })
         .catch(error => {
           console.error('Error:', error);
-          alert('Failed to add to favorites');
+          console.log('Failed to add to favorites');
         });
     }
   };

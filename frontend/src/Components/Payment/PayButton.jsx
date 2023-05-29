@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 
 const PayButton = (props) => {
+  const [gymEmail] = useState(props.gymEmail);
   const [username] = useState(props.username);
   const [email] = useState(props.useremail);
   const [rate, setRate] = useState(null);
@@ -39,7 +40,7 @@ const PayButton = (props) => {
 
   const handleCheckout = async (e) => {
     e.preventDefault();
-    const formData = { username, fee, email };
+    const formData = { gymEmail, username, fee, email };
     console.log(fee);
     console.log(rate);
     const response = await fetch("/api/stripe/create-checkout-session/", {

@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage>
   String _selectedDay = "";
   List<dynamic> _schedule = [];
   String? _userId;
+  String? _userEmail;
   late AnimationController _animationController;
   ValueNotifier<List<dynamic>> _scheduleNotifier = ValueNotifier([]);
 
@@ -41,10 +42,15 @@ class _HomePageState extends State<HomePage>
   Future<void> _initializeData() async {
     await _loadUserId();
     await _loadSchedule();
+    await _loadUserEmail();
   }
 
   _loadUserId() async {
     _userId = await widget.authService.getUserId();
+  }
+
+  _loadUserEmail() async {
+    _userEmail = await widget.authService.getEmail();
   }
 
   _loadSchedule() async {
@@ -68,7 +74,7 @@ class _HomePageState extends State<HomePage>
       "Saturday",
     ];
     final currentDayIndex = DateTime.now().weekday;
-    final currentDay = daysOfWeek[currentDayIndex - 1];
+    final currentDay = daysOfWeek[currentDayIndex];
     setState(() {
       _selectedDay = currentDay;
     });
@@ -108,6 +114,17 @@ class _HomePageState extends State<HomePage>
       ),
       body: Column(
         children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Text(
+              'Welcome!, $_userEmail',
+              style: GoogleFonts.roboto(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
           ElevatedButton(
             onPressed: () async {
               await Navigator.push(

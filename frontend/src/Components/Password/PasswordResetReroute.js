@@ -15,15 +15,15 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
 
+
 // import { useCookies } from 'react-cookie';
 
 const PasswordResetReroute = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("")
   const [confirmPwd, setConfirmPwd] = useState("");
   const [pwsdMatch, setpwsdMatch] = useState("");
   const { token } = useParams();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     Aos.init({ duration: 500 });
@@ -49,7 +49,8 @@ const PasswordResetReroute = () => {
   };
 
   //form submit function
-  const handleResetPassword = async () => {
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
     if (password === confirmPwd) {
       setpwsdMatch(true);
     } else {
@@ -82,11 +83,7 @@ const PasswordResetReroute = () => {
       userSuccess();
       setPassword("");
       setConfirmPwd("");
-
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
-      //window.location.reload(false);
+      navigate("/login");
     }
 
 

@@ -283,6 +283,134 @@ router.post('/new-password', (req, res) => {
     })
 })
 
+//send contact form email
+router.post('/send-contact-email', (req, res) => {
+  sendContactEmail(req, res);
+});
+
+const sendContactEmail = (req, res) => {
+  const { name, email, subject, message, sendCopy } = req.body;
+  const fixedEmailAddress = "fitfinder.uor@gmail.com";
+
+  const html = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <title>${subject}</title>
+  </head>
+  <body style="display:flex">
+      <div style="background: #3B3D35;width:120px">
+          
+      </div>
+      
+  <div style="background: black;color: white;width: 600px; height: 400px;padding: 30px">
+  <div style="display: flex; justify-content: center;">
+  
+  <img src="cid:fitfindertext" alt="name" width="50%" height="20%" >
+  
+  </div>
+  <table class="body" role="presentation" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td></td>
+        <td class="container">
+          <div class="content">
+            <!-- START CENTERED WHITE CONTAINER-->
+            <table class="main" role="presentation">
+              <!-- START MAIN AREA-->
+              <tbody>
+                <tr>
+                  <td class="wrapper">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <!-- CONTENT-->
+                            <p>Hi</p>
+                            <p>${name} has submitted the following message: </p>
+                            <p><strong>Subject:</strong> ${subject}</p>
+                            <p><strong>Message:</strong> ${message}</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- START FOOTER-->
+            <div class="footer">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                <tbody>
+                  <tr>
+                    <td style="transform: translateY(10px);" class="content-block">
+                    <span class="apple-link" ">
+                      <span id="year"></span> By Department of Computer Science <br> 
+  
+                      University Of Ruhuna<br>
+                      
+                      Matara, Sri Lanka</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    const y=new Date();
+    document.getElementById('year').innerText=y.getFullYear();
+  </script>
+  
+      <div style="padding-top:10px;display:flex;padding-left:40%;padding-bottom:10%;justify-content: center;">
+      <img src="cid:logo" alt="logo" width="150px" height="150px">
+      </div>
+      
+  </div>
+  
+  <div style="background: #3B3D35;width:120px">
+          
+  </div>
+  
+  </body>
+  </html>
+  `;
+
+  let mailOptions = {
+    to: fixedEmailAddress,
+    from: "fitfinder.uor@gmail.com",
+    subject: `Contact Form Submission: ${subject}`,
+    html: html,
+    attachments: [{
+      filename: 'fitfindertext.png',
+      content: headerImage,
+      cid: 'fitfindertext' // Use the same 'cid' value as the src attribute in the HTML
+    },
+    {
+      filename: 'logo.png',
+      content: footerImage,
+      cid: 'logo' // Use the same 'cid' value as the src attribute in the HTML
+    }
+    ],
+  }
+
+  if (sendCopy) {
+    mailOptions.cc = email;
+  }
+
+  transporter
+    .sendMail(mailOptions)
+    .then(() => {
+      res.json({ message: "Email sent successfully" });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Error sending email" });
+    });
+};
 //export the created routes
 module.exports = router;
 

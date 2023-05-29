@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback  } from 'react';
 import { useCookies } from 'react-cookie';
 import './favorite.css';
 import Aos from 'aos';
@@ -41,7 +41,7 @@ const styles = {
 };
 
 function FavoritedGyms() {
-    const [cookie, setCookie] = useCookies(['LoggedUser']);
+    const [cookie] = useCookies(['LoggedUser']);
     const [Favorites, setFavorites] = useState([]);
     const [openModalId, setOpenModalId] = useState(null);
 
@@ -56,11 +56,9 @@ function FavoritedGyms() {
         setOpenModalId(null);
     };
 
-    useEffect(() => {
-        fetchFavoritedGym();
-    }, []);
 
-    const fetchFavoritedGym = () => {
+
+    const fetchFavoritedGym = useCallback(() => {
         Aos.init({ duration: 500 });
         fetch(`/api/favorite/get-favoritedGym/${userId}`)
             .then((response) => response.json())
@@ -69,7 +67,11 @@ function FavoritedGyms() {
                 const { favorites } = data;
                 setFavorites(favorites);
             });
-    };
+    }, [userId]);
+
+    useEffect(() => {
+        fetchFavoritedGym();
+    }, [fetchFavoritedGym]);
 
     const onClickDelete = (gymId, userId) => {
 
@@ -90,7 +92,7 @@ function FavoritedGyms() {
                 if (data.success) {
                     fetchFavoritedGym();
                 } else {
-                    alert('Failed to Remove From Favorite');
+                    console.log('Failed to Remove From Favorite');
                 }
             });
     }
@@ -101,7 +103,7 @@ function FavoritedGyms() {
                 <SideNavbar userRole={cookie.LoggedUser[0]} />
             </div>
             <div style={{ paddingTop: '40px', paddingLeft: '50px', height: '650px' }}>
-                <h1 style={{ color: 'white', textAlign: 'center' }}>Favorite Gyms By Me</h1>
+                <h1 style={{ color: 'white', textAlign: 'center' }}>My Favorite Gyms</h1>
                 <hr style={{ borderTop: '5px solid white', width: '40%', fontWeight: 'bold', marginLeft: '30%' }} />
 
                 <div style={{ paddingLeft: '25%', paddingTop: '4%' }}>
@@ -156,9 +158,8 @@ function FavoritedGyms() {
                                                         No favorite Gyms 😁
                                                     </h2>
                                                     <br />
-                                                    <p style={{ fontSize: '25px' }}>You can add gyms to your favorite list</p>
+                                                    <p style={{ fontSize: '18px' }}>You can add gyms to your favorite list</p>
                                                     <br />
-                                                    <p style={{ fontSize: '25px', fontWeight: 'bold' }}>Hurry up ...!</p>
 
                                                 </div>
                                                 <p className="large text-white-50">Or</p>
