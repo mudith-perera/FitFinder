@@ -56,6 +56,7 @@ const MemberPayment = () => {
                     <div>
                       <p>Pay Monthly Rs : {monthlyFee}</p>
                       <PayButton
+                        gymEmail = {gymDetails?.gymName}
                         username={username}
                         useremail={useremail}
                         fee={monthlyFee}

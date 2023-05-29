@@ -23,6 +23,52 @@ const PaymentSuccess = () => {
   function gotoHome() {
     navigate("/member-home");
   }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const gymEmail = urlParams.get('gymEmail');
+  const username = urlParams.get('username');
+  const fee = urlParams.get('fee');
+  const email = urlParams.get('email');
+
+  console.log(gymEmail, username, fee, email);
+
+  useEffect(() => {
+    const sendPaymentEmail = async () => {
+      try {
+        const formData = {
+          gymEmail,
+          username,
+          fee,
+          email,
+        };
+
+        // User validation backend
+        const response = await fetch("/api/stripe/send-payment-email/", {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const json = await response.json();
+
+        if (!response.ok) {
+          console.log(json.error);
+        }
+
+        if (response.ok) {
+          console.log(json);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    sendPaymentEmail();
+  }, [gymEmail,username,fee,email]);
+
+
   return (
     <section data-aos="fade-right" className="vh-800 gradient-custom">
       <div className="container py-5 h-80">
