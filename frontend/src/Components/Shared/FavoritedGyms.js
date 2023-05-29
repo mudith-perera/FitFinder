@@ -92,7 +92,7 @@ function FavoritedGyms() {
                 if (data.success) {
                     fetchFavoritedGym();
                 } else {
-                    alert('Failed to Remove From Favorite');
+                    console.log('Failed to Remove From Favorite');
                 }
             });
     }
