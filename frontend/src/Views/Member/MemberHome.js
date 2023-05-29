@@ -9,7 +9,9 @@ import MemberStats from '../../Components/Member/MemberStats.js';
 
 const MemberHome = () => {
   const [cookie] = useCookies(['']);
-  const [username] = useState((cookie.LoggedUser[2])+ " " + (cookie.LoggedUser[3]));
+  const [username] = useState(
+    (cookie.LoggedUser[2] || '') + ' ' + (cookie.LoggedUser[3] || '')
+  );
   return (
     <div style={{ display: "flex", flexDirection: "row"}}>
     <div>

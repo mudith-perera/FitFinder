@@ -158,9 +158,8 @@ function FavoritedGyms() {
                                                         No favorite Gyms 😁
                                                     </h2>
                                                     <br />
-                                                    <p style={{ fontSize: '25px' }}>You can add gyms to your favorite list</p>
+                                                    <p style={{ fontSize: '18px' }}>You can add gyms to your favorite list</p>
                                                     <br />
-                                                    <p style={{ fontSize: '25px', fontWeight: 'bold' }}>Hurry up ...!</p>
 
                                                 </div>
                                                 <p className="large text-white-50">Or</p>
