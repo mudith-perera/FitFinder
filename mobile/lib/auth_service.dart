@@ -11,7 +11,7 @@ class AuthService {
       'https://www.googleapis.com/auth/userinfo.profile',
     ],
     serverClientId:
-        '814415258055-mv8fm4il1t8m9mgruuf4tqgoos0vdkkh.apps.googleusercontent.com',
+        '338037268448-96oj399dqcc7l8a5ie31ke0t6fb8r6ut.apps.googleusercontent.com',
   );
   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
